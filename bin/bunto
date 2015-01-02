@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+STDOUT.sync = true
+
+$:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
+
+require 'bunto'
+require 'mercenary'
+
+Bunto::External.require_if_present(
+  Bunto::External.blessed_gems
+)
+
+Bunto::PluginManager.require_from_bundler
+
+Bunto::Deprecator.process(ARGV)
+
+Mercenary.program(:bunto) do |p|
+  p.version Bunto::VERSION
+  p.description 'Bunto is a static site generator.'
+  p.syntax 'bunto <subcommand> [options]'
+
+  p.option 'source', '-s', '--source [DIR]', 'Source directory (defaults to ./)'
+  p.option 'destination', '-d', '--destination [DIR]', 'Destination directory (defaults to ./_site)'
+  p.option 'safe', '--safe', 'Safe mode (defaults to false)'
+  p.option 'plugins', '-p', '--plugins PLUGINS_DIR1[,PLUGINS_DIR2[,...]]', Array, 'Plugins directory (defaults to ./_plugins)'
+  p.option 'layouts', '--layouts DIR', String, 'Layouts directory (defaults to ./_layouts)'
+
+  Bunto::Command.subclasses.each { |c| c.init_with_program(p) }
+
+  p.action do |args, options|
+    if args.empty?
+      Bunto.logger.error "A subcommand is required."
+      puts p
+    else
+      unless p.has_command?(args.first)
+        Bunto.logger.abort_with "Invalid command. Use --help for more information"
+      end
+    end
+  end
+end
