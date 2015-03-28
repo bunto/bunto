@@ -1,0 +1,8 @@
+require 'benchmark/ips'
+
+url = "http://bunto.isc"
+
+Benchmark.ips do |x|
+  x.report('+=') { url += '/' }
+  x.report('<<') { url << '/' }
+end
