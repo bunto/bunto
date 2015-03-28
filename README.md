@@ -1,4 +1,4 @@
 bunto
 =====
 
-Bunto is a static site generator.
+**Bunto** is a static site generator.
