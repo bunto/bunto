@@ -1,0 +1,15 @@
+#! /bin/bash
+set -e
+
+# Usage:
+#   script/test
+#   script/test <test_file>
+
+if [ -d test/dest ]
+  then rm -r test/dest
+fi
+
+if [[ $# -lt 1 ]]
+ then time bundle exec rake test
+ else time bundle exec ruby -Itest "$@"
+fi
