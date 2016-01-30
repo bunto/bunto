@@ -1,28 +1,82 @@
-source 'https://rubygems.org'
-gemspec
+source "https://rubygems.org"
+gemspec :name => "bunto"
 
-gem 'rake', '~> 10.1'
-gem 'rdoc', '~> 3.11'
-gem 'redgreen', '~> 1.2'
-gem 'shoulda', '~> 3.5'
-gem 'rr', '~> 1.1'
-gem 'cucumber', '1.3.18'
-gem 'RedCloth', '~> 4.2'
-gem 'maruku', '~> 0.7.0'
-gem 'rdiscount', '~> 1.6'
-gem 'launchy', '~> 2.3'
-gem 'simplecov', '~> 0.9'
-gem 'simplecov-gem-adapter', '~> 1.0.1'
-gem 'mime-types', '~> 1.5'
-gem 'activesupport', '~> 3.2.13'
-gem 'bunto_test_plugin'
-gem 'bunto_test_plugin_malicious'
-gem 'rouge', '~> 1.7'
-gem 'liquid-c', '~> 0.0.3'
-gem 'minitest' if RUBY_PLATFORM =~ /cygwin/
-gem 'test-unit' if RUBY_PLATFORM =~ /cygwin/ || RUBY_VERSION.start_with?("2.2")
+gem "rake", "~> 10.1"
+group :development do
+  gem "launchy", "~> 2.3"
+  gem "rubocop", :branch => :master, :github => "bbatsov/rubocop"
+  gem "pry"
 
-if ENV['BENCHMARK']
-  gem 'rbtrace'
-  gem 'stackprof'
+  unless RUBY_ENGINE == "jruby"
+    gem "pry-byebug"
+  end
+end
+
+#
+
+group :test do
+  gem "cucumber"
+  gem "bunto_test_plugin"
+  gem "bunto_test_plugin_malicious"
+  gem "codeclimate-test-reporter"
+  gem "rspec-mocks"
+  gem "nokogiri"
+  gem "rspec"
+end
+
+#
+
+group :test_legacy do
+  if RUBY_PLATFORM =~ /cygwin/ || RUBY_VERSION.start_with?("2.2")
+    gem 'test-unit'
+  end
+
+  gem "redgreen"
+  gem "simplecov"
+  gem "minitest-reporters"
+  gem "minitest-profile"
+  gem "minitest"
+  gem "shoulda"
+end
+
+#
+
+group :benchmark do
+  if ENV["BENCHMARK"]
+    gem "ruby-prof"
+    gem "benchmark-ips"
+    gem "stackprof"
+    gem "rbtrace"
+  end
+end
+
+#
+
+group :bunto_optional_dependencies do
+  gem "toml", "~> 0.1.0"
+  gem "coderay", "~> 1.1.0"
+  gem "bunto-gist", "~> 1.0"
+  gem "bunto-feed", "~> 0.1.3"
+  gem "bunto-coffeescript", "~> 1.0"
+  gem "bunto-redirect-from", "~> 0.9.1"
+  gem "bunto-paginate", "~> 1.0"
+  gem "mime-types", "~> 3.0"
+  gem "kramdown", "~> 1.9"
+  gem "rdoc", "~> 4.2"
+
+  platform :ruby, :mswin, :mingw do
+    gem "rdiscount", "~> 2.0"
+    gem "pygments.rb", "~> 0.6.0"
+    gem "redcarpet", "~> 3.2", ">= 3.2.3"
+    gem "classifier-reborn", "~> 2.0"
+    gem "liquid-c", "~> 3.0"
+  end
+end
+
+#
+
+group :site do
+  if ENV["PROOF"]
+    gem "html-proofer", "~> 2.0"
+  end
 end
