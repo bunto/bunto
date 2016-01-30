@@ -5,7 +5,7 @@
 .analysis
 .bundle/
 .byebug_history
-.jekyll-metadata
+.bunto-metadata
 .ruby-gemset
 .ruby-version
 .sass-cache
