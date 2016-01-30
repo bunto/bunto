@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'servergems'
 require 'rake'
 require 'rdoc'
 require 'date'
@@ -8,6 +7,8 @@ require 'yaml'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), *%w[lib]))
 require 'bunto/version'
 
+Dir.glob('rake/**.rake').each { |f| import f }
+
 #############################################################################
 #
 # Helper functions
@@ -15,11 +16,15 @@ require 'bunto/version'
 #############################################################################
 
 def name
-  @name ||= File.basename(Dir['*.gemspec'].first, ".*")
+  "bunto"
 end
 
 def version
   Bunto::VERSION
+end
+
+def docs_name
+  "#{name}-docs"
 end
 
 def gemspec_file
@@ -27,7 +32,7 @@ def gemspec_file
 end
 
 def gem_file
-  "#{name}-#{version}.gem"
+  "#{name}-#{Gem::Version.new(version).to_s}.gem"
 end
 
 def normalize_bullets(markdown)
@@ -90,6 +95,7 @@ end
 
 multitask :default => [:test, :features]
 
+task :spec => :test
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
@@ -123,172 +129,4 @@ end
 desc "Open an irb session preloaded with this library"
 task :console do
   sh "irb -rubygems -r ./lib/#{name}.rb"
-end
-
-#############################################################################
-#
-# Site tasks - http://ruby.bunto.isc
-#
-#############################################################################
-
-namespace :site do
-  desc "Generate and view the site locally"
-  task :preview do
-    require "launchy"
-    require "bunto"
-
-    # Yep, it's a hack! Wait a few seconds for the Bunto site to generate and
-    # then open it in a browser. Someday we can do better than this, I hope.
-    Thread.new do
-      sleep 4
-      puts "Opening in browser..."
-      Launchy.open("http://localhost:4000")
-    end
-
-    # Generate the site in server mode.
-    puts "Running Bunto..."
-    options = {
-      "source"      => File.expand_path("site"),
-      "destination" => File.expand_path("site/_site"),
-      "watch"       => true,
-      "serving"     => true
-    }
-    Bunto::Commands::Build.process(options)
-    Bunto::Commands::Serve.process(options)
-  end
-
-  desc "Generate the site"
-  task :generate => [:history, :version_file] do
-    require "bunto"
-    Bunto::Commands::Build.process({
-      "source"      => File.expand_path("site"),
-      "destination" => File.expand_path("site/_site")
-    })
-  end
-
-  desc "Update normalize.css library to the latest version and minify"
-  task :update_normalize_css do
-    Dir.chdir("site/_sass") do
-      sh 'curl "http://necolas.github.io/normalize.css/latest/normalize.css" -o "normalize.scss"'
-      sh 'sass "normalize.scss":"_normalize.scss" --style compressed'
-      rm ['normalize.scss', Dir.glob('*.map')].flatten
-    end
-  end
-
-  desc "Commit the local site to the gh-pages branch and publish to GitHub Pages"
-  task :publish => [:history, :version_file] do
-    # Ensure the gh-pages dir exists so we can generate into it.
-    puts "Checking for gh-pages dir..."
-    unless File.exist?("./gh-pages")
-      puts "No gh-pages directory found. Run the following commands first:"
-      puts "  `git clone git@github.com:bunto/website gh-pages"
-      puts "  `cd gh-pages"
-      puts "  `git checkout gh-pages`"
-      exit(1)
-    end
-
-    # Ensure gh-pages branch is up to date.
-    Dir.chdir('gh-pages') do
-      sh "git pull origin gh-pages"
-    end
-
-    # Copy to gh-pages dir.
-    puts "Copying site to gh-pages branch..."
-    Dir.glob("site/*") do |path|
-      next if path.include? "_site"
-      sh "cp -R #{path} gh-pages/"
-    end
-
-    # Change any configuration settings for production.
-    config = YAML.load_file("gh-pages/_config.yml")
-    config.merge!({'sass' => {'style' => 'compressed'}})
-    File.write('gh-pages/_config.yml', YAML.dump(config))
-
-    # Commit and push.
-    puts "Committing and pushing to GitHub Pages..."
-    sha = `git log`.match(/[a-z0-9]{40}/)[0]
-    Dir.chdir('gh-pages') do
-      sh "git add ."
-      sh "git commit --allow-empty -m 'Updating to #{sha}.'"
-      sh "git push origin gh-pages"
-    end
-    puts 'Done.'
-  end
-
-  desc "Create a nicely formatted history page for the Bunto site based on the repo history."
-  task :history do
-    if File.exist?("History.markdown")
-      history_file = File.read("History.markdown")
-      front_matter = {
-        "layout" => "docs",
-        "title" => "History",
-        "permalink" => "/docs/history/",
-        "prev_section" => "contributing"
-      }
-      Dir.chdir('site/_docs/') do
-        File.open("history.md", "w") do |file|
-          file.write("#{front_matter.to_yaml}---\n\n")
-          file.write(converted_history(history_file))
-        end
-      end
-    else
-      abort "You seem to have misplaced your History.markdown file. I can haz?"
-    end
-  end
-
-  desc "Write the site latest_version.txt file"
-  task :version_file do
-    File.open('site/latest_version.txt', 'wb') { |f| f.write(version) }
-  end
-
-  namespace :releases do
-    desc "Create new release post"
-    task :new, :version do |t, args|
-      raise "Specify a version: rake site:releases:new['1.2.3']" unless args.version
-      today = Time.new.strftime('%Y-%m-%d')
-      release = args.version.to_s
-      filename = "site/_posts/#{today}-bunto-#{release.split('.').join('-')}-released.markdown"
-
-      File.open(filename, "wb") do |post|
-        post.puts("---")
-        post.puts("layout: news_item")
-        post.puts("title: 'Bunto #{release} Released'")
-        post.puts("date: #{Time.new.strftime('%Y-%m-%d %H:%M:%S %z')}")
-        post.puts("author: ")
-        post.puts("version: #{release}")
-        post.puts("categories: [release]")
-        post.puts("---")
-        post.puts
-        post.puts
-      end
-
-      puts "Created #{filename}"
-    end
-  end
-end
-
-#############################################################################
-#
-# Packaging tasks
-#
-#############################################################################
-
-desc "Release #{name} v#{version}"
-task :release => :build do
-  unless `git branch` =~ /^\* master$/
-    puts "You must be on the master branch to release!"
-    exit!
-  end
-  sh "git commit --allow-empty -m 'Release :gem: #{version}'"
-  sh "git tag v#{version}"
-  sh "git push origin master"
-  sh "git push origin v#{version}"
-  sh "gem push pkg/#{name}-#{version}.gem"
-end
-
-desc "Build #{name} v#{version} into pkg/"
-task :build do
-  mkdir_p "pkg"
-  sh "gem build #{gemspec_file}"
-  sh "mv #{gem_file} pkg"
 end
