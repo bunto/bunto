@@ -1,24 +1,37 @@
-language: ruby
-cache: bundler
-sudo: false
-rvm:
-- 2.2
-- 2.1
-- 2.0
-env:
-matrix:
-- TEST_SUITE=test
-- TEST_SUITE=cucumber
 before_script: bundle update
+bundler_args: --without benchmark:site:development
 script: script/cibuild
+cache: bundler
+language: ruby
+sudo: false
+
+rvm:
+  - &ruby1 2.3.0
+  - &ruby2 2.2.4
+  - &ruby3 2.1.8
+  - &ruby4 2.0.0-p648
+  - &jruby jruby-9.0.4.0
+  - &rhead ruby-head
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: *jruby
+    - rvm: *rhead
+env:
+  matrix:
+    - TEST_SUITE=test
+    - TEST_SUITE=cucumber
+
+branches:
+  only:
+    - ruby
+
 notifications:
-irc:
-on_success: change
-on_failure: change
-channels:
-- irc.freenode.org#bunto
-template:
-- "%{repository}#%{build_number} (%{branch}) %{message} %{build_url}"
-email:
-on_success: never
-on_failure: never
+  irc:
+    template: "%{repository}#%{build_number} (%{branch}) %{message} %{build_url}"
+    channels: irc.freenode.org#bunto
+
+  email:
+    recipients:
+      - SuriyaaKudoIsc@users.noreply.github.com
