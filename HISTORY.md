@@ -1,3 +1,3 @@
 # History
 
-> See https://github.com/bunto/bunto/commits/ruby!
+> See all commits in https://github.com/bunto/bunto/commits/ruby!
