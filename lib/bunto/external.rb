@@ -1,16 +1,15 @@
 module Bunto
   module External
     class << self
-
       #
       # Gems that, if installed, should be loaded.
       # Usually contain subcommands.
       #
       def blessed_gems
-        %w{
-          docs
-          import
-        }
+        %w(
+          bunto-docs
+          bunto-import
+        )
       end
 
       #
@@ -18,12 +17,13 @@ module Bunto
       #
       # names - a string gem name or array of gem names
       #
-      def require_if_present(names)
+      def require_if_present(names, &block)
         Array(names).each do |name|
           begin
             require name
           rescue LoadError
             Bunto.logger.debug "Couldn't load #{name}. Skipping."
+            block.call(name) if block
             false
           end
         end
@@ -39,6 +39,7 @@ module Bunto
       def require_with_graceful_fail(names)
         Array(names).each do |name|
           begin
+            Bunto.logger.debug "Requiring:", "#{name}"
             require name
           rescue LoadError => e
             Bunto.logger.error "Dependency Error:", <<-MSG
@@ -47,13 +48,12 @@ In order to use Bunto as currently configured, you'll need to install this gem.
 
 The full error message from Ruby is: '#{e.message}'
 
-If you run into trouble, you can find helpful resources at http://bunto.isc/help/!
+If you run into trouble, you can find helpful resources at http://buntorb.com/help/!
             MSG
             raise Bunto::Errors::MissingDependencyException.new(name)
           end
         end
       end
-
     end
   end
 end
