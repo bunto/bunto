@@ -4,14 +4,14 @@ require 'csv'
 module Bunto
   class Site
     attr_reader   :source, :dest, :config
-    attr_accessor :layouts, :posts, :pages, :static_files, :drafts,
+    attr_accessor :layouts, :pages, :static_files, :drafts,
                   :exclude, :include, :lsi, :highlighter, :permalink_style,
                   :time, :future, :unpublished, :safe, :plugins, :limit_posts,
                   :show_drafts, :keep_files, :baseurl, :data, :file_read_opts,
                   :gems, :plugin_manager
 
     attr_accessor :converters, :generators, :reader
-    attr_reader   :regenerator
+    attr_reader   :regenerator, :liquid_renderer
 
     # Public: Initialize a new Site.
     #
@@ -19,8 +19,8 @@ module Bunto
     def initialize(config)
       @config = config.clone
 
-      %w[safe lsi highlighter baseurl exclude include future unpublished
-        show_drafts limit_posts keep_files gems].each do |opt|
+      %w(safe lsi highlighter baseurl exclude include future unpublished
+        show_drafts limit_posts keep_files gems).each do |opt|
         self.send("#{opt}=", config[opt])
       end
 
@@ -32,6 +32,8 @@ module Bunto
 
       # Initialize incremental regenerator
       @regenerator = Regenerator.new(self)
+
+      @liquid_renderer = LiquidRenderer.new(self)
 
       self.plugin_manager = Bunto::PluginManager.new(self)
       self.plugins        = plugin_manager.plugins_path
@@ -57,6 +59,13 @@ module Bunto
       render
       cleanup
       write
+      print_stats
+    end
+
+    def print_stats
+      if @config['profile']
+        puts @liquid_renderer.stats_table
+      end
     end
 
     # Reset Site details.
@@ -65,16 +74,18 @@ module Bunto
     def reset
       self.time = (config['time'] ? Utils.parse_date(config['time'].to_s, "Invalid time in _config.yml.") : Time.now)
       self.layouts = {}
-      self.posts = []
       self.pages = []
       self.static_files = []
       self.data = {}
       @collections = nil
-      @regenerator.clear_cache()
+      @regenerator.clear_cache
+      @liquid_renderer.reset
 
       if limit_posts < 0
         raise ArgumentError, "limit_posts must be a non-negative number"
       end
+
+      Bunto::Hooks.trigger :site, :after_reset, self
     end
 
     # Load necessary libraries, plugins, converters, and generators.
@@ -132,6 +143,7 @@ module Bunto
     def read
       reader.read
       limit_posts!
+      Bunto::Hooks.trigger :site, :post_read, self
     end
 
     # Run each of the Generators.
@@ -150,20 +162,26 @@ module Bunto
       relative_permalinks_are_deprecated
 
       payload = site_payload
-      collections.each do |label, collection|
+
+      Bunto::Hooks.trigger :site, :pre_render, self, payload
+
+      collections.each do |_, collection|
         collection.docs.each do |document|
           if regenerator.regenerate?(document)
             document.output = Bunto::Renderer.new(self, document, payload).run
+            document.trigger_hooks(:post_render)
           end
         end
       end
 
-      payload = site_payload
-      [posts, pages].flatten.each do |page_or_post|
-        if regenerator.regenerate?(page_or_post)
-          page_or_post.render(layouts, payload)
+      pages.flatten.each do |page|
+        if regenerator.regenerate?(page)
+          page.output = Bunto::Renderer.new(self, page, payload).run
+          page.trigger_hooks(:post_render)
         end
       end
+
+      Bunto::Hooks.trigger :site, :post_render, self, payload
     rescue Errno::ENOENT
       # ignore missing layout dir
     end
@@ -179,10 +197,15 @@ module Bunto
     #
     # Returns nothing.
     def write
-      each_site_file { |item|
+      each_site_file do |item|
         item.write(dest) if regenerator.regenerate?(item)
-      }
+      end
       regenerator.write_metadata
+      Bunto::Hooks.trigger :site, :post_write, self
+    end
+
+    def posts
+      collections['posts'] ||= Collection.new(self, 'posts')
     end
 
     # Construct a Hash of Posts indexed by the specified Post attribute.
@@ -202,7 +225,7 @@ module Bunto
       # Build a hash map based on the specified post attribute ( post attr =>
       # array of posts ) then sort each array in reverse order.
       hash = Hash.new { |h, key| h[key] = [] }
-      posts.each { |p| p.send(post_attr.to_sym).each { |t| hash[t] << p } }
+      posts.docs.each { |p| p.data[post_attr].each { |t| hash[t] << p } if p.data[post_attr] }
       hash.values.each { |posts| posts.sort!.reverse! }
       hash
     end
@@ -237,47 +260,25 @@ module Bunto
     #   "tags"       - The Hash of tag values and Posts.
     #                  See Site#post_attr_hash for type info.
     def site_payload
-      {
-        "bunto" => {
-          "version" => Bunto::VERSION,
-          "environment" => Bunto.env
-        },
-        "site"   => Utils.deep_merge_hashes(config,
-          Utils.deep_merge_hashes(Hash[collections.map{|label, coll| [label, coll.docs]}], {
-            "time"         => time,
-            "posts"        => posts.sort { |a, b| b <=> a },
-            "pages"        => pages,
-            "static_files" => static_files,
-            "html_pages"   => pages.select { |page| page.html? || page.url.end_with?("/") },
-            "categories"   => post_attr_hash('categories'),
-            "tags"         => post_attr_hash('tags'),
-            "collections"  => collections,
-            "documents"    => documents,
-            "data"         => site_data
-        }))
-      }
+      Drops::UnifiedPayloadDrop.new self
     end
 
     # Get the implementation class for the given Converter.
-    #
-    # klass - The Class of the Converter to fetch.
-    #
     # Returns the Converter instance implementing the given Converter.
+    # klass - The Class of the Converter to fetch.
+
     def find_converter_instance(klass)
-      converters.find { |c| c.class == klass } || proc { raise "No converter for #{klass}" }.call
+      converters.find { |klass_| klass_.instance_of?(klass) } || \
+        raise("No Converters found for #{klass}")
     end
 
+    # klass - class or module containing the subclasses.
+    # Returns array of instances of subclasses of parameter.
     # Create array of instances of the subclasses of the class or module
-    #   passed in as argument.
-    #
-    # klass - class or module containing the subclasses which should be
-    #         instantiated
-    #
-    # Returns array of instances of subclasses of parameter
+    # passed in as argument.
+
     def instantiate_subclasses(klass)
-      klass.descendants.select do |c|
-        !safe || c.safe
-      end.sort.map do |c|
+      klass.descendants.select { |c| !safe || c.safe }.sort.map do |c|
         c.new(config)
       end
     end
@@ -287,12 +288,12 @@ module Bunto
     #
     # Returns
     def relative_permalinks_are_deprecated
-    if config['relative_permalinks'] && has_relative_page?
-        Bunto::Deprecator.deprecation_message "Since v2.0, permalinks for pages" +
-                                            " in subfolders must be relative to the" +
-                                            " site source directory, not the parent" +
-                                            " directory. Check http://bunto.isc/docs/upgrading/"+
-                                            " for more info."
+      if config['relative_permalinks']
+        Bunto.logger.abort_with "Since v3.0, permalinks for pages" \
+                                " in subfolders must be relative to the" \
+                                " site source directory, not the parent" \
+                                " directory. Check http://bunto.isc/docs/upgrading/"\
+                                " for more info."
       end
     end
 
@@ -312,9 +313,8 @@ module Bunto
       end.to_a
     end
 
-
     def each_site_file
-      %w(posts pages static_files docs_to_write).each do |type|
+      %w(pages static_files docs_to_write).each do |type|
         send(type).each do |item|
           yield item
         end
@@ -332,8 +332,8 @@ module Bunto
     # Whether to perform a full rebuild without incremental regeneration
     #
     # Returns a Boolean: true for a full rebuild, false for normal build
-    def full_rebuild?(override = {})
-      override['full_rebuild'] || config['full_rebuild']
+    def incremental?(override = {})
+      override['incremental'] || config['incremental']
     end
 
     # Returns the publisher or creates a new publisher if it doesn't
@@ -370,21 +370,13 @@ module Bunto
 
     private
 
-    # Checks if the site has any pages containing relative links
-    #
-    # Returns a Boolean: true for usage of relateive permalinks, false
-    # if it doesn't
-    def has_relative_page?
-      pages.any? { |page| page.uses_relative_permalinks }
-    end
-
     # Limits the current posts; removes the posts which exceed the limit_posts
     #
     # Returns nothing
     def limit_posts!
       if limit_posts > 0
-        limit = posts.length < limit_posts ? posts.length : limit_posts
-        self.posts = posts[-limit, limit]
+        limit = posts.docs.length < limit_posts ? posts.docs.length : limit_posts
+        self.posts.docs = posts.docs[-limit, limit]
       end
     end
 
