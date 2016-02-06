@@ -2,7 +2,6 @@ module Bunto
   module Commands
     class Doctor < Command
       class << self
-
         def init_with_program(prog)
           prog.command(:doctor) do |c|
             c.syntax 'doctor'
@@ -11,7 +10,7 @@ module Bunto
 
             c.option '--config CONFIG_FILE[,CONFIG_FILE2,...]', Array, 'Custom configuration file'
 
-            c.action do |args, options|
+            c.action do |_, options|
               Bunto::Commands::Doctor.process(options)
             end
           end
@@ -30,41 +29,66 @@ module Bunto
 
         def healthy?(site)
           [
+            fsnotify_buggy?(site),
             !deprecated_relative_permalinks(site),
-            !conflicting_urls(site)
+            !conflicting_urls(site),
+            !urls_only_differ_by_case(site)
           ].all?
         end
 
         def deprecated_relative_permalinks(site)
-          contains_deprecated_pages = false
-          site.pages.each do |page|
-            if page.uses_relative_permalinks
-              Bunto::Deprecator.deprecation_message "'#{page.path}' uses relative" +
-                                  " permalinks which will be deprecated in" +
-                                  " Bunto v1.0.0 and beyond."
-              contains_deprecated_pages = true
-            end
+          if site.config['relative_permalinks']
+            Bunto::Deprecator.deprecation_message "Your site still uses relative" \
+                                " permalinks, which was removed in" \
+                                " Bunto v3.0.0."
+            return true
           end
-          contains_deprecated_pages
         end
 
         def conflicting_urls(site)
           conflicting_urls = false
           urls = {}
           urls = collect_urls(urls, site.pages, site.dest)
-          urls = collect_urls(urls, site.posts, site.dest)
+          urls = collect_urls(urls, site.posts.docs, site.dest)
           urls.each do |url, paths|
-            if paths.size > 1
-              conflicting_urls = true
-              Bunto.logger.warn "Conflict:", "The URL '#{url}' is the destination" +
-                " for the following pages: #{paths.join(", ")}"
-            end
+            next unless paths.size > 1
+            conflicting_urls = true
+            Bunto.logger.warn "Conflict:", "The URL '#{url}' is the destination" \
+              " for the following pages: #{paths.join(", ")}"
           end
           conflicting_urls
         end
 
-        private
+        def fsnotify_buggy?(_site)
+          return true unless Utils::Platforms.osx?
+          if Dir.pwd != `pwd`.strip
+            Bunto.logger.error "  " + <<-STR.strip.gsub(/\n\s+/, "\n  ")
+              We have detected that there might be trouble using fsevent on your
+              operating system, you can read https://github.com/thibaudgg/rb-fsevent/wiki/no-fsevents-fired-(OSX-bug)
+              for possible work arounds or you can work around it immediately
+              with `--force-polling`.
+            STR
 
+            false
+          end
+
+          true
+        end
+
+        def urls_only_differ_by_case(site)
+          urls_only_differ_by_case = false
+          urls = case_insensitive_urls(site.pages + site.docs_to_write, site.dest)
+          urls.each do |case_insensitive_url, real_urls|
+            next unless real_urls.uniq.size > 1
+            urls_only_differ_by_case = true
+            Bunto.logger.warn "Warning:", "The following URLs only differ" \
+              " by case. On a case-insensitive file system one of the URLs" \
+              " will be overwritten by the other: #{real_urls.join(", ")}"
+          end
+          urls_only_differ_by_case
+        end
+
+        private
         def collect_urls(urls, things, destination)
           things.each do |thing|
             dest = thing.destination(destination)
@@ -77,8 +101,14 @@ module Bunto
           urls
         end
 
+        def case_insensitive_urls(things, destination)
+          things.inject({}) do |memo, thing|
+            dest = thing.destination(destination)
+            (memo[dest.downcase] ||= []) << dest
+            memo
+          end
+        end
       end
-
     end
   end
 end
