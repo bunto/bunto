@@ -5,7 +5,7 @@ module Bunto
 
       priority :lowest
 
-      def matches(ext)
+      def matches(_ext)
         true
       end
 
