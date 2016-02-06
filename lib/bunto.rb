@@ -1,4 +1,4 @@
-$:.unshift File.dirname(__FILE__) # For use/testing when no gem is installed
+$LOAD_PATH.unshift File.dirname(__FILE__) # For use/testing when no gem is installed
 
 # Require all of the Ruby files in the given directory.
 #
@@ -16,6 +16,7 @@ end
 require 'rubygems'
 
 # stdlib
+require 'forwardable'
 require 'fileutils'
 require 'time'
 require 'English'
@@ -30,10 +31,8 @@ require 'kramdown'
 require 'colorator'
 
 SafeYAML::OPTIONS[:suppress_warnings] = true
-Liquid::Template.error_mode = :strict
 
 module Bunto
-
   # internal requires
   autoload :Cleaner,             'bunto/cleaner'
   autoload :Collection,          'bunto/collection'
@@ -48,23 +47,23 @@ module Bunto
   autoload :External,            'bunto/external'
   autoload :Filters,             'bunto/filters'
   autoload :FrontmatterDefaults, 'bunto/frontmatter_defaults'
+  autoload :Hooks,               'bunto/hooks'
   autoload :Layout,              'bunto/layout'
   autoload :CollectionReader,    'bunto/readers/collection_reader'
   autoload :DataReader,          'bunto/readers/data_reader'
   autoload :LayoutReader,        'bunto/readers/layout_reader'
-  autoload :DraftReader,         'bunto/readers/draft_reader'
   autoload :PostReader,          'bunto/readers/post_reader'
   autoload :PageReader,          'bunto/readers/page_reader'
   autoload :StaticFileReader,    'bunto/readers/static_file_reader'
   autoload :LogAdapter,          'bunto/log_adapter'
   autoload :Page,                'bunto/page'
   autoload :PluginManager,       'bunto/plugin_manager'
-  autoload :Post,                'bunto/post'
   autoload :Publisher,           'bunto/publisher'
   autoload :Reader,              'bunto/reader'
   autoload :Regenerator,         'bunto/regenerator'
   autoload :RelatedPosts,        'bunto/related_posts'
   autoload :Renderer,            'bunto/renderer'
+  autoload :LiquidRenderer,      'bunto/liquid_renderer'
   autoload :Site,                'bunto/site'
   autoload :StaticFile,          'bunto/static_file'
   autoload :Stevenson,           'bunto/stevenson'
@@ -96,7 +95,7 @@ module Bunto
     #            list of option names and their defaults.
     #
     # Returns the final configuration Hash.
-    def configuration(override = Hash.new)
+    def configuration(override = {})
       config = Configuration[Configuration::DEFAULTS]
       override = Configuration[override].stringify_keys
       unless override.delete('skip_config_files')
@@ -134,7 +133,7 @@ module Bunto
     #
     # Returns the new logger.
     def logger=(writer)
-      @logger = LogAdapter.new(writer)
+      @logger = LogAdapter.new(writer, (ENV["BUNTO_LOG_LEVEL"] || :info).to_sym)
     end
 
     # Public: An array of sites
@@ -157,22 +156,23 @@ module Bunto
       clean_path = File.expand_path(questionable_path, "/")
       clean_path = clean_path.sub(/\A\w\:\//, '/')
 
-      unless clean_path.start_with?(base_directory.sub(/\A\w\:\//, '/'))
-        File.join(base_directory, clean_path)
-      else
+      if clean_path.start_with?(base_directory.sub(/\A\w\:\//, '/'))
         clean_path
+      else
+        File.join(base_directory, clean_path)
       end
     end
 
     # Conditional optimizations
     Bunto::External.require_if_present('liquid-c')
-
   end
 end
 
+require "bunto/drops/drop"
 require_all 'bunto/commands'
 require_all 'bunto/converters'
 require_all 'bunto/converters/markdown'
+require_all 'bunto/drops'
 require_all 'bunto/generators'
 require_all 'bunto/tags'
 
