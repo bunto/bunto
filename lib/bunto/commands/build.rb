@@ -1,9 +1,7 @@
 module Bunto
   module Commands
     class Build < Command
-
       class << self
-
         # Create the Mercenary command for the Bunto CLI for this Command
         def init_with_program(prog)
           prog.command(:build) do |c|
@@ -13,17 +11,18 @@ module Bunto
 
             add_build_options(c)
 
-            c.action do |args, options|
+            c.action do |_, options|
               options["serving"] = false
               Bunto::Commands::Build.process(options)
             end
           end
         end
 
-        # Build your Bunto site
+        # Build your bunto site
         # Continuously watch if `watch` is set to true in the config.
         def process(options)
-          Bunto.logger.log_level = :error if options['quiet']
+          # Adjust verbosity quickly
+          Bunto.logger.adjust_verbosity(options)
 
           options = configuration_from_options(options)
           site = Bunto::Site.new(options)
@@ -34,7 +33,9 @@ module Bunto
             build(site, options)
           end
 
-          if options.fetch('watch', false)
+          if options.fetch('detach', false)
+            Bunto.logger.info "Auto-regeneration:", "disabled when running server detached."
+          elsif options.fetch('watch', false)
             watch(site, options)
           else
             Bunto.logger.info "Auto-regeneration:", "disabled. Use --watch to enable."
@@ -51,10 +52,10 @@ module Bunto
           t = Time.now
           source      = options['source']
           destination = options['destination']
-          full_build  = options['full_rebuild']
+          incremental = options['incremental']
           Bunto.logger.info "Source:", source
           Bunto.logger.info "Destination:", destination
-          Bunto.logger.info "Incremental build:", (full_build ? "disabled" : "enabled")
+          Bunto.logger.info "Incremental build:", (incremental ? "enabled" : "disabled. Enable with --incremental")
           Bunto.logger.info "Generating..."
           process_site(site)
           Bunto.logger.info "", "done in #{(Time.now - t).round(3)} seconds."
@@ -66,13 +67,11 @@ module Bunto
         # options - A Hash of options passed to the command
         #
         # Returns nothing.
-        def watch(site, options)
+        def watch(_site, options)
           External.require_with_graceful_fail 'bunto-watch'
           Bunto::Watcher.watch(options)
         end
-
       end # end of class << self
-
     end
   end
 end
