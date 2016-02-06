@@ -38,11 +38,11 @@ module Bunto
     end
 
     def layout_directory_inside_source
-      site.in_source_dir(site.config['layouts'])
+      site.in_source_dir(site.config['layouts_dir'])
     end
 
     def layout_directory_in_cwd
-      dir = Bunto.sanitized_path(Dir.pwd, site.config['layouts'])
+      dir = Bunto.sanitized_path(Dir.pwd, site.config['layouts_dir'])
       if File.directory?(dir) && !site.safe
         dir
       else
