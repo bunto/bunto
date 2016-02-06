@@ -2,14 +2,15 @@ module Bunto
   module Commands
     class Clean < Command
       class << self
-
         def init_with_program(prog)
           prog.command(:clean) do |c|
             c.syntax 'clean [subcommand]'
             c.description 'Clean the site (removes site output and metadata file) without building.'
 
-            c.action do |args, _|
-              Bunto::Commands::Clean.process({})
+            add_build_options(c)
+
+            c.action do |_, options|
+              Bunto::Commands::Clean.process(options)
             end
           end
         end
@@ -35,7 +36,6 @@ module Bunto
             Bunto.logger.info "Nothing to do for #{metadata_file}."
           end
         end
-
       end
     end
   end
