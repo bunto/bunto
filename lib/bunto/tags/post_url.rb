@@ -14,7 +14,7 @@ module Bunto
       end
 
       def ==(other)
-        other.name.match(@name_regex)
+        other.basename.match(@name_regex)
       end
 
       def deprecated_equality(other)
@@ -32,11 +32,11 @@ module Bunto
       #
       # Returns the post slug with the subdirectory (relative to _posts)
       def post_slug(other)
-        path = other.name.split("/")[0...-1].join("/")
+        path = other.basename.split("/")[0...-1].join("/")
         if path.nil? || path == ""
-          other.slug
+          other.data['slug']
         else
-          path + '/' + other.slug
+          path + '/' + other.data['slug']
         end
       end
     end
@@ -59,23 +59,20 @@ eos
       def render(context)
         site = context.registers[:site]
 
-        site.posts.each do |p|
-          if @post == p
-            return p.url
-          end
+        site.posts.docs.each do |p|
+          return p.url if @post == p
         end
 
         # New matching method did not match, fall back to old method
         # with deprecation warning if this matches
 
-        site.posts.each do |p|
-          if @post.deprecated_equality p
-            Bunto::Deprecator.deprecation_message "A call to '{{ post_url #{name} }}' did not match " +
-              "a post using the new matching method of checking name " +
-              "(path-date-slug) equality. Please make sure that you " +
-              "change this tag to match the post's name exactly."
-            return p.url
-          end
+        site.posts.docs.each do |p|
+          next unless @post.deprecated_equality p
+          Bunto::Deprecator.deprecation_message "A call to '{{ post_url #{@post.name} }}' did not match " \
+            "a post using the new matching method of checking name " \
+            "(path-date-slug) equality. Please make sure that you " \
+            "change this tag to match the post's name exactly."
+          return p.url
         end
 
         raise ArgumentError.new <<-eos
