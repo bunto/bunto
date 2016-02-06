@@ -1,4 +1,3 @@
 module Bunto
-  class Generator < Plugin
-  end
+  Generator = Class.new(Plugin)
 end
