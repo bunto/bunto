@@ -1,8 +1,6 @@
 module Bunto
   class Command
-
     class << self
-
       # A list of subclasses of Bunto::Command
       def subclasses
         @subclasses ||= []
@@ -60,10 +58,8 @@ module Bunto
         c.option 'unpublished', '--unpublished', 'Render posts that were marked as unpublished'
         c.option 'quiet',   '-q', '--quiet', 'Silence output.'
         c.option 'verbose', '-V', '--verbose', 'Print verbose output.'
-        c.option 'full_rebuild', '-f', '--full-rebuild', 'Disable incremental rebuild.'
+        c.option 'incremental', '-I', '--incremental', 'Enable incremental rebuild.'
       end
-
     end
-
   end
 end
