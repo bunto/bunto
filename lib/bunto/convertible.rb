@@ -28,12 +28,6 @@ module Bunto
       !(data.key?('published') && data['published'] == false)
     end
 
-    # Returns merged option hash for File.read of self.site (if exists)
-    # and a given param
-    def merged_file_read_opts(opts)
-      (site ? site.file_read_opts : {}).merge(opts)
-    end
-
     # Read the YAML frontmatter.
     #
     # base - The String path to the dir containing the file.
@@ -42,20 +36,39 @@ module Bunto
     #
     # Returns nothing.
     def read_yaml(base, name, opts = {})
+      filename = File.join(base, name)
+
       begin
         self.content = File.read(site.in_source_dir(base, name),
-                                 merged_file_read_opts(opts))
+                                 Utils.merged_file_read_opts(site, opts))
         if content =~ /\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m
           self.content = $POSTMATCH
-          self.data = SafeYAML.load($1)
+          self.data = SafeYAML.load(Regexp.last_match(1))
         end
       rescue SyntaxError => e
-        Bunto.logger.warn "YAML Exception reading #{File.join(base, name)}: #{e.message}"
+        Bunto.logger.warn "YAML Exception reading #{filename}: #{e.message}"
       rescue Exception => e
-        Bunto.logger.warn "Error reading file #{File.join(base, name)}: #{e.message}"
+        Bunto.logger.warn "Error reading file #{filename}: #{e.message}"
       end
 
       self.data ||= {}
+
+      validate_data! filename
+      validate_permalink! filename
+
+      self.data
+    end
+
+    def validate_data!(filename)
+      unless self.data.is_a?(Hash)
+        raise Errors::InvalidYAMLFrontMatterError, "Invalid YAML front matter in #{filename}"
+      end
+    end
+
+    def validate_permalink!(filename)
+      if self.data['permalink'] && self.data['permalink'].size == 0
+        raise Errors::InvalidPermalinkError, "Invalid permalink in #{filename}"
+      end
     end
 
     # Transform the contents based on the content type.
@@ -78,13 +91,7 @@ module Bunto
     # Returns the String extension for the output file.
     #   e.g. ".html" for an HTML output file.
     def output_ext
-      if converters.all? { |c| c.is_a?(Bunto::Converters::Identity) }
-        ext
-      else
-        converters.map { |c|
-          c.output_ext(ext) unless c.is_a?(Bunto::Converters::Identity)
-        }.compact.last
-      end
+      Bunto::Renderer.new(site, self).output_ext
     end
 
     # Determine which converter to use based on this convertible's
@@ -102,8 +109,8 @@ module Bunto
     # info    - the info for Liquid
     #
     # Returns the converted content
-    def render_liquid(content, payload, info, path = nil)
-      Liquid::Template.parse(content).render!(payload, info)
+    def render_liquid(content, payload, info, path)
+      site.liquid_renderer.file(path).parse(content).render!(payload, info)
     rescue Tags::IncludeTagError => e
       Bunto.logger.error "Liquid Exception:", "#{e.message} in #{e.path}, included in #{path || self.path}"
       raise e
@@ -116,9 +123,9 @@ module Bunto
     #
     # Returns the Hash representation of this Convertible.
     def to_liquid(attrs = nil)
-      further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map { |attribute|
+      further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map do |attribute|
         [attribute, send(attribute)]
-      }]
+      end]
 
       defaults = site.frontmatter_defaults.all(relative_path, type)
       Utils.deep_merge_hashes defaults, Utils.deep_merge_hashes(data, further_data)
@@ -129,11 +136,14 @@ module Bunto
     #
     # Returns the type of self.
     def type
-      if is_a?(Draft)
-        :drafts
-      elsif is_a?(Post)
-        :posts
-      elsif is_a?(Page)
+      if is_a?(Page)
+        :pages
+      end
+    end
+
+    # returns the owner symbol for hook triggering
+    def hook_owner
+      if is_a?(Page)
         :pages
       end
     end
@@ -151,7 +161,7 @@ module Bunto
     #
     # Returns true if extname == .sass or .scss, false otherwise.
     def sass_file?
-      %w[.sass .scss].include?(ext)
+      %w(.sass .scss).include?(ext)
     end
 
     # Determine whether the document is a CoffeeScript file.
@@ -200,12 +210,14 @@ module Bunto
       used = Set.new([layout])
 
       while layout
-        payload = Utils.deep_merge_hashes(payload, {"content" => output, "page" => layout.data})
+        Bunto.logger.debug "Rendering Layout:", path
+        payload["content"] = output
+        payload["layout"]  = Utils.deep_merge_hashes(payload["layout"] || {}, layout.data)
 
         self.output = render_liquid(layout.content,
                                          payload,
                                          info,
-                                         File.join(site.config['layouts'], layout.name))
+                                         File.join(site.config['layouts_dir'], layout.name))
 
         # Add layout to dependency tree
         site.regenerator.add_dependency(
@@ -225,24 +237,34 @@ module Bunto
 
     # Add any necessary layouts to this convertible document.
     #
-    # payload - The site payload Hash.
+    # payload - The site payload Drop or Hash.
     # layouts - A Hash of {"name" => "layout"}.
     #
     # Returns nothing.
     def do_layout(payload, layouts)
-      info = { :filters => [Bunto::Filters], :registers => { :site => site, :page => payload['page'] } }
+      Bunto.logger.debug "Rendering:", self.relative_path
+
+      Bunto.logger.debug "Pre-Render Hooks:", self.relative_path
+      Bunto::Hooks.trigger hook_owner, :pre_render, self, payload
+      info = { :filters => [Bunto::Filters], :registers => { :site => site, :page => payload["page"] } }
 
       # render and transform content (this becomes the final content of the object)
       payload["highlighter_prefix"] = converters.first.highlighter_prefix
       payload["highlighter_suffix"] = converters.first.highlighter_suffix
 
-      self.content = render_liquid(content, payload, info) if render_with_liquid?
+      if render_with_liquid?
+        Bunto.logger.debug "Rendering Liquid:", self.relative_path
+        self.content = render_liquid(content, payload, info, path)
+      end
+      Bunto.logger.debug "Rendering Markup:", self.relative_path
       self.content = transform
 
       # output keeps track of what will finally be written
       self.output = content
 
       render_all_layouts(layouts, payload, info) if place_in_layout?
+      Bunto.logger.debug "Post-Render Hooks:", self.relative_path
+      Bunto::Hooks.trigger hook_owner, :post_render, self
     end
 
     # Write the generated page file to the destination directory.
@@ -256,6 +278,7 @@ module Bunto
       File.open(path, 'wb') do |f|
         f.write(output)
       end
+      Bunto::Hooks.trigger hook_owner, :post_write, self
     end
 
     # Accessor for data properties by Liquid.
