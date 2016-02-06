@@ -24,12 +24,7 @@ module Bunto
     #
     # Returns nothing.
     def require_gems
-      site.gems.each do |gem|
-        if plugin_allowed?(gem)
-          Bunto.logger.debug("PluginManager:", "Requiring #{gem}")
-          require gem
-        end
-      end
+      Bunto::External.require_with_graceful_fail(site.gems.select { |gem| plugin_allowed?(gem) })
     end
 
     def self.require_from_bundler
@@ -70,10 +65,9 @@ module Bunto
     # Returns nothing.
     def require_plugin_files
       unless site.safe
-        plugins_path.each do |plugins|
-          Dir[File.join(plugins, "**", "*.rb")].sort.each do |f|
-            require f
-          end
+        plugins_path.each do |plugin_search_path|
+          plugin_files = Utils.safe_glob(plugin_search_path, File.join("**", "*.rb"))
+          Bunto::External.require_with_graceful_fail(plugin_files)
         end
       end
     end
@@ -82,21 +76,20 @@ module Bunto
     #
     # Returns an Array of plugin search paths
     def plugins_path
-      if (site.config['plugins'] == Bunto::Configuration::DEFAULTS['plugins'])
-        [site.in_source_dir(site.config['plugins'])]
+      if site.config['plugins_dir'] == Bunto::Configuration::DEFAULTS['plugins_dir']
+        [site.in_source_dir(site.config['plugins_dir'])]
       else
-        Array(site.config['plugins']).map { |d| File.expand_path(d) }
+        Array(site.config['plugins_dir']).map { |d| File.expand_path(d) }
       end
     end
 
     def deprecation_checks
       pagination_included = (site.config['gems'] || []).include?('bunto-paginate') || defined?(Bunto::Paginate)
       if site.config['paginate'] && !pagination_included
-        Bunto::Deprecator.deprecation_message "You appear to have pagination " +
-          "turned on, but you haven't included the `bunto-paginate` gem. " +
+        Bunto::Deprecator.deprecation_message "You appear to have pagination " \
+          "turned on, but you haven't included the `bunto-paginate` gem. " \
           "Ensure you have `gems: [bunto-paginate]` in your configuration file."
       end
     end
-
   end
 end
