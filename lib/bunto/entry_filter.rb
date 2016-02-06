@@ -47,7 +47,7 @@ module Bunto
 
     def excluded?(entry)
       excluded = glob_include?(site.exclude, relative_to_source(entry))
-      Bunto.logger.debug "EntryFilter:", "excluded?(#{relative_to_source(entry)}) ==> #{excluded}"
+      Bunto.logger.debug "EntryFilter:", "excluded #{relative_to_source(entry)}" if excluded
       excluded
     end
 
