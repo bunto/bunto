@@ -15,6 +15,17 @@ module Bunto
       converter.convert(input)
     end
 
+    # Convert a Markdown string into HTML output.
+    #
+    # input - The Markdown String to convert.
+    #
+    # Returns the HTML formatted String.
+    def smartify(input)
+      site = @context.registers[:site]
+      converter = site.find_converter_instance(Bunto::Converters::SmartyPants)
+      converter.convert(input)
+    end
+
     # Convert a Sass string into CSS output.
     #
     # input - The Sass String to convert.
@@ -45,7 +56,7 @@ module Bunto
     # Returns the given filename or title as a lowercase URL String.
     # See Utils.slugify for more detail.
     def slugify(input, mode=nil)
-      Utils.slugify(input, mode)
+      Utils.slugify(input, :mode => mode)
     end
 
     # Format a date in short format e.g. "27 Jan 2011".
@@ -194,7 +205,7 @@ module Bunto
         input.group_by do |item|
           item_property(item, property).to_s
         end.inject([]) do |memo, i|
-          memo << {"name" => i.first, "items" => i.last}
+          memo << { "name" => i.first, "items" => i.last }
         end
       else
         input
@@ -211,7 +222,7 @@ module Bunto
     def where(input, property, value)
       return input unless input.is_a?(Enumerable)
       input = input.values if input.is_a?(Hash)
-      input.select { |object| item_property(object, property) == value }
+      input.select { |object| item_property(object, property).to_s == value.to_s }
     end
 
     # Sort an array of objects
@@ -223,7 +234,7 @@ module Bunto
     # Returns the filtered array of objects
     def sort(input, property = nil, nils = "first")
       if input.nil?
-          raise ArgumentError.new("Cannot sort a null object.")
+        raise ArgumentError.new("Cannot sort a null object.")
       end
       if property.nil?
         input.sort
@@ -234,11 +245,11 @@ module Bunto
         when nils == "last"
           order = + 1
         else
-          raise ArgumentError.new("Invalid nils order: " +
+          raise ArgumentError.new("Invalid nils order: " \
             "'#{nils}' is not a valid nils order. It must be 'first' or 'last'.")
         end
 
-        input.sort { |apple, orange|
+        input.sort do |apple, orange|
           apple_property = item_property(apple, property)
           orange_property = item_property(orange, property)
 
@@ -249,7 +260,7 @@ module Bunto
           else
             apple_property <=> orange_property
           end
-        }
+        end
       end
     end
 
@@ -279,6 +290,16 @@ module Bunto
       new_ary = array.dup
       new_ary.unshift(input)
       new_ary
+    end
+
+    def sample(input, num = 1)
+      return input unless input.respond_to?(:sample)
+      n = num.to_i rescue 1
+      if n == 1
+        input.sample
+      else
+        input.sample(n)
+      end
     end
 
     # Convert an object into its String representation for debugging
@@ -327,7 +348,7 @@ module Bunto
         pairs = item.map { |k, v| as_liquid([k, v]) }
         Hash[pairs]
       when Array
-        item.map{ |i| as_liquid(i) }
+        item.map { |i| as_liquid(i) }
       else
         if item.respond_to?(:to_liquid)
           liquidated = item.to_liquid
