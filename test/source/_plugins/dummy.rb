@@ -1,4 +1,4 @@
-module Jekyll
+module Bunto
   class Dummy < Generator
     priority :high
 
