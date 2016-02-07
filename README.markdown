@@ -5,10 +5,12 @@
 
 [![Gem Version](https://img.shields.io/gem/v/bunto.svg)][ruby-gems]
 [![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=master)][travis]
+<!--
 [![Test Coverage](https://codeclimate.com/github/bunto/bunto/badges/coverage.svg)][coverage]
 [![Code Climate](https://codeclimate.com/github/bunto/bunto/badges/gpa.svg)][codeclimate]
 [![Dependency Status](https://gemnasium.com/bunto/bunto.svg)][gemnasium]
 [![Security](https://hakiri.io/github/bunto/bunto/master.svg)][hakiri]
+-->
 
 [ruby-gems]: https://rubygems.org/gems/bunto
 <!--
@@ -16,8 +18,8 @@
 [codeclimate]: https://codeclimate.com/github/bunto/bunto
 [coverage]: https://codeclimate.com/github/bunto/bunto/coverage
 [hakiri]: https://hakiri.io/github/bunto/bunto/master
-[travis]: https://travis-ci.org/bunto/bunto
 -->
+[travis]: https://travis-ci.org/bunto/bunto
 
 By Suriyaa Kudo, Tom Preston-Werner and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
 
