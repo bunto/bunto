@@ -1,5 +1,18 @@
 # Travis CI
-before_script: bundle update
+before_script:
+  - chmod +x script/cibuild
+  - chmod +x script/bootstrap
+  - chmod +x script/branding
+  - chmod +x script/cibuild
+  - chmod +x script/console
+  - chmod +x script/cucumber
+  - chmod +x script/proof
+  - chmod +x script/rubyprof
+  - chmod +x script/stackprof
+  - chmod +x script/test
+  - chmod +x script/travis
+  - chmod +x script/vendor-mimes
+  - bundle update
 bundler_args: --without benchmark:site:development
 script: script/cibuild
 cache: bundler
