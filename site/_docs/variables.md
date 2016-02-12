@@ -4,9 +4,9 @@ title: Variables
 permalink: /docs/variables/
 ---
 
-Jekyll traverses your site looking for files to process. Any files with [YAML
+Bunto traverses your site looking for files to process. Any files with [YAML
 front matter](../frontmatter/) are subject to processing. For each of these
-files, Jekyll makes a variety of data available via the [Liquid templating
+files, Bunto makes a variety of data available via the [Liquid templating
 system](https://github.com/Shopify/liquid/wiki). The
 following is a reference of the available data.
 
@@ -78,7 +78,7 @@ following is a reference of the available data.
       <td><p><code>site.time</code></p></td>
       <td><p>
 
-        The current time (when you run the <code>jekyll</code> command).
+        The current time (when you run the <code>bunto</code> command).
 
       </p></td>
     </tr>
@@ -105,7 +105,7 @@ following is a reference of the available data.
         If the page being processed is a Post, this contains a list of up to ten
         related Posts. By default, these are the ten most recent posts.
         For high quality but slow to compute results, run the
-        <code>jekyll</code> command with the <code>--lsi</code> (latent semantic
+        <code>bunto</code> command with the <code>--lsi</code> (latent semantic
         indexing) option. Also note GitHub Pages does not support the <code>lsi</code> option when generating sites.
 
       </p></td>
@@ -115,7 +115,7 @@ following is a reference of the available data.
       <td><p>
 
         A list of all <a href="/docs/static-files/">static files</a> (i.e.
-        files not processed by Jekyll's converters or the Liquid renderer).
+        files not processed by Bunto's converters or the Liquid renderer).
         Each file has three properties: <code>path</code>,
         <code>modified_time</code> and <code>extname</code>.
 
@@ -185,9 +185,9 @@ following is a reference of the available data.
         <code>_config.yml</code> are available through the <code>site</code>
         variable. For example, if you have <code>url: http://mysite.com</code>
         in your configuration file, then in your Posts and Pages it will be
-        stored in <code>site.url</code>. Jekyll does not parse changes to
+        stored in <code>site.url</code>. Bunto does not parse changes to
         <code>_config.yml</code> in <code>watch</code> mode, you must restart
-        Jekyll to see changes to variables.
+        Bunto to see changes to variables.
 
       </p></td>
     </tr>

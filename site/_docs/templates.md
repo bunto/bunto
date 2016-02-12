@@ -4,10 +4,10 @@ title: Templates
 permalink: /docs/templates/
 ---
 
-Jekyll uses the [Liquid](https://github.com/Shopify/liquid/wiki) templating language to
+Bunto uses the [Liquid](https://github.com/Shopify/liquid/wiki) templating language to
 process templates. All of the standard Liquid [tags](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers#tags) and
 [filters](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers#standard-filters) are
-supported. Jekyll even adds a few handy filters and tags of its own to make
+supported. Bunto even adds a few handy filters and tags of its own to make
 common tasks easier.
 
 ## Filters
@@ -296,7 +296,7 @@ your site, you can use the `include` tag.
 {% raw %}{% include footer.html %}{% endraw %}
 {% endhighlight %}
 
-Jekyll expects all include files to be placed in an `_includes` directory at the
+Bunto expects all include files to be placed in an `_includes` directory at the
 root of your source directory. This will embed the contents of
 `<source>/_includes/footer.html` into the calling file.
 
@@ -342,9 +342,9 @@ such as using variables.
 
 ### Code snippet highlighting
 
-Jekyll has built in support for syntax highlighting of over 60 languages
+Bunto has built in support for syntax highlighting of over 60 languages
 thanks to [Rouge](http://rouge.jneen.net). Rouge is the default highlighter
-in Jekyll 3 and above. To use it in Jekyll 2, set `highlighter` to `rouge`
+in Bunto 3 and above. To use it in Bunto 2, set `highlighter` to `rouge`
 and ensure the `rouge` gem is installed properly.
 
 Alternatively, you can use [Pygments](http://pygments.org) to highlight
@@ -443,9 +443,9 @@ You may also optionally specify the filename in the gist to display:
 
 {% highlight text %}
 {% raw %}
-{% gist parkr/931c1c8d465a04042403 jekyll-private-gist.markdown %}
+{% gist parkr/931c1c8d465a04042403 bunto-private-gist.markdown %}
 {% endraw %}
 {% endhighlight %}
 
 To use the `gist` tag, you'll need to add the
-[jekyll-gist](https://github.com/jekyll/jekyll-gist) gem to your project.
+[bunto-gist](https://github.com/bunto/bunto-gist) gem to your project.

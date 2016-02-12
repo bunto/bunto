@@ -5,8 +5,8 @@ permalink: /docs/pages/
 ---
 
 In addition to [writing posts](../posts/), another thing you may want to do
-with your Jekyll site is create static pages. By taking advantage of the way
-Jekyll copies files and directories, this is easy to do.
+with your Bunto site is create static pages. By taking advantage of the way
+Bunto copies files and directories, this is easy to do.
 
 ## Homepage
 
@@ -14,7 +14,7 @@ Just about every web server configuration you come across will look for an HTML
 file called `index.html` (by convention) in the site's root folder and display
 that as the homepage. Unless the web server you’re using is configured to look
 for some different filename as the default, this file will turn into the
-homepage of your Jekyll-generated site.
+homepage of your Bunto-generated site.
 
 <div class="note">
   <h5>ProTip™: Use layouts on your homepage</h5>
@@ -63,7 +63,7 @@ and associated URLs might look like:
 
 There is nothing wrong with the above method. However, some people like to keep
 their URLs free from things like filename extensions. To achieve clean URLs for
-pages using Jekyll, you simply need to create a folder for each top-level page
+pages using Bunto, you simply need to create a folder for each top-level page
 you want, and then place an `index.html` file in each page’s folder. This way
 the page URL ends up being the folder name, and the web server will serve up
 the respective `index.html` file. Here's an example of what this structure

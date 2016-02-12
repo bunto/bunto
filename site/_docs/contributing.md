@@ -4,10 +4,10 @@ title: Contributing
 permalink: /docs/contributing/
 ---
 
-So you've got an awesome idea to throw into Jekyll. Great! Please keep the
+So you've got an awesome idea to throw into Bunto. Great! Please keep the
 following in mind:
 
-* **Use https://talk.jekyllrb.com for non-technical or indirect Jekyll questions that are not bugs.**
+* **Use https://talk.bunto.isc for non-technical or indirect Bunto questions that are not bugs.**
 * **Contributions will not be accepted without tests or necessary documentation updates.**
 * If you're creating a small fix or patch to an existing feature, just a simple
   test will do. Please stay in the confines of the current test suite and use
@@ -17,8 +17,8 @@ following in mind:
   [Cucumber](https://github.com/cucumber/cucumber/) feature and reuse steps
   where appropriate. Also, whipping up some documentation in your fork's `site`
   would be appreciated, and once merged it will be transferred over to the main
-  `site`, jekyllrb.com.
-* If your contribution changes any Jekyll behavior, make sure to update the
+  `site`, bunto.isc.
+* If your contribution changes any Bunto behavior, make sure to update the
   documentation. It lives in `site/_docs`. If the docs are missing information,
   please feel free to add it in. Great docs make a great project!
 * Please follow the [GitHub Ruby Styleguide](https://github.com/styleguide/ruby)
@@ -42,7 +42,7 @@ following in mind:
 Test Dependencies
 -----------------
 
-To run the test suite and build the gem you'll need to install Jekyll's
+To run the test suite and build the gem you'll need to install Bunto's
 dependencies. Simply run this command to get all set up:
 
 <figure class="highlight"><pre><code>$ script/bootstrap</code></pre></figure>
@@ -69,30 +69,30 @@ Workflow
 Here's the most direct way to get your work merged into the project:
 
 * Fork the project.
-* Clone down your fork ( `git clone git@github.com:[username]/jekyll.git` ).
+* Clone down your fork ( `git clone git@github.com:[username]/bunto.git` ).
 * Create a topic branch to contain your change ( `git checkout -b my_awesome_feature` ).
 * Hack away, add tests. Not necessarily in that order.
 * Make sure everything still passes by running `script/cibuild`.
 * If necessary, rebase your commits into logical chunks, without errors.
 * Push the branch up ( `git push origin my_awesome_feature` ).
-* Create a pull request against jekyll/jekyll and describe what your change
+* Create a pull request against bunto/bunto and describe what your change
   does and the why you think it should be merged.
 
 Updating Documentation
 ----------------------
 
-We want the Jekyll documentation to be the best it can be. We've
+We want the Bunto documentation to be the best it can be. We've
 open-sourced our docs and we welcome any pull requests if you find it
 lacking.
 
-You can find the documentation for jekyllrb.com in the
+You can find the documentation for bunto.isc in the
 [site]({{ site.repository }}/tree/master/site) directory of
-Jekyll's repo on GitHub.com.
+Bunto's repo on GitHub.com.
 
 All documentation pull requests should be directed at `master`. Pull
 requests directed at another branch will not be accepted.
 
-The [Jekyll wiki]({{ site.repository }}/wiki) on GitHub
+The [Bunto wiki]({{ site.repository }}/wiki) on GitHub
 can be freely updated without a pull request as all GitHub users have access.
 
 If you want to add your plugin to the [list of plugins](/docs/plugins/#available-plugins),
@@ -104,7 +104,7 @@ Gotchas
 -------
 
 * Please do not bump the gem version in your pull requests.
-* Try to keep your patch(es) based from the latest commit on jekyll/jekyll.
+* Try to keep your patch(es) based from the latest commit on bunto/bunto.
   The easier it is to apply your work, the less work the maintainers have to do,
   which is always a good thing.
 * Please don't tag your GitHub issue with [fix], [feature], etc. The maintainers
@@ -116,7 +116,7 @@ Finally...
 <div class="note">
   <h5>Let us know what could be better!</h5>
   <p>
-    Both using and hacking on Jekyll should be fun, simple, and easy, so if for
+    Both using and hacking on Bunto should be fun, simple, and easy, so if for
     some reason you find it’s a pain, please <a
     href="{{ site.repository }}/issues/new">create an issue</a> on
     GitHub describing your experience so we can make it better.

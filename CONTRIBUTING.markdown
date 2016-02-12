@@ -84,7 +84,7 @@ The [Bunto wiki](https://github.com/bunto/bunto/wiki) on GitHub
 can be freely updated without a pull request as all GitHub users have access.
 
 If you want to add your plugin to the
-[list of plugins](http:///docs.bunto.isc/plugins/#available-plugins),
+[list of plugins](http:///bunto.github.io/docs/plugins/#available-plugins),
 please submit a pull request modifying the
 [plugins page source file](site/_docs/plugins.md) by adding a
 link to your plugin under the proper subheading depending upon its type.

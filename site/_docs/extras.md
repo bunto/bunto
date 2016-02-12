@@ -4,8 +4,8 @@ title: Extras
 permalink: /docs/extras/
 ---
 
-There are a number of (optional) extra features that Jekyll supports that you
-may want to install, depending on how you plan to use Jekyll.
+There are a number of (optional) extra features that Bunto supports that you
+may want to install, depending on how you plan to use Bunto.
 
 ## Math Support
 
@@ -15,7 +15,7 @@ Kramdown comes with optional support for LaTeX to PNG rendering via [MathJax](ht
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 {% endhighlight %}
 
-For more information about getting started, check out [this excellent blog post](http://gastonsanchez.com/opinion/2014/02/16/Mathjax-with-jekyll/).
+For more information about getting started, check out [this excellent blog post](http://gastonsanchez.com/opinion/2014/02/16/Mathjax-with-bunto/).
 
 ## Alternative Markdown Processors
 

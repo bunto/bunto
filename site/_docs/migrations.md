@@ -4,6 +4,6 @@ title: Blog migrations
 permalink: /docs/migrations/
 ---
 
-If you’re switching to Jekyll from another blogging system, Jekyll’s importers
-can help you with the move. To learn more about importing your site to Jekyll,
-visit our [`jekyll-import` docs site](http://import.jekyllrb.com/docs/home/).
+If you’re switching to Bunto from another blogging system, Bunto’s importers
+can help you with the move. To learn more about importing your site to Bunto,
+visit our [`bunto-import` docs site](http://bunto.github.io/import/docs/home/).

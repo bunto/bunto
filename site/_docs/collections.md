@@ -19,7 +19,7 @@ namespace.
 
 ## Using Collections
 
-### Step 1: Tell Jekyll to read in your collection
+### Step 1: Tell Bunto to read in your collection
 
 Add the following to your site's `_config.yml` file, replacing `my_collection`
 with the name of your collection:
@@ -53,7 +53,7 @@ defaults:
 Create a corresponding folder (e.g. `<source>/_my_collection`) and add
 documents. YAML Front Matter is read in as data if it exists, and everything
 after it is stuck in the Document's `content` attribute. If no YAML Front
-Matter is provided, Jekyll will not generate the file in your collection.
+Matter is provided, Bunto will not generate the file in your collection.
 
 <div class="note info">
   <h5>Be sure to name your directories correctly</h5>
@@ -65,7 +65,7 @@ your <code>_config.yml</code> file, with the addition of the preceding <code>_</
 
 ### Step 3: Optionally render your collection's documents into independent files
 
-If you'd like Jekyll to create a public-facing, rendered version of each
+If you'd like Bunto to create a public-facing, rendered version of each
 document in your collection, set the `output` key to `true` in your collection
 metadata in your `_config.yml`:
 
@@ -266,7 +266,7 @@ file, each document has the following attributes:
       <td>
         <p>
           The (unrendered) content of the document. If no YAML Front Matter is
-          provided, Jekyll will not generate the file in your collection. If
+          provided, Bunto will not generate the file in your collection. If
           YAML Front Matter is used, then this is all the contents of the file
           after the terminating
           `---` of the front matter.

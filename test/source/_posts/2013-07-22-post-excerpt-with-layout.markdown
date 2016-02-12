@@ -10,7 +10,7 @@ tags:
 - first
 - second
 - third
-- jekyllrb.com
+- bunto.github.io
 ---
 
 First paragraph with [link ref][link].
@@ -21,4 +21,4 @@ Second paragraph
 
 Third paragraph
 
-[link]: http://www.jekyllrb.com/
+[link]: http://bunto.github.io/

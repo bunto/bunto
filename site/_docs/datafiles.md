@@ -4,11 +4,11 @@ title: Data Files
 permalink: /docs/datafiles/
 ---
 
-In addition to the [built-in variables](../variables/) available from Jekyll,
+In addition to the [built-in variables](../variables/) available from Bunto,
 you can specify your own custom data that can be accessed via the [Liquid
 templating system](https://wiki.github.com/shopify/liquid/liquid-for-designers).
 
-Jekyll supports loading data from [YAML](http://yaml.org/), [JSON](http://www.json.org/),
+Bunto supports loading data from [YAML](http://yaml.org/), [JSON](http://www.json.org/),
 and [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) files located in the `_data` directory.
 Note that CSV files *must* contain a header row.
 
@@ -20,7 +20,7 @@ Plugins/themes can also leverage Data Files to set configuration variables.
 ## The Data Folder
 
 As explained on the [directory structure](../structure/) page, the `_data`
-folder is where you can store additional data for Jekyll to use when generating
+folder is where you can store additional data for Bunto to use when generating
 your site. These files must be YAML files
 (using either the `.yml`, `.yaml`, `.json` or `csv` extension) and they will be
 accessible via `site.data`.
@@ -28,7 +28,7 @@ accessible via `site.data`.
 ## Example: List of members
 
 Here is a basic example of using Data Files to avoid copy-pasting large chunks
-of code in your Jekyll templates:
+of code in your Bunto templates:
 
 In `_data/members.yml`:
 
@@ -78,11 +78,11 @@ level will be added to a variable's namespace. The example below shows how
 GitHub organizations could be defined separately in a file under the `orgs`
 folder:
 
-In `_data/orgs/jekyll.yml`:
+In `_data/orgs/bunto.yml`:
 
 {% highlight yaml %}
-username: jekyll
-name: Jekyll
+username: bunto
+name: Bunto
 members:
   - name: Tom Preston-Werner
     github: mojombo

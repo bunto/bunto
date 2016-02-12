@@ -4,12 +4,12 @@ title: Troubleshooting
 permalink: /docs/troubleshooting/
 ---
 
-If you ever run into problems installing or using Jekyll, here are a few tips
+If you ever run into problems installing or using Bunto, here are a few tips
 that might be of help. If the problem you’re experiencing isn’t covered below,
 **please [check out our other help resources](/help/)** as well.
 
 - [Installation Problems](#installation-problems)
-- [Problems running Jekyll](#problems-running-jekyll)
+- [Problems running Bunto](#problems-running-bunto)
 - [Base-URL Problems](#base-url-problems)
 - [Configuration problems](#configuration-problems)
 - [Markup Problems](#markup-problems)
@@ -31,7 +31,7 @@ sudo yum install ruby-devel
 {% endhighlight %}
 
 On [NearlyFreeSpeech](https://www.nearlyfreespeech.net/) you need to run the
-following commands before installing Jekyll:
+following commands before installing Bunto:
 
 {% highlight bash %}
 export GEM_HOME=/home/private/gems
@@ -66,7 +66,7 @@ which may allow you to install native gems using this command (again using
 `sudo` only if necessary):
 
 {% highlight bash %}
-sudo gem install jekyll
+sudo gem install bunto
 {% endhighlight %}
 
 Note that upgrading Mac OS X does not automatically upgrade Xcode itself
@@ -75,7 +75,7 @@ Xcode.app can interfere with the command line tools downloaded above. If
 you run into this issue, upgrade Xcode and install the upgraded Command
 Line Tools.
 
-### Jekyll &amp; Mac OS X 10.11
+### Bunto &amp; Mac OS X 10.11
 
 With the introduction of System Integrity Protection, several directories
 that were previously writable are now considered system locations and are no
@@ -84,7 +84,7 @@ up and running. One option is to change the location where the gem will be
 installed (again using `sudo` only if necessary):
 
 {% highlight bash %}
-sudo gem install -n /usr/local/bin jekyll
+sudo gem install -n /usr/local/bin bunto
 {% endhighlight %}
 
 Alternatively, Homebrew can be installed and used to set up Ruby. This can be
@@ -102,7 +102,7 @@ brew install ruby
 
 Advanced users (with more complex needs) may find it helpful to choose one of a
 number of Ruby version managers ([RVM][], [rbenv][], [chruby][], [etc][].) in
-which to install Jekyll.
+which to install Bunto.
 
 [RVM]: https://rvm.io
 [rbenv]: http://rbenv.org
@@ -124,28 +124,28 @@ launchctl setenv PATH "/usr/local/bin:$PATH"
 
 Either of these approaches are useful because `/usr/local` is considered a
 "safe" location on systems which have SIP enabled, they avoid potential
-conflicts with the version of Ruby included by Apple, and it keeps Jekyll and
+conflicts with the version of Ruby included by Apple, and it keeps Bunto and
 its dependencies in a sandboxed environment. This also has the added
 benefit of not requiring `sudo` when you want to add or remove a gem.
 
 ### Could not find a JavaScript runtime. (ExecJS::RuntimeUnavailable)
 
-This error can occur during the installation of `jekyll-coffeescript` when
+This error can occur during the installation of `bunto-coffeescript` when
 you don't have a proper JavaScript runtime. To solve this, either install
 `execjs` and `therubyracer` gems, or install `nodejs`. Check out
-[issue #2327](https://github.com/jekyll/jekyll/issues/2327) for more info.
+[issue #2327](https://github.com/bunto/bunto/issues/2327) for more info.
 
-## Problems running Jekyll
+## Problems running Bunto
 
 On Debian or Ubuntu, you may need to add `/var/lib/gems/1.8/bin/` to your path
-in order to have the `jekyll` executable be available in your Terminal.
+in order to have the `bunto` executable be available in your Terminal.
 
 ## Base-URL Problems
 
 If you are using base-url option like:
 
 {% highlight bash %}
-jekyll serve --baseurl '/blog'
+bunto serve --baseurl '/blog'
 {% endhighlight %}
 
 … then make sure that you access the site at:
@@ -175,7 +175,7 @@ specified elsewhere.
 
 ## Markup Problems
 
-The various markup engines that Jekyll uses may have some issues. This
+The various markup engines that Bunto uses may have some issues. This
 page will document them to help others who may run into the same
 problems.
 
@@ -191,8 +191,8 @@ following error:
 
 ### Excerpts
 
-Since v1.0.0, Jekyll has had automatically-generated post excerpts. Since
-v1.1.0, Jekyll also passes these excerpts through Liquid, which can cause
+Since v1.0.0, Bunto has had automatically-generated post excerpts. Since
+v1.1.0, Bunto also passes these excerpts through Liquid, which can cause
 strange errors where references don't exist or a tag hasn't been closed. If you
 run into these errors, try setting `excerpt_separator: ""` in your
 `_config.yml`, or set it to some nonsense string.

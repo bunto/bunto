@@ -6,17 +6,17 @@ permalink: /docs/pagination/
 
 With many websites &mdash; especially blogs &mdash; it’s very common to
 break the main listing of posts up into smaller lists and display them over
-multiple pages. Jekyll offers a pagination plugin, so you can automatically
+multiple pages. Bunto offers a pagination plugin, so you can automatically
 generate the appropriate files and folders you need for paginated listings.
 
-For Jekyll 3, include the `jekyll-paginate` plugin in your Gemfile and in
-your `_config.yml` under `gems`. For Jekyll 2, this is standard.
+For Bunto 3, include the `bunto-paginate` plugin in your Gemfile and in
+your `_config.yml` under `gems`. For Bunto 2, this is standard.
 
 <div class="note info">
   <h5>Pagination only works within HTML files</h5>
   <p>
     Pagination does not work from within Markdown or Textile files from
-    your Jekyll site. Pagination works when called from within the HTML
+    your Bunto site. Pagination works when called from within the HTML
     file, named <code>index.html</code>, which optionally may reside in and
     produce pagination from within a subdirectory, via the
     <code>paginate_path</code> configuration value.
@@ -44,7 +44,7 @@ paginate_path: "/blog/page:num/"
 This will read in `blog/index.html`, send it each pagination page in Liquid as
 `paginator` and write the output to `blog/page:num/`, where `:num` is the
 pagination page number, starting with `2`. If a site has 12 posts and specifies
-`paginate: 5`, Jekyll will write `blog/index.html` with the first 5 posts, `blog/page2/index.html` with the next 5 posts
+`paginate: 5`, Bunto will write `blog/index.html` with the first 5 posts, `blog/page2/index.html` with the next 5 posts
 and `blog/page3/index.html` with the last 2 posts into the destination
 directory.
 
@@ -184,7 +184,7 @@ title: My Blog
 <div class="note warning">
   <h5>Beware the page one edge-case</h5>
   <p>
-    Jekyll does not generate a ‘page1’ folder, so the above code will not work
+    Bunto does not generate a ‘page1’ folder, so the above code will not work
     when a <code>/page1</code> link is produced. See below for a way to handle
     this if it’s a problem for you.
   </p>

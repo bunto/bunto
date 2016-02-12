@@ -4,7 +4,7 @@ title: Directory structure
 permalink: /docs/structure/
 ---
 
-Jekyll is, at its core, a text transformation engine. The concept behind the
+Bunto is, at its core, a text transformation engine. The concept behind the
 system is this: you give it text written in your favorite markup language, be
 that Markdown, Textile, or just plain HTML, and it churns that through a layout
 or series of layout files. Throughout that process you can tweak how you want
@@ -12,7 +12,7 @@ the site URLs to look, what data gets displayed in the layout, and more. This
 is all done through editing text files, and the static web site is the final
 product.
 
-A basic Jekyll site usually looks something like this:
+A basic Bunto site usually looks something like this:
 
 {% highlight bash %}
 .
@@ -32,7 +32,7 @@ A basic Jekyll site usually looks something like this:
 ├── _data
 |   └── members.yml
 ├── _site
-├── .jekyll-metadata
+├── .bunto-metadata
 └── index.html
 {% endhighlight %}
 
@@ -132,7 +132,7 @@ An overview of what each of these does:
       <td>
         <p>
 
-          Well-formatted site data should be placed here. The jekyll engine
+          Well-formatted site data should be placed here. The bunto engine
           will autoload all YAML files in this directory (using either the
           <code>.yml</code>, <code>.yaml</code>, <code>.json</code> or
           <code>.csv</code> formats and extensions) and they will be
@@ -151,7 +151,7 @@ An overview of what each of these does:
         <p>
 
           This is where the generated site will be placed (by default) once
-          Jekyll is done transforming it. It’s probably a good idea to add this
+          Bunto is done transforming it. It’s probably a good idea to add this
           to your <code>.gitignore</code> file.
 
         </p>
@@ -159,12 +159,12 @@ An overview of what each of these does:
     </tr>
     <tr>
       <td>
-        <p><code>.jekyll-metadata</code></p>
+        <p><code>.bunto-metadata</code></p>
       </td>
       <td>
         <p>
 
-          This helps Jekyll keep track of which files have not been modified
+          This helps Bunto keep track of which files have not been modified
           since the site was last built, and which files will need to be
           regenerated on the next build. This file will not be included in the
           generated site. It’s probably a good idea to add this to your
@@ -181,7 +181,7 @@ An overview of what each of these does:
         <p>
 
           Provided that the file has a <a href="../frontmatter/">YAML Front
-          Matter</a> section, it will be transformed by Jekyll. The same will
+          Matter</a> section, it will be transformed by Bunto. The same will
           happen for any <code>.html</code>, <code>.markdown</code>,
           <code>.md</code>, or <code>.textile</code> file in your site’s root
           directory or directories not listed above.
@@ -200,7 +200,7 @@ An overview of what each of these does:
           <code>css</code> and <code>images</code> folders,
           <code>favicon.ico</code> files, and so forth—will be copied verbatim
           to the generated site. There are plenty of <a href="../sites/">sites
-          already using Jekyll</a> if you’re curious to see how they’re laid
+          already using Bunto</a> if you’re curious to see how they’re laid
           out.
 
         </p>

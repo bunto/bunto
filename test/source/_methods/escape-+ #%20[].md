@@ -1,5 +1,5 @@
 ---
-title: "Jekyll.escape"
+title: "Bunto.escape"
 ---
 
 Signs are nice

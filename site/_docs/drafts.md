@@ -14,7 +14,7 @@ first draft:
 |   |-- a-draft-post.md
 {% endhighlight %}
 
-To preview your site with drafts, simply run `jekyll serve` or `jekyll build`
+To preview your site with drafts, simply run `bunto serve` or `bunto build`
 with the `--drafts` switch. Each will be assigned the value modification time
 of the draft file for its date, and thus you will see currently edited drafts
 as the latest posts.

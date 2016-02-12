@@ -4,15 +4,15 @@ title: Deployment methods
 permalink: /docs/deployment-methods/
 ---
 
-Sites built using Jekyll can be deployed in a large number of ways due to the static nature of the generated output. A few of the most common deployment techniques are described below.
+Sites built using Bunto can be deployed in a large number of ways due to the static nature of the generated output. A few of the most common deployment techniques are described below.
 
 ## Web hosting providers (FTP)
 
-Just about any traditional web hosting provider will let you upload files to their servers over FTP. To upload a Jekyll site to a web host using FTP, simply run the `jekyll` command and copy the generated `_site` folder to the root folder of your hosting account. This is most likely to be the `httpdocs` or `public_html` folder on most hosting providers.
+Just about any traditional web hosting provider will let you upload files to their servers over FTP. To upload a Bunto site to a web host using FTP, simply run the `bunto` command and copy the generated `_site` folder to the root folder of your hosting account. This is most likely to be the `httpdocs` or `public_html` folder on most hosting providers.
 
 ### FTP using Glynn
 
-There is a project called [Glynn](https://github.com/dmathieu/glynn), which lets you easily generate your Jekyll powered website’s static files and
+There is a project called [Glynn](https://github.com/dmathieu/glynn), which lets you easily generate your Bunto powered website’s static files and
 send them to your host through FTP.
 
 ## Self-managed web server
@@ -21,14 +21,14 @@ If you have direct access yourself to the deployment web server yourself, the pr
 
 ## Automated methods
 
-There are also a number of ways to easily automate the deployment of a Jekyll site. If you’ve got another method that isn’t listed below, we’d love it if you [contributed](../contributing/) so that everyone else can benefit too.
+There are also a number of ways to easily automate the deployment of a Bunto site. If you’ve got another method that isn’t listed below, we’d love it if you [contributed](../contributing/) so that everyone else can benefit too.
 
 ### Git post-update hook
 
-If you store your Jekyll site in [Git](http://git-scm.com/) (you are using version control, right?), it’s pretty easy to automate the
+If you store your Bunto site in [Git](http://git-scm.com/) (you are using version control, right?), it’s pretty easy to automate the
 deployment process by setting up a post-update hook in your Git
 repository, [like
-this](http://web.archive.org/web/20091223025644/http://www.taknado.com/en/2009/03/26/deploying-a-jekyll-generated-site/).
+this](http://web.archive.org/web/20091223025644/http://www.taknado.com/en/2009/03/26/deploying-a-bunto-generated-site/).
 
 ### Git post-receive hook
 
@@ -43,7 +43,7 @@ server$ cp hooks/post-receive.sample hooks/post-receive
 server$ mkdir /var/www/myrepo
 {% endhighlight %}
 
-Next, add the following lines to hooks/post-receive and be sure Jekyll is
+Next, add the following lines to hooks/post-receive and be sure Bunto is
 installed on the server:
 
 {% highlight bash %}
@@ -52,7 +52,7 @@ TMP_GIT_CLONE=$HOME/tmp/myrepo
 PUBLIC_WWW=/var/www/myrepo
 
 git clone $GIT_REPO $TMP_GIT_CLONE
-jekyll build -s $TMP_GIT_CLONE -d $PUBLIC_WWW
+bunto build -s $TMP_GIT_CLONE -d $PUBLIC_WWW
 rm -Rf $TMP_GIT_CLONE
 exit
 {% endhighlight %}
@@ -71,10 +71,10 @@ Deploying is now as easy as telling nginx or Apache to look at
 laptops$ git push deploy master
 {% endhighlight %}
 
-### Jekyll-hook
+### Bunto-hook
 
-You can also use jekyll-hook, a server that listens for webhook posts from
-GitHub, generates a website with Jekyll, and moves it somewhere to be
+You can also use bunto-hook, a server that listens for webhook posts from
+GitHub, generates a website with Bunto, and moves it somewhere to be
 published. Use this to run your own GitHub Pages-style web server.
 
 This method is useful if you need to serve your websites behind a firewall,
@@ -82,7 +82,7 @@ need extra server-level features like HTTP basic authentication or want to
 host your site directly on a CDN or file host like S3.
 
 Setup steps are fully documented
-[in the `jekyll-hook` repo](https://github.com/developmentseed/jekyll-hook).
+[in the `bunto-hook` repo](https://github.com/developmentseed/bunto-hook).
 
 ### Static Publisher
 
@@ -90,8 +90,8 @@ Setup steps are fully documented
 
 ### Rake
 
-Another way to deploy your Jekyll site is to use [Rake](https://github.com/jimweirich/rake), [HighLine](https://github.com/JEG2/highline), and
-[Net::SSH](https://github.com/net-ssh/net-ssh). A more complex example of deploying Jekyll with Rake that deals with multiple branches can be found in [Git Ready](https://github.com/gitready/gitready/blob/cdfbc4ec5321ff8d18c3ce936e9c749dbbc4f190/Rakefile).
+Another way to deploy your Bunto site is to use [Rake](https://github.com/jimweirich/rake), [HighLine](https://github.com/JEG2/highline), and
+[Net::SSH](https://github.com/net-ssh/net-ssh). A more complex example of deploying Bunto with Rake that deals with multiple branches can be found in [Git Ready](https://github.com/gitready/gitready/blob/cdfbc4ec5321ff8d18c3ce936e9c749dbbc4f190/Rakefile).
 
 
 ### scp
@@ -156,7 +156,7 @@ Don't forget the column `:` after server name!
 #### Step 4 (Optional): Exclude the transfer script from being copied to the output folder.
 
 This step is recommended if you use these instructions to deploy your site. If
-you put the `deploy` script in the root folder of your project, Jekyll will
+you put the `deploy` script in the root folder of your project, Bunto will
 copy it to the output folder. This behavior can be changed in `_config.yml`.
 
 Just add the following line:
@@ -174,15 +174,15 @@ Now it's possible to publish your website simply by running the  `deploy`
 script. If your SSH certificate  is [passphrase-protected](https://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html), you will be asked to enter it when the
 script executes.
 
-## Rack-Jekyll
+## Rack-Bunto
 
-[Rack-Jekyll](https://github.com/adaoraul/rack-jekyll/) is an easy way to deploy your site on any Rack server such as Amazon EC2, Slicehost, Heroku, and so forth. It also can run with [shotgun](https://github.com/rtomayko/shotgun/), [rackup](https://github.com/rack/rack), [mongrel](https://github.com/mongrel/mongrel), [unicorn](https://github.com/defunkt/unicorn/), and [others](https://github.com/adaoraul/rack-jekyll#readme).
+[Rack-Bunto](https://github.com/adaoraul/rack-bunto/) is an easy way to deploy your site on any Rack server such as Amazon EC2, Slicehost, Heroku, and so forth. It also can run with [shotgun](https://github.com/rtomayko/shotgun/), [rackup](https://github.com/rack/rack), [mongrel](https://github.com/mongrel/mongrel), [unicorn](https://github.com/defunkt/unicorn/), and [others](https://github.com/adaoraul/rack-bunto#readme).
 
-Read [this post](http://blog.crowdint.com/2010/08/02/instant-blog-using-jekyll-and-heroku.html) on how to deploy to Heroku using Rack-Jekyll.
+Read [this post](http://blog.crowdint.com/2010/08/02/instant-blog-using-bunto-and-heroku.html) on how to deploy to Heroku using Rack-Bunto.
 
-## Jekyll-Admin for Rails
+## Bunto-Admin for Rails
 
-If you want to maintain Jekyll inside your existing Rails app, [Jekyll-Admin](https://github.com/zkarpinski/Jekyll-Admin) contains drop in code to make this possible. See Jekyll-Admin’s [README](https://github.com/zkarpinski/Jekyll-Admin/blob/master/README) for more details.
+If you want to maintain Bunto inside your existing Rails app, [Bunto-Admin](https://github.com/zkarpinski/Bunto-Admin) contains drop in code to make this possible. See Bunto-Admin’s [README](https://github.com/zkarpinski/Bunto-Admin/blob/master/README) for more details.
 
 ## Amazon S3
 
@@ -197,17 +197,17 @@ low-volume blogs as you only pay for what you use.
 ## OpenShift
 
 If you'd like to deploy your site to an OpenShift gear, there's [a cartridge
-for that](https://github.com/openshift-cartridges/openshift-jekyll-cartridge).
+for that](https://github.com/openshift-cartridges/openshift-bunto-cartridge).
 
 <div class="note">
-  <h5>ProTip™: Use GitHub Pages for zero-hassle Jekyll hosting</h5>
-  <p>GitHub Pages are powered by Jekyll behind the scenes, so if you’re looking for a zero-hassle, zero-cost solution, GitHub Pages are a great way to <a href="../github-pages/">host your Jekyll-powered website for free</a>.</p>
+  <h5>ProTip™: Use GitHub Pages for zero-hassle Bunto hosting</h5>
+  <p>GitHub Pages are powered by Bunto behind the scenes, so if you’re looking for a zero-hassle, zero-cost solution, GitHub Pages are a great way to <a href="../github-pages/">host your Bunto-powered website for free</a>.</p>
 </div>
 
 ## Kickster
 
 Use [Kickster](http://kickster.nielsenramon.com/) for easy (automated) deploys to GitHub Pages when using unsupported plugins on GitHub Pages.
 
-Kickster provides a basic Jekyll project setup packed with web best practises and useful optimization tools increasing your overall project quality. Kickster ships with automated and worry-free deployment scripts for GitHub Pages.
+Kickster provides a basic Bunto project setup packed with web best practises and useful optimization tools increasing your overall project quality. Kickster ships with automated and worry-free deployment scripts for GitHub Pages.
 
 Setting up Kickster is very easy, just install the gem and you are good to go. More documentation can here found [here](https://github.com/nielsenramon/kickster#kickster). If you do not want to use the gem or start a new project you can just copy paste the deployment scripts for [Travis CI](https://github.com/nielsenramon/kickster/tree/master/snippets/travis) or [Circle CI](https://github.com/nielsenramon/kickster#automated-deployment-with-circle-ci).

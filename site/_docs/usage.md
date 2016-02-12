@@ -4,20 +4,20 @@ title: Basic Usage
 permalink: /docs/usage/
 ---
 
-The Jekyll gem makes a `jekyll` executable available to you in your Terminal
+The Bunto gem makes a `bunto` executable available to you in your Terminal
 window. You can use this command in a number of ways:
 
 {% highlight bash %}
-$ jekyll build
+$ bunto build
 # => The current folder will be generated into ./_site
 
-$ jekyll build --destination <destination>
+$ bunto build --destination <destination>
 # => The current folder will be generated into <destination>
 
-$ jekyll build --source <source> --destination <destination>
+$ bunto build --source <source> --destination <destination>
 # => The <source> folder will be generated into <destination>
 
-$ jekyll build --watch
+$ bunto build --watch
 # => The current folder will be generated into ./_site,
 #    watched for changes, and regenerated automatically.
 {% endhighlight %}
@@ -49,36 +49,36 @@ $ jekyll build --watch
   </p>
 </div>
 
-Jekyll also comes with a built-in development server that will allow you to
+Bunto also comes with a built-in development server that will allow you to
 preview what the generated site will look like in your browser locally.
 
 {% highlight bash %}
-$ jekyll serve
+$ bunto serve
 # => A development server will run at http://localhost:4000/
 # Auto-regeneration: enabled. Use `--no-watch` to disable.
 
-$ jekyll serve --detach
-# => Same as `jekyll serve` but will detach from the current terminal.
+$ bunto serve --detach
+# => Same as `bunto serve` but will detach from the current terminal.
 #    If you need to kill the server, you can `kill -9 1234` where "1234" is the PID.
-#    If you cannot find the PID, then do, `ps aux | grep jekyll` and kill the instance. [Read more](http://unixhelp.ed.ac.uk/shell/jobz5.html).
+#    If you cannot find the PID, then do, `ps aux | grep bunto` and kill the instance. [Read more](http://unixhelp.ed.ac.uk/shell/jobz5.html).
 {% endhighlight %}
 
 <div class="note info">
   <h5>Be aware of default behavior</h5>
   <p>
-    As of version 2.4, the <code>serve</code> command will watch for changes automatically. To disable this, you can use <code>jekyll serve --no-watch</code>, which preserves the old behavior.
+    As of version 2.4, the <code>serve</code> command will watch for changes automatically. To disable this, you can use <code>bunto serve --no-watch</code>, which preserves the old behavior.
   </p>
 </div>
 
 {% highlight bash %}
-$ jekyll serve --no-watch
-# => Same as `jekyll serve` but will not watch for changes.
+$ bunto serve --no-watch
+# => Same as `bunto serve` but will not watch for changes.
 {% endhighlight %}
 
 These are just a few of the available [configuration options](../configuration/).
 Many configuration options can either be specified as flags on the command line,
 or alternatively (and more commonly) they can be specified in a `_config.yml`
-file at the root of the source directory. Jekyll will automatically use the
+file at the root of the source directory. Bunto will automatically use the
 options from this file when run. For example, if you place the following lines
 in your `_config.yml` file:
 
@@ -90,12 +90,12 @@ destination: _deploy
 Then the following two commands will be equivalent:
 
 {% highlight bash %}
-$ jekyll build
-$ jekyll build --source _source --destination _deploy
+$ bunto build
+$ bunto build --source _source --destination _deploy
 {% endhighlight %}
 
 For more about the possible configuration options, see the
 [configuration](../configuration/) page.
 
 If you're interested in browsing these docs on-the-go, install the
-`jekyll-docs` gem and run `jekyll docs` in your terminal.
+`bunto-docs` gem and run `bunto docs` in your terminal.

@@ -1,6 +1,6 @@
 require 'benchmark/ips'
 
-url = "https://isc-host.github.io/bunto.isc/"
+url = "https://bunto.github.io/"
 
 Benchmark.ips do |x|
   x.report('+=') { url += '/' }

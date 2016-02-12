@@ -3,34 +3,34 @@ layout: page
 title: Getting Help
 ---
 
-Need help with Jekyll? Try these resources.
+Need help with Bunto? Try these resources.
 
 ### [Google](https://google.com)
 
-Add **jekyll** to almost any query, and you'll find just what you need.
+Add **bunto** to almost any query, and you'll find just what you need.
 
-### [Jekyll Talk](https://talk.jekyllrb.com/)
+### [Bunto Talk](https://bunto.github.io/talk/)
 
-Jekyll Talk is our official Discourse forum. Here, users and contributors
-can ask questions and discuss all aspects of Jekyll.
+Bunto Talk is our official Discourse forum. Here, users and contributors
+can ask questions and discuss all aspects of Bunto.
 
-### [Jekyll on StackOverflow](http://stackoverflow.com/questions/tagged/jekyll)
+### [Bunto on StackOverflow](http://stackoverflow.com/questions/tagged/bunto)
 
-StackOverflow is a staple of any developer's diet. Check out the Jekyll tag
+StackOverflow is a staple of any developer's diet. Check out the Bunto tag
 on StackOverflow for an answer to your question. Not there? Ask a new
 question!
 
-### [Jekyll IRC Channel](irc:irc.freenode.net/jekyll)
+### [Bunto IRC Channel](irc:irc.freenode.net/bunto)
 
-Get live support at **#jekyll** on **irc.freenode.net**, the official
-Jekyll IRC channel.
+Get live support at **#bunto** on **irc.freenode.net**, the official
+Bunto IRC channel.
 
-### [jekyll/jekyll](https://github.com/jekyll/jekyll/issues)
+### [bunto/bunto](https://github.com/bunto/bunto/issues)
 
-Search through the issues on the main Jekyll development. Think you've
+Search through the issues on the main Bunto development. Think you've
 found a bug? File a new issue.
 
-### [@jekyllrb on Twitter](https://twitter.com/jekyllrb)
+### [@buntorb on Twitter](https://twitter.com/buntorb)
 
-The official Jekyll Twitter account. It's not checked often, so try the
+The official Bunto Twitter account. It's not checked often, so try the
 above first.

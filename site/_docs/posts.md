@@ -4,8 +4,8 @@ title: Writing posts
 permalink: /docs/posts/
 ---
 
-One of Jekyll’s best aspects is that it is “blog aware”. What does this mean,
-exactly? Well, simply put, it means that blogging is baked into Jekyll’s
+One of Bunto’s best aspects is that it is “blog aware”. What does this mean,
+exactly? Well, simply put, it means that blogging is baked into Bunto’s
 functionality. If you write articles and publish them online, this means that
 you can publish and maintain a blog simply by managing a folder of text-files on
 your computer. Compared to the hassle of configuring and maintaining databases
@@ -24,7 +24,7 @@ static site.
 ### Creating Post Files
 
 To create a new post, all you need to do is create a new file in the `_posts`
-directory. How you name files in this folder is important. Jekyll requires blog
+directory. How you name files in this folder is important. Bunto requires blog
 post files to be named according to the following format:
 
 {% highlight bash %}
@@ -52,7 +52,7 @@ file. For example, the following are examples of valid post filenames:
 ### Content Formats
 
 All blog post files must begin with [YAML Front Matter](../frontmatter/). After
-that, it's simply a matter of deciding which format you prefer. Jekyll supports
+that, it's simply a matter of deciding which format you prefer. Bunto supports
 [Markdown](http://daringfireball.net/projects/markdown/) out of the box,
 and has [myriad extensions for other formats as well](/docs/plugins/#converters-1),
 including the popular [Textile](http://redcloth.org/textile) format. These
@@ -79,7 +79,7 @@ digital assets along with your text content. While the syntax for linking to
 these resources differs between Markdown and Textile, the problem of working
 out where to store these files in your site is something everyone will face.
 
-Because of Jekyll’s flexibility, there are many solutions to how to do this.
+Because of Bunto’s flexibility, there are many solutions to how to do this.
 One common solution is to create a folder in the root of the project directory
 called something like `assets` or `downloads`, into which any images, downloads
 or other resources are placed. Then, from within any post, they can be linked
@@ -131,7 +131,7 @@ of how to create a list of links to your blog posts:
 
 Of course, you have full control over how (and where) you display your posts,
 and how you structure your site. You should read more about [how templates
-work](../templates/) with Jekyll if you want to know more.
+work](../templates/) with Bunto if you want to know more.
 
 Note that the `post` variable only exists inside the `for` loop above. If
 you wish to access the currently-rendering page/posts's variables (the
@@ -157,7 +157,7 @@ your posts:
 </ul>
 {% endhighlight %}
 
-Because Jekyll grabs the first paragraph you will not need to wrap the excerpt
+Because Bunto grabs the first paragraph you will not need to wrap the excerpt
 in `p` tags, which is already done for you. These tags can be removed with the
 following if you'd prefer:
 
@@ -193,7 +193,7 @@ html tags along with the content is not desirable.
 
 ## Highlighting code snippets
 
-Jekyll also has built-in support for syntax highlighting of code snippets using
+Bunto also has built-in support for syntax highlighting of code snippets using
 either Pygments or Rouge, and including a code snippet in any post is easy.
 Just use the dedicated Liquid tag as follows:
 

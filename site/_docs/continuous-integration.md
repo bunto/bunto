@@ -25,11 +25,11 @@ Enabling Travis builds for your GitHub repository is pretty simple:
 
 ## 2. The Test Script
 
-The simplest test script simply runs `jekyll build` and ensures that Jekyll
+The simplest test script simply runs `bunto build` and ensures that Bunto
 doesn't fail to build the site. It doesn't check the resulting site, but it
 does ensure things are built properly.
 
-When testing Jekyll output, there is no better tool than [html-proofer][2].
+When testing Bunto output, there is no better tool than [html-proofer][2].
 This tool checks your resulting site to ensure all links and images exist.
 Utilize it either with the convenient `htmlproof` command-line executable,
 or write a Ruby script which utilizes the gem.
@@ -42,7 +42,7 @@ Save the commands you want to run and succeed in a file: `./script/cibuild`
 #!/usr/bin/env bash
 set -e # halt script on error
 
-bundle exec jekyll build
+bundle exec bunto build
 bundle exec htmlproof ./_site
 {% endhighlight %}
 
@@ -75,7 +75,7 @@ check out `html-proofer`'s README file.
 
 ## 3. Configuring Your Travis Builds
 
-This file is used to configure your Travis builds. Because Jekyll is built
+This file is used to configure your Travis builds. Because Bunto is built
 with Ruby and requires RubyGems to install, we use the Ruby language build
 environment. Below is a sample `.travis.yml` file, followed by
 an explanation of each line.
@@ -85,7 +85,7 @@ an explanation of each line.
 {% highlight ruby %}
 source "https://rubygems.org"
 
-gem "jekyll"
+gem "bunto"
 gem "html-proofer"
 {% endhighlight %}
 
@@ -153,8 +153,8 @@ customizable. If your script won't change much, you can write your test
 incantation here directly:
 
 {% highlight yaml %}
-install: gem install jekyll html-proofer
-script: jekyll build && htmlproof ./_site
+install: gem install bunto html-proofer
+script: bunto build && htmlproof ./_site
 {% endhighlight %}
 
 The `script` directive can be absolutely any valid shell command.
@@ -195,7 +195,7 @@ environment variable `NOKOGIRI_USE_SYSTEM_LIBRARIES` to `true`.
   <h5>Be sure to exclude <code>vendor</code> from your
    <code>_config.yml</code></h5>
   <p>Travis bundles all gems in the <code>vendor</code> directory on its build
-   servers, which Jekyll will mistakenly read and explode on.</p>
+   servers, which Bunto will mistakenly read and explode on.</p>
 </div>
 
 {% highlight yaml %}
@@ -217,5 +217,5 @@ an entry in the `.gitignore` file to avoid it from being checked in again.
 This entire guide is open-source. Go ahead and [edit it][3] if you have a
 fix or [ask for help][4] if you run into trouble and need some help.
 
-[3]: https://github.com/jekyll/jekyll/edit/master/site/_docs/continuous-integration.md
-[4]: http://jekyllrb.com/help/
+[3]: https://github.com/bunto/bunto/edit/master/site/_docs/continuous-integration.md
+[4]: http://buntorb.com/help/

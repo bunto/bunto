@@ -5,39 +5,39 @@ permalink: /docs/home/
 redirect_from: /docs/index.html
 ---
 
-This site aims to be a comprehensive guide to Jekyll. We’ll cover topics such
+This site aims to be a comprehensive guide to Bunto. We’ll cover topics such
 as getting your site up and running, creating and managing your content,
 customizing the way your site works and looks, deploying to various
 environments, and give you some advice on participating in the future
-development of Jekyll itself.
+development of Bunto itself.
 
-## So what is Jekyll, exactly?
+## So what is Bunto, exactly?
 
-Jekyll is a simple, blog-aware, static site generator. It takes a template
+Bunto is a simple, static site generator. It takes a template
 directory containing raw text files in various formats, runs it through
 a converter (like [Markdown](http://daringfireball.net/projects/markdown/))
 and our [Liquid](https://github.com/Shopify/liquid/wiki) renderer, and
 spits out a complete, ready-to-publish static website suitable
-for serving with your favorite web server. Jekyll also happens to be the engine
-behind [GitHub Pages](http://pages.github.com), which means you can use Jekyll
+for serving with your favorite web server. Bunto also happens to be the engine
+behind [GitHub Pages](http://pages.github.com), which means you can use Bunto
 to host your project’s page, blog, or website from GitHub’s servers **for
 free**.
 
 ## Helpful Hints
 
 Throughout this guide there are a number of small-but-handy pieces of
-information that can make using Jekyll easier, more interesting, and less
+information that can make using Bunto easier, more interesting, and less
 hazardous. Here’s what to look out for.
 
 <div class="note">
-  <h5>ProTips™ help you get more from Jekyll</h5>
-  <p>These are tips and tricks that will help you be a Jekyll wizard!</p>
+  <h5>ProTips™ help you get more from Bunto</h5>
+  <p>These are tips and tricks that will help you be a Bunto wizard!</p>
 </div>
 
 <div class="note info">
   <h5>Notes are handy pieces of information</h5>
   <p>These are for the extra tidbits sometimes necessary to understand
-     Jekyll.</p>
+     Bunto.</p>
 </div>
 
 <div class="note warning">
@@ -47,7 +47,7 @@ hazardous. Here’s what to look out for.
 
 <div class="note unreleased">
   <h5>You'll see this by a feature that hasn't been released</h5>
-  <p>Some pieces of this website are for future versions of Jekyll that
+  <p>Some pieces of this website are for future versions of Bunto that
     are not yet released.</p>
 </div>
 

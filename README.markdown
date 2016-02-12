@@ -27,11 +27,11 @@ Bunto is a Web Application Framework and can be used as a static site generator 
 
 ## Getting Started
 
-* [Install](https://isc-host.github.io/bunto.isc/docs/installation/) the gem
-* Read up about its [Usage](https://isc-host.github.io/bunto.isc/docs/usage/) and [Configuration](https://isc-host.github.io/bunto.isc/docs/configuration/)
+* [Install](https://bunto.github.io/bunto/docs/installation/) the gem
+* Read up about its [Usage](https://bunto.github.io/docs/usage/) and [Configuration](https://bunto.github.io/docs/configuration/)
 * Take a gander at some existing [Sites](https://wiki.github.com/bunto/bunto/sites)
-* Fork and [Contribute](https://isc-host.github.io/bunto.isc/docs/contributing/) your own modifications
-* Have questions? Check out our official forum community [Bunto Talk](https://talk.bunto.isc/) or [`#bunto` on irc.freenode.net](https://botbot.me/freenode/bunto/)
+* Fork and [Contribute](https://bunto.github.io/docs/contributing/) your own modifications
+* Have questions? Check out our official forum community [Bunto Talk](https://bunto.github.io/talk/) or [`#bunto` on irc.freenode.net](https://botbot.me/freenode/bunto/)
 
 ## Code of Conduct
 
@@ -47,12 +47,12 @@ and we will address it as soon as possible.
 
 ## Diving In
 
-* [Migrate](http://import.bunto.isc/docs/home/) from your previous system
-* Learn how the [YAML Front Matter](https://isc-host.github.io/bunto.isc/docs/frontmatter/) works
-* Put information on your site with [Variables](https://isc-host.github.io/bunto.isc/docs/variables/)
-* Customize the [Permalinks](https://isc-host.github.io/bunto.isc/docs/permalinks/) your posts are generated with
-* Use the built-in [Liquid Extensions](https://isc-host.github.io/bunto.isc/docs/templates/) to make your life easier
-* Use custom [Plugins](https://isc-host.github.io/bunto.isc/docs/plugins/) to generate content specific to your site
+* [Migrate](http://bunto.github.io/import/docs/home/) from your previous system
+* Learn how the [YAML Front Matter](https://bunto.github.io/docs/frontmatter/) works
+* Put information on your site with [Variables](https://bunto.github.io/docs/variables/)
+* Customize the [Permalinks](https://bunto.github.io/docs/permalinks/) your posts are generated with
+* Use the built-in [Liquid Extensions](https://bunto.github.io/docs/templates/) to make your life easier
+* Use custom [Plugins](https://bunto.github.io/docs/plugins/) to generate content specific to your site
 
 ## License
 

@@ -4,7 +4,7 @@ title: Permalinks
 permalink: /docs/permalinks/
 ---
 
-Jekyll supports a flexible way to build your site’s URLs. You can specify the
+Bunto supports a flexible way to build your site’s URLs. You can specify the
 permalinks for your site through the [Configuration](../configuration/) or in
 the [YAML Front Matter](../frontmatter/) for each post. You’re free to choose
 one of the built-in styles to create your links or craft your own. The default
@@ -134,8 +134,8 @@ permalink is defined according to the format `/:categories/:year/:month/:day/:ti
       <td>
         <p>
           The specified categories for this Post. If a post has multiple
-          categories, Jekyll will create a hierarchy (e.g. <code>/category1/category2</code>).
-          Also Jekyll automatically parses out double slashes in the URLs,
+          categories, Bunto will create a hierarchy (e.g. <code>/category1/category2</code>).
+          Also Bunto automatically parses out double slashes in the URLs,
           so if no categories are present, it will ignore this.
         </p>
       </td>
@@ -147,7 +147,7 @@ permalink is defined according to the format `/:categories/:year/:month/:day/:ti
 ## Built-in permalink styles
 
 While you can specify a custom permalink style using [template variables](#template-variables),
-Jekyll also provides the following built-in styles for convenience.
+Bunto also provides the following built-in styles for convenience.
 
 <div class="mobile-side-scroller">
 <table>
@@ -273,13 +273,13 @@ Given a post named: `/2009-04-29-slap-chop.md`
 
 ## Extensionless permalinks
 
-Jekyll supports permalinks that contain neither a trailing slash nor a file
+Bunto supports permalinks that contain neither a trailing slash nor a file
 extension, but this requires additional support from the web server to properly
 serve. When using extensionless permalinks, output files written to disk will
 still have the proper file extension (typically `.html`), so the web server
 must be able to map requests without file extensions to these files.
 
-Both [GitHub Pages](../github-pages/) and the Jekyll's built-in WEBrick server
+Both [GitHub Pages](../github-pages/) and the Bunto's built-in WEBrick server
 handle these requests properly without any additional work.
 
 ### Apache
