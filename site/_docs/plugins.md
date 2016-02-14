@@ -74,18 +74,18 @@ based on your own rules.
 
 A generator is a subclass of `Bunto::Generator` that defines a `generate`
 method, which receives an instance of
-[`Bunto::Site`]({{ site.repository }}/blob/master/lib/bunto/site.rb). The
+[`Bunto::Site`]({{ site.repository }}/blob/ruby/lib/bunto/site.rb). The
 return value of `generate` is ignored.
 
 Generators run after Bunto has made an inventory of the existing content, and
 before the site is generated. Pages with YAML Front Matters are stored as
 instances of
-[`Bunto::Page`]({{ site.repository }}/blob/master/lib/bunto/page.rb)
+[`Bunto::Page`]({{ site.repository }}/blob/ruby/lib/bunto/page.rb)
 and are available via `site.pages`. Static files become instances of
-[`Bunto::StaticFile`]({{ site.repository }}/blob/master/lib/bunto/static_file.rb)
+[`Bunto::StaticFile`]({{ site.repository }}/blob/ruby/lib/bunto/static_file.rb)
 and are available via `site.static_files`. See
 [the Variables documentation page](/docs/variables/) and
-[`Bunto::Site`]({{ site.repository }}/blob/master/lib/bunto/site.rb)
+[`Bunto::Site`]({{ site.repository }}/blob/ruby/lib/bunto/site.rb)
 for more details.
 
 For instance, a generator can inject values computed at build time for template

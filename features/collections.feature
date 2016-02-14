@@ -65,7 +65,7 @@ Feature: Collections
     And I should see "label => methods" in "_site/index.html"
     And I should see "foo => bar" in "_site/index.html"
     And I should see "<p>Run your generators! default</p>" in "_site/methods/site/generate.html"
-    And I should see "<div class='title'>Tom Preston-Werner</div>" in "_site/methods/site/generate.html"
+    And I should see "<div class='title'>Suriyaa Kudo</div>" in "_site/methods/site/generate.html"
 
   Scenario: Collections specified as an array
     Given I have an "index.html" page that contains "Collections: {% for method in site.methods %}{{ method.relative_path }} {% endfor %}"

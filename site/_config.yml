@@ -11,7 +11,7 @@ excerpt_separator: ""
 repository: https://github.com/bunto/bunto
 help_url: https://github.com/bunto/bunto-help
 
-timezone: America/Los_Angeles
+timezone: Europe/Berlin
 
 collections:
   docs:
@@ -19,7 +19,7 @@ collections:
 
 name: Bunto • Simple, static sites for everybody
 description: Transform your plain text into static websites and blogs
-url: http://bunto.github.io
+url: https://bunto.github.io
 
 gems:
   - bunto-feed

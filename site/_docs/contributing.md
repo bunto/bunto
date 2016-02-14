@@ -86,10 +86,10 @@ open-sourced our docs and we welcome any pull requests if you find it
 lacking.
 
 You can find the documentation for bunto.isc in the
-[site]({{ site.repository }}/tree/master/site) directory of
+[site]({{ site.repository }}/tree/ruby/site) directory of
 Bunto's repo on GitHub.com.
 
-All documentation pull requests should be directed at `master`. Pull
+All documentation pull requests should be directed at `ruby`. Pull
 requests directed at another branch will not be accepted.
 
 The [Bunto wiki]({{ site.repository }}/wiki) on GitHub
@@ -97,7 +97,7 @@ can be freely updated without a pull request as all GitHub users have access.
 
 If you want to add your plugin to the [list of plugins](/docs/plugins/#available-plugins),
 please submit a pull request modifying the [plugins page source
-file]({{ site.repository }}/blob/master/site/_docs/plugins.md) by adding a
+file]({{ site.repository }}/blob/ruby/site/_docs/plugins.md) by adding a
 link to your plugin under the proper subheading depending upon its type.
 
 Gotchas

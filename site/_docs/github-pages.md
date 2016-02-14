@@ -87,7 +87,7 @@ name. For example, [@mojombo’s user page
 repository](https://github.com/mojombo/mojombo.github.io) has the name
 `mojombo.github.io`.
 
-Content from the `master` branch of your repository will be used to build and
+Content from the `ruby` branch of your repository will be used to build and
 publish the GitHub Pages site, so make sure your Bunto site is stored there.
 
 <div class="note info">
@@ -109,7 +109,7 @@ of your user pages subdomain, such as `username.github.io/project` (unless a
 custom domain is specified—see below).
 
 The Bunto project repository itself is a perfect example of this branch
-structure—the [master branch]({{ site.repository }}) contains the
+structure—the [ruby branch]({{ site.repository }}) contains the
 actual software project for Bunto, however the Bunto website (that you’re
 looking at right now) is contained in the [gh-pages
 branch]({{ site.repository }}/tree/gh-pages) of the same repository.

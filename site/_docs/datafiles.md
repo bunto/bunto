@@ -33,13 +33,8 @@ of code in your Bunto templates:
 In `_data/members.yml`:
 
 {% highlight yaml %}
-- name: Tom Preston-Werner
-  github: mojombo
-
-- name: Parker Moore
-  github: parkr
-
-- name: Liu Fengyun
+- name: Suriyaa Kudo
+  github: SuriyaaKudoIsc
   github: liufengyun
 {% endhighlight %}
 

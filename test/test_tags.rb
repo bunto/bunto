@@ -531,7 +531,7 @@ CONTENT
       end
 
       should "ignore parameters if unused" do
-        assert_match "<hr />\n<p>Tom Preston-Werner\ngithub.com/mojombo</p>\n", @result
+        assert_match "<hr />\n<p>Suriyaa Kudo\ngithub.com/SuriyaaKudoIsc</p>\n", @result
       end
     end
 
