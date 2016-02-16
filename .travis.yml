@@ -47,10 +47,13 @@ branches:
   only:
     - ruby
 
-#notifications:
-#  irc:
-#    template: "%{repository}#%{build_number} (%{branch}) %{message} %{build_url}"
-#    channels: irc.freenode.org#bunto
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/8e6011bb9dce6d5c0753
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
 
   email:
     recipients:
