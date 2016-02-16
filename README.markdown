@@ -1,12 +1,9 @@
 # ![Bunto](https://cloud.githubusercontent.com/assets/5073946/9288138/f4335fee-4337-11e5-9a28-068900097035.png)
-
-[![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-
 > **Bunto** is a Web Application Framework which can be used as a simple, static site generator for personal, project, or organization sites. 
 
 [![Gem Version](https://img.shields.io/gem/v/bunto.svg)][ruby-gems]
 [![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=ruby)][travis]
+[![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!--
 [![Test Coverage](https://codeclimate.com/github/bunto/bunto/badges/coverage.svg)][coverage]
 [![Code Climate](https://codeclimate.com/github/bunto/bunto/badges/gpa.svg)][codeclimate]
