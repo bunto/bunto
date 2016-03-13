@@ -15,7 +15,7 @@ end
 #
 
 group :test do
-  gem "cucumber"
+  gem "cucumber", "~> 2.1"
   gem "bunto_test_plugin"
   gem "bunto_test_plugin_malicious"
   gem "codeclimate-test-reporter"
@@ -55,6 +55,7 @@ end
 group :bunto_optional_dependencies do
   gem "toml", "~> 0.1.0"
   gem "coderay", "~> 1.1.0"
+  gem "bunto-docs", :path => '../docs' if Dir.exist?('../docs') && ENV['BUNTO_VERSION']
   gem "bunto-gist", "~> 1.0"
   gem "bunto-feed", "~> 1.0"
   gem "bunto-coffeescript", "~> 1.0"
@@ -79,5 +80,9 @@ group :site do
   if ENV["PROOF"]
     gem "html-proofer", "~> 2.0"
   end
-#  gem "bemoji"
+
+  gem "bemoji"
+  gem "bunto-sitemap"
+  gem "bunto-seo-tag", "~> 1.0"
+  gem "bunto-avatar"
 end
