@@ -95,20 +95,20 @@ class TestUtils < BuntoUnitTest
     end
 
     should "throw an error if the input contains no date data" do
-      assert_raises Bunto::Errors::FatalException do
+      assert_raises Bunto::Errors::InvalidDateError do
         Utils.parse_date("Blah")
       end
     end
 
     should "throw an error if the input is out of range" do
-      assert_raises Bunto::Errors::FatalException do
+      assert_raises Bunto::Errors::InvalidDateError do
         Utils.parse_date("9999-99-99")
       end
     end
 
     should "throw an error with the default message if no message is passed in" do
       date = "Blah this is invalid"
-      assert_raises Bunto::Errors::FatalException, "Invalid date '#{date}': Input could not be parsed." do
+      assert_raises Bunto::Errors::InvalidDateError, "Invalid date '#{date}': Input could not be parsed." do
         Utils.parse_date(date)
       end
     end
@@ -116,7 +116,7 @@ class TestUtils < BuntoUnitTest
     should "throw an error with the provided message if a message is passed in" do
       date = "Blah this is invalid"
       message = "Aaaah, the world has exploded!"
-      assert_raises Bunto::Errors::FatalException, "Invalid date '#{date}': #{message}" do
+      assert_raises Bunto::Errors::InvalidDateError, "Invalid date '#{date}': #{message}" do
         Utils.parse_date(date, message)
       end
     end
@@ -203,6 +203,14 @@ class TestUtils < BuntoUnitTest
       assert_equal "The-_config.yml-file", Utils.slugify("The _config.yml file?", mode: "pretty", cased: true)
       assert_equal "The-_config.yml-file?", Utils.slugify("The _config.yml file?", mode: "raw", cased: true)
       assert_equal "The _config.yml file?", Utils.slugify("The _config.yml file?", mode: "none", cased: true)
+    end
+  end
+
+  context "The \`Utils.titleize_slug\` method" do
+    should "capitalize all words and not drop any words" do
+      assert_equal "This Is A Long Title With Mixed Capitalization", Utils.titleize_slug("This-is-a-Long-title-with-Mixed-capitalization")
+      assert_equal "This Is A Title With Just The Initial Word Capitalized", Utils.titleize_slug("This-is-a-title-with-just-the-initial-word-capitalized")
+      assert_equal "This Is A Title With No Capitalization", Utils.titleize_slug("this-is-a-title-with-no-capitalization")
     end
   end
 
