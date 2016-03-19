@@ -59,7 +59,7 @@ group :bunto_optional_dependencies do
   gem "bunto-gist", "~> 1.0"
   gem "bunto-feed", "~> 1.0"
   gem "bunto-coffeescript", "~> 1.0"
-  gem "bunto-redirect-from", "~> 1.0"
+  gem "bunto-redirect-from", "~> 2.0"
   gem "bunto-paginate", "~> 1.0"
   gem "mime-types", "~> 3.0"
   gem "kramdown", "~> 1.9"
