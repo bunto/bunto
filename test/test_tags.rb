@@ -317,6 +317,23 @@ EOS
       end
     end
 
+    context "post content has highlight tag with linenumbers" do
+      setup do
+        fill_post <<-EOS
+This is not yet highlighted
+{% highlight php linenos %}
+test
+{% endhighlight %}
+
+This should not be highlighted, right?
+EOS
+      end
+
+      should "should stop highlighting at boundary" do
+        assert_match "<p>This is not yet highlighted</p> <div class=\"highlight\"><pre><code class=\"language-php\" data-lang=\"php\"> <table style=\"border-spacing: 0\"> <tbody> <tr> <td class=\"gutter gl\" style=\"text-align: right\"> <pre class=\"lineno\">1</pre> </td> <td class=\"code\"><pre>test<span class=\"w\"></span></pre> </td> </tr> </tbody> </table></code></pre></div> <p>This should not be highlighted, right?</p>", @result
+      end
+    end
+
     context "post content has highlight tag with preceding spaces & Windows-style newlines" do
       setup do
         fill_post "\r\n\r\n\r\n     [,1] [,2]"
@@ -470,32 +487,8 @@ title: Invalid post name linking
 {% post_url abc2008-11-21-complex %}
 CONTENT
 
-      assert_raises Bunto::Errors::PostURLError do
-        create_post(content, {
-          'permalink' => 'pretty',
-          'source' => source_dir,
-          'destination' => dest_dir,
-          'read_posts' => true
-        })
-      end
-    end
-
-    should "cause an error with a bad date" do
-      content = <<CONTENT
----
-title: Invalid post name linking
----
-
-{% post_url 2008-42-21-complex %}
-CONTENT
-
-      assert_raises Bunto::Errors::InvalidDateError do
-        create_post(content, {
-          'permalink' => 'pretty',
-          'source' => source_dir,
-          'destination' => dest_dir,
-          'read_posts' => true
-        })
+      assert_raises ArgumentError do
+        create_post(content, {'permalink' => 'pretty', 'source' => source_dir, 'destination' => dest_dir, 'read_posts' => true})
       end
     end
   end
