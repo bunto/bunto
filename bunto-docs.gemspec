@@ -6,7 +6,7 @@ require 'bunto/version'
 Gem::Specification.new do |spec|
   spec.name          = 'bunto-docs'
   spec.version       = Bunto::VERSION
-  spec.authors       = ['Parker Moore']
+  spec.authors       = ['Suriyaa Kudo']
   spec.email         = ['SuriyaaKudoIsc@users.noreply.github.com']
   spec.summary       = %q{Offline usage documentation for Bunto.}
   spec.homepage      = 'https://bit.ly/BuntoBETA'
