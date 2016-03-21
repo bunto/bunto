@@ -58,7 +58,7 @@ group :bunto_optional_dependencies do
   gem "bunto-docs", :path => '../docs' if Dir.exist?('../docs') && ENV['BUNTO_VERSION']
   gem "bunto-gist", "~> 2.0"
   gem "bunto-feed", "~> 1.0"
-  gem "bunto-coffeescript", "~> 1.0"
+  gem "bunto-coffeescript", "~> 4.0"
   gem "bunto-redirect-from", "~> 4.0"
   gem "bunto-paginate", "~> 2.0"
   gem "mime-types", "~> 3.0"
