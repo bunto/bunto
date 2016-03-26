@@ -13,6 +13,7 @@ before_script:
   - chmod +x script/test
   - chmod +x script/travis
   - chmod +x script/vendor-mimes
+  - gem install wdm -v '0.1.1'
   - bundle update
 
 bundler_args: --without benchmark:site:development
