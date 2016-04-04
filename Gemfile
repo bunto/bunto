@@ -83,6 +83,6 @@ group :site do
 
   gem "bemoji", "3.0"
   gem "bunto-sitemap"
-  gem "bunto-seo-tag", "~> 4.0"
+  gem "bunto-seo-tag", "~> 5.0"
   gem "bunto-avatar"
 end
