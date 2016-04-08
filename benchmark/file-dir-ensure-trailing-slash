@@ -2,7 +2,7 @@
 require 'benchmark/ips'
 
 # For this pull request, which changes Page#dir
-# https://github.com/bunto/bunto/pull/4403
+# https://github.com/bunto/bunto/pull/41
 
 FORWARD_SLASH = '/'.freeze
 
@@ -31,7 +31,7 @@ Benchmark.ips do |x|
   path = '/'
   x.report("pre_pr:#{path}")    { pre_pr(path) }
   x.report("pr:#{path}")        { pr(path) }
-  x.report("envygeeks:#{path}") { pr(path) }
+  x.report("SuriyaaKudoIsc:#{path}") { pr(path) }
   x.compare!
 end
 
@@ -40,7 +40,7 @@ Benchmark.ips do |x|
   path = '/some/very/very/long/path/to/a/file/i/like'
   x.report("pre_pr:#{path}")    { pre_pr(path) }
   x.report("pr:#{path}")        { pr(path) }
-  x.report("envygeeks:#{path}") { pr(path) }
+  x.report("SuriyaaKudoIsc:#{path}") { pr(path) }
   x.compare!
 end
 
@@ -49,6 +49,6 @@ Benchmark.ips do |x|
   path = '/some/very/very/long/path/to/a/file/i/like/'
   x.report("pre_pr:#{path}")    { pre_pr(path) }
   x.report("pr:#{path}")        { pr(path) }
-  x.report("envygeeks:#{path}") { pr(path) }
+  x.report("SuriyaaKudoIsc:#{path}") { pr(path) }
   x.compare!
 end
