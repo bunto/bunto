@@ -1,3 +1,10 @@
+$stdout.puts "# -------------------------------------------------------------"
+$stdout.puts "# SPECS AND TESTS ARE RUNNING WITH WARNINGS OFF."
+$stdout.puts "# SEE: https://github.com/Shopify/liquid/issues/730"
+$stdout.puts "# SEE: https://github.com/bunto/bunto/issues/39"
+$stdout.puts "# -------------------------------------------------------------"
+$VERBOSE = nil
+
 def jruby?
   defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
 end
