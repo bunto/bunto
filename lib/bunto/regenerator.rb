@@ -1,6 +1,8 @@
 module Bunto
   class Regenerator
     attr_reader :site, :metadata, :cache
+    attr_accessor :disabled
+    private :disabled, :disabled=
 
     def initialize(site)
       @site = site
@@ -115,7 +117,7 @@ module Bunto
     #
     # Returns nothing.
     def add_dependency(path, dependency)
-      return if metadata[path].nil? || @disabled
+      return if metadata[path].nil? || disabled
 
       unless metadata[path]["deps"].include? dependency
         metadata[path]["deps"] << dependency
@@ -144,8 +146,8 @@ module Bunto
     #
     # Returns a Boolean (true for disabled, false for enabled).
     def disabled?
-      @disabled = !site.incremental? if @disabled.nil?
-      @disabled
+      self.disabled = !site.incremental? if disabled.nil?
+      disabled
     end
 
     private

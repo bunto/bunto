@@ -148,7 +148,7 @@ module Bunto
       Bunto.logger.info "Configuration file:", file
       next_config
     rescue SystemCallError
-      if @default_config_file
+      if @default_config_file ||= nil
         Bunto.logger.warn "Configuration file:", "none"
         {}
       else

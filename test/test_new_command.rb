@@ -81,7 +81,7 @@ class TestNewCommand < BuntoUnitTest
     should 'force created folder' do
       capture_stdout { Bunto::Commands::New.process(@args) }
       output = capture_stdout { Bunto::Commands::New.process(@args, '--force') }
-      assert_match /New bunto site installed in/, output
+      assert_match(/New bunto site installed in/, output)
     end
   end
 

@@ -60,7 +60,7 @@ module Bunto
     #
     # Returns the safety Boolean.
     def self.safe(safe = nil)
-      if safe
+      if !defined?(@safe) || !safe.nil?
         @safe = safe
       end
       @safe || false
