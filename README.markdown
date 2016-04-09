@@ -3,12 +3,12 @@
 
 [![Gem Version](https://img.shields.io/gem/v/bunto.svg)][ruby-gems]
 [![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=ruby)][travis]
+[![Security](https://hakiri.io/github/bunto/bunto/ruby.svg)][hakiri]
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!--
 [![Test Coverage](https://codeclimate.com/github/bunto/bunto/badges/coverage.svg)][coverage]
 [![Code Climate](https://codeclimate.com/github/bunto/bunto/badges/gpa.svg)][codeclimate]
 [![Dependency Status](https://gemnasium.com/bunto/bunto.svg)][gemnasium]
-[![Security](https://hakiri.io/github/bunto/bunto/ruby.svg)][hakiri]
 -->
 
 [ruby-gems]: https://rubygems.org/gems/bunto
@@ -16,8 +16,8 @@
 [gemnasium]: https://gemnasium.com/bunto/bunto
 [codeclimate]: https://codeclimate.com/github/bunto/bunto
 [coverage]: https://codeclimate.com/github/bunto/bunto/coverage
-[hakiri]: https://hakiri.io/github/bunto/bunto/ruby
 -->
+[hakiri]: https://hakiri.io/github/bunto/bunto/ruby
 [travis]: https://travis-ci.org/bunto/bunto
 
 By Suriyaa Kudo, Tom Preston-Werner and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
