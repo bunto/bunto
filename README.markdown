@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=ruby)][travis]
 [![Security](https://hakiri.io/github/bunto/bunto/ruby.svg)][hakiri]
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)][freenode]
 <!--
 [![Test Coverage](https://codeclimate.com/github/bunto/bunto/badges/coverage.svg)][coverage]
 [![Code Climate](https://codeclimate.com/github/bunto/bunto/badges/gpa.svg)][codeclimate]
@@ -19,6 +20,7 @@
 -->
 [hakiri]: https://hakiri.io/github/bunto/bunto/ruby
 [travis]: https://travis-ci.org/bunto/bunto
+[freenode]: http://webchat.freenode.net/?channels=bunto
 
 By Suriyaa Kudo, Tom Preston-Werner and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
 
