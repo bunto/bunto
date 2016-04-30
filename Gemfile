@@ -82,7 +82,7 @@ group :site do
     gem "html-proofer", "~> 2.0"
   end
 
-  gem "bemoji", "3.0"
+  gem "bemoji", "~> 3.0"
   gem "bunto-sitemap"
   gem "bunto-seo-tag", "~> 5.0"
   gem "bunto-avatar"
