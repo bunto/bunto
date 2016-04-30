@@ -45,7 +45,6 @@ module Bunto
   autoload :Errors,              'bunto/errors'
   autoload :Excerpt,             'bunto/excerpt'
   autoload :External,            'bunto/external'
-  autoload :Filters,             'bunto/filters'
   autoload :FrontmatterDefaults, 'bunto/frontmatter_defaults'
   autoload :Hooks,               'bunto/hooks'
   autoload :Layout,              'bunto/layout'
@@ -67,6 +66,7 @@ module Bunto
   autoload :Site,                'bunto/site'
   autoload :StaticFile,          'bunto/static_file'
   autoload :Stevenson,           'bunto/stevenson'
+  autoload :Theme,               'bunto/theme'
   autoload :URL,                 'bunto/url'
   autoload :Utils,               'bunto/utils'
   autoload :VERSION,             'bunto/version'
@@ -77,6 +77,7 @@ module Bunto
   require 'bunto/generator'
   require 'bunto/command'
   require 'bunto/liquid_extensions'
+  require "bunto/filters"
 
   class << self
     # Public: Tells you which Bunto environment you are building in so you can skip tasks
@@ -84,7 +85,7 @@ module Bunto
     # images and allows you to skip that when working in development.
 
     def env
-      ENV["BUNTO_ENV"] || "development"
+      ENV["JEKYLL_ENV"] || "development"
     end
 
     # Public: Generate a Bunto configuration Hash by merging the default
@@ -122,7 +123,7 @@ module Bunto
     #
     # Returns the LogAdapter instance.
     def logger
-      @logger ||= LogAdapter.new(Stevenson.new, (ENV["BUNTO_LOG_LEVEL"] || :info).to_sym)
+      @logger ||= LogAdapter.new(Stevenson.new, (ENV["JEKYLL_LOG_LEVEL"] || :info).to_sym)
     end
 
     # Public: Set the log writer.
@@ -133,7 +134,7 @@ module Bunto
     #
     # Returns the new logger.
     def logger=(writer)
-      @logger = LogAdapter.new(writer, (ENV["BUNTO_LOG_LEVEL"] || :info).to_sym)
+      @logger = LogAdapter.new(writer, (ENV["JEKYLL_LOG_LEVEL"] || :info).to_sym)
     end
 
     # Public: An array of sites
@@ -153,8 +154,9 @@ module Bunto
     def sanitized_path(base_directory, questionable_path)
       return base_directory if base_directory.eql?(questionable_path)
 
+      questionable_path.insert(0, '/') if questionable_path.start_with?('~')
       clean_path = File.expand_path(questionable_path, "/")
-      clean_path = clean_path.sub(/\A\w\:\//, '/')
+      clean_path.sub!(/\A\w\:\//, '/')
 
       if clean_path.start_with?(base_directory.sub(/\A\w\:\//, '/'))
         clean_path

@@ -1,10 +1,10 @@
 # Bunto docs site
 
-This directory contains the code for the Bunto docs site, [bunto.isc](http://bunto.isc/).
+This directory contains the code for the Bunto docs site, [buntorb.com](https://bunto.github.io/).
 
 ## Contributing
 
-For information about contributing, see the [Contributing page](http://bunto.isc/docs/contributing/).
+For information about contributing, see the [Contributing page](https://bunto.github.io/docs/contributing/).
 
 ## Running locally
 

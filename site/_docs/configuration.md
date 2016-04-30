@@ -106,9 +106,9 @@ class="flag">flags</code> (specified on the command-line) that control them.
             Set the time zone for site generation. This sets the <code>TZ</code>
             environment variable, which Ruby uses to handle time and date
             creation and manipulation. Any entry from the
-            <a href="http://en.wikipedia.org/wiki/Tz_database">IANA Time Zone
+            <a href="https://en.wikipedia.org/wiki/Tz_database">IANA Time Zone
             Database</a> is valid, e.g. <code>America/New_York</code>. A list of all
-            available values can be found <a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones">
+            available values can be found <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">
             here</a>. The default is the local time zone, as set by your operating system.
         </p>
       </td>
@@ -120,7 +120,7 @@ class="flag">flags</code> (specified on the command-line) that control them.
       <td>
         <p class="name"><strong>Encoding</strong></p>
         <p class="description">
-            Set the encoding of files by name. Only available for Ruby
+            Set the encoding of files by name (only available for Ruby
             1.9 or later).
             The default value is <code>utf-8</code> starting in 2.0.0,
             and <code>nil</code> before 2.0.0, which will yield the Ruby
@@ -208,13 +208,13 @@ class="flag">flags</code> (specified on the command-line) that control them.
         <p class="description">Use a specific environment value in the build.</p>
       </td>
       <td class="align-center">
-        <p><code class="flag">BUNTO_ENV=production</code></p>
+        <p><code class="flag">JEKYLL_ENV=production</code></p>
       </td>
     </tr>
     <tr class="setting">
       <td>
         <p class="name"><strong>Future</strong></p>
-        <p class="description">Publish posts with a future date.</p>
+        <p class="description">Publish posts or collection documents with a future date.</p>
       </td>
       <td class="align-center">
         <p><code class="option">future: BOOL</code></p>
@@ -418,12 +418,12 @@ For example, suppose you set this conditional statement in your code:
 When you build your Bunto site, the content inside the `if` statement won't be run unless you also specify a `production` environment in the build command, like this:
 
 {% highlight sh %}
-BUNTO_ENV=production bunto build
+JEKYLL_ENV=production bunto build
 {% endhighlight %}
 
 Specifying an environment value allows you to make certain content available only within specific environments.
 
-The default value for `BUNTO_ENV` is `development`. Therefore if you omit `BUNTO_ENV` from the build arguments, the default value will be `BUNTO_ENV=development`. Any content inside `{% raw %}{% if bunto.environment == "development" %}{% endraw %}` tags will automatically appear in the build.
+The default value for `JEKYLL_ENV` is `development`. Therefore if you omit `JEKYLL_ENV` from the build arguments, the default value will be `JEKYLL_ENV=development`. Any content inside `{% raw %}{% if bunto.environment == "development" %}{% endraw %}` tags will automatically appear in the build.
 
 Your environment values can be anything you want (not just `development` or `production`). Some elements you might want to hide in development environments include Disqus comment forms or Google Analytics. Conversely, you might want to expose an "Edit me in GitHub" button in a development environment but not include it in production environments.
 
@@ -435,7 +435,7 @@ Using [YAML Front Matter](../frontmatter/) is one way that you can specify confi
 
 Often times, you will find that you are repeating a lot of configuration options. Setting the same layout in each file, adding the same category - or categories - to a post, etc. You can even add custom variables like author names, which might be the same for the majority of posts on your blog.
 
-Instead of repeating this configuration each time you create a new post or page, Bunto provides a way to set these defaults in the site configuration. To do this, you can specify  site-wide defaults using the `defaults` key in the `_config.yml` file in your projects root directory.
+Instead of repeating this configuration each time you create a new post or page, Bunto provides a way to set these defaults in the site configuration. To do this, you can specify  site-wide defaults using the `defaults` key in the `_config.yml` file in your project's root directory.
 
 The `defaults` key holds an array of scope/values pairs that define what defaults should be set for a particular file path, and optionally, a file type in that path.
 
@@ -449,6 +449,18 @@ defaults:
     values:
       layout: "default"
 {% endhighlight %}
+
+<div class="note info">
+  <h5>Please stop and rerun `bunto serve` command.</h5>
+  <p>
+    The <code>_config.yml</code> master configuration file contains global configurations
+    and variable definitions that are read once at execution time. Changes made to <code>_config.yml</code>
+    during automatic regeneration are not loaded until the next execution.
+  </p>
+  <p>
+    Note <a href="../datafiles">Data Files</a> are included and reloaded during automatic regeneration.
+  </p>
+</div>
 
 Here, we are scoping the `values` to any file that exists in the scopes path. Since the path is set as an empty string, it will apply to **all files** in your project. You probably don't want to set a layout on every file in your project - like css files, for example - so you can also specify a `type` value under the `scope` key.
 
@@ -500,7 +512,8 @@ defaults:
       layout: "default"
 {% endhighlight %}
 
-In this example the `layout` is set to `default` inside the [collection](../collections/) with the name `my_collection`.
+In this example, the `layout` is set to `default` inside the
+[collection](../collections/) with the name `my_collection`.
 
 ### Precedence
 

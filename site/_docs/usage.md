@@ -7,7 +7,7 @@ permalink: /docs/usage/
 The Bunto gem makes a `bunto` executable available to you in your Terminal
 window. You can use this command in a number of ways:
 
-{% highlight bash %}
+{% highlight shell %}
 $ bunto build
 # => The current folder will be generated into ./_site
 
@@ -52,7 +52,7 @@ $ bunto build --watch
 Bunto also comes with a built-in development server that will allow you to
 preview what the generated site will look like in your browser locally.
 
-{% highlight bash %}
+{% highlight shell %}
 $ bunto serve
 # => A development server will run at http://localhost:4000/
 # Auto-regeneration: enabled. Use `--no-watch` to disable.
@@ -70,7 +70,7 @@ $ bunto serve --detach
   </p>
 </div>
 
-{% highlight bash %}
+{% highlight shell %}
 $ bunto serve --no-watch
 # => Same as `bunto serve` but will not watch for changes.
 {% endhighlight %}
@@ -89,7 +89,7 @@ destination: _deploy
 
 Then the following two commands will be equivalent:
 
-{% highlight bash %}
+{% highlight shell %}
 $ bunto build
 $ bunto build --source _source --destination _deploy
 {% endhighlight %}

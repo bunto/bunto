@@ -4,7 +4,7 @@ gemspec :name => "bunto"
 gem "rake", "~> 11.0"
 group :development do
   gem "launchy", "~> 2.3"
-  gem "rubocop", :branch => :master, :github => "bbatsov/rubocop"
+  gem "rubocop"
   gem "pry"
 
   unless RUBY_ENGINE == "jruby"
@@ -22,6 +22,7 @@ group :test do
   gem "rspec-mocks"
   gem "nokogiri"
   gem "rspec"
+  gem "test-theme", path: File.expand_path("./test/fixtures/test-theme", File.dirname(__FILE__))
 end
 
 #

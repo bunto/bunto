@@ -11,7 +11,7 @@ having to modify the Bunto source itself.
 <div class="note info">
   <h5>Plugins on GitHub Pages</h5>
   <p>
-    <a href="http://pages.github.com/">GitHub Pages</a> is powered by Bunto.
+    <a href="https://pages.github.com/">GitHub Pages</a> is powered by Bunto.
     However, all Pages sites are generated using the <code>--safe</code> option
     to disable custom plugins for security reasons. Unfortunately, this means
     your plugins won’t work if you’re deploying to GitHub Pages.<br><br>
@@ -60,12 +60,13 @@ values of the gem names of the plugins you'd like to use. An example:
   </p>
 </div>
 
-In general, plugins you make will fall into one of four categories:
+In general, plugins you make will fall into one of five categories:
 
 1. [Generators](#generators)
 2. [Converters](#converters)
 3. [Commands](#commands)
 4. [Tags](#tags)
+5. [Hooks](#hooks)
 
 ## Generators
 
@@ -74,18 +75,18 @@ based on your own rules.
 
 A generator is a subclass of `Bunto::Generator` that defines a `generate`
 method, which receives an instance of
-[`Bunto::Site`]({{ site.repository }}/blob/ruby/lib/bunto/site.rb). The
+[`Bunto::Site`]({{ site.repository }}/blob/master/lib/bunto/site.rb). The
 return value of `generate` is ignored.
 
 Generators run after Bunto has made an inventory of the existing content, and
 before the site is generated. Pages with YAML Front Matters are stored as
 instances of
-[`Bunto::Page`]({{ site.repository }}/blob/ruby/lib/bunto/page.rb)
+[`Bunto::Page`]({{ site.repository }}/blob/master/lib/bunto/page.rb)
 and are available via `site.pages`. Static files become instances of
-[`Bunto::StaticFile`]({{ site.repository }}/blob/ruby/lib/bunto/static_file.rb)
+[`Bunto::StaticFile`]({{ site.repository }}/blob/master/lib/bunto/static_file.rb)
 and are available via `site.static_files`. See
 [the Variables documentation page](/docs/variables/) and
-[`Bunto::Site`]({{ site.repository }}/blob/ruby/lib/bunto/site.rb)
+[`Bunto::Site`]({{ site.repository }}/blob/master/lib/bunto/site.rb)
 for more details.
 
 For instance, a generator can inject values computed at build time for template
@@ -310,7 +311,7 @@ Commands should implement this single class method:
       </td>
       <td><p>
         This method accepts one parameter, the
-        <code><a href="http://github.com/bunto/mercenary#readme">Mercenary::Program</a></code>
+        <code><a href="https://github.com/bunto/mercenary#readme">Mercenary::Program</a></code>
         instance, which is the Bunto program itself. Upon the program,
         commands may be created using the above syntax. For more details,
         visit the Mercenary repository on GitHub.com.
@@ -515,6 +516,18 @@ The complete list of available hooks is below:
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>
+        <p><code>:site</code></p>
+      </td>
+      <td>
+        <p><code>:after_init</code></p>
+      </td>
+      <td>
+        <p>Just after the site initializes, but before setup & render. Good
+        for modifying the configuration of the site.</p>
+      </td>
+    </tr>
     <tr>
       <td>
         <p><code>:site</code></p>
@@ -737,6 +750,7 @@ LESS.js files during generation.
 - [Bunto-Umlauts by Arne Gockeln](https://github.com/webchef/bunto-umlauts): This generator replaces all german umlauts (äöüß) case sensitive with html.
 - [Bunto Flickr Plugin](https://github.com/lawmurray/indii-bunto-flickr) by [Lawrence Murray](http://www.indii.org): Generates posts for photos uploaded to a Flickr photostream.
 - [Bunto::Paginate::Category](https://github.com/midnightSuyama/bunto-paginate-category): Pagination Generator for Bunto Category.
+- [AMP-Bunto by Juuso Mikkonen](https://github.com/juusaw/amp-bunto): Generate [Accelerated Mobile Pages](https://www.ampproject.org) of Bunto posts.
 
 #### Converters
 
@@ -775,6 +789,7 @@ LESS.js files during generation.
 - [pluralize](https://github.com/bdesham/pluralize): Easily combine a number and a word into a grammatically-correct amount like “1 minute” or “2 minute**s**”.
 - [reading_time](https://github.com/bdesham/reading_time): Count words and estimate reading time for a piece of text, ignoring HTML elements that are unlikely to contain running text.
 - [Table of Content Generator](https://github.com/dafi/bunto-toc-generator): Generate the HTML code containing a table of content (TOC), the TOC can be customized in many way, for example you can decide which pages can be without TOC.
+- [bunto-toc](https://github.com/toshimaru/bunto-toc): A liquid filter plugin for Bunto which generates a table of contents.
 - [bunto-humanize](https://github.com/23maverick23/bunto-humanize): This is a port of the Django app humanize which adds a "human touch" to data. Each method represents a Fluid type filter that can be used in your Bunto site templates. Given that Bunto produces static sites, some of the original methods do not make logical sense to port (e.g. naturaltime).
 - [Bunto-Ordinal](https://github.com/PatrickC8t/Bunto-Ordinal): Bunto liquid filter to output a date ordinal such as "st", "nd", "rd", or "th".
 - [Deprecated articles keeper](https://github.com/kzykbys/BuntoPlugins) by [Kazuya Kobayashi](http://blog.kazuya.co/): A simple Bunto filter which monitor how old an article is.
@@ -837,12 +852,13 @@ LESS.js files during generation.
 - [inline\_highlight](https://github.com/bdesham/inline_highlight): A tag for inline syntax highlighting.
 - [bunto-mermaid](https://github.com/jasonbellamy/bunto-mermaid): Simplify the creation of mermaid diagrams and flowcharts in your posts and pages.
 - [twa](https://github.com/Ezmyrelda/twa): Twemoji Awesome plugin for Bunto. Liquid tag allowing you to use twitter emoji in your bunto pages.
-- [bunto-files](https://github.com/x43x61x69/bunto-files) by [Zhi-Wei Cai](http://vox.vg/): Output relative path strings and other info regarding specific assets.
 - [Fetch remote file content](https://github.com/dimitri-koenig/bunto-plugins) by [Dimitri König](https://www.dimitrikoenig.net/): Using `remote_file_content` tag you can fetch the content of a remote file and include it as if you would put the content right into your markdown file yourself. Very useful for including code from github repo's to always have a current repo version.
 - [bunto-asciinema](https://github.com/mnuessler/bunto-asciinema): A tag for embedding asciicasts recorded with [asciinema](https://asciinema.org) in your Bunto pages.
 - [Bunto-Youtube](https://github.com/dommmel/bunto-youtube)  A Liquid tag that embeds Youtube videos. The default emded markup is responsive but you can also specify your own by using an include/partial.
 - [Bunto Flickr Plugin](https://github.com/lawmurray/indii-bunto-flickr) by [Lawrence Murray](http://www.indii.org): Embeds Flickr photosets (albums) as a gallery of thumbnails, with lightbox links to larger images.
 - [bunto-figure](https://github.com/paulrobertlloyd/bunto-figure): A liquid tag for Bunto that generates `<figure>` elements.
+- [Bunto Video Embed](https://github.com/eug/bunto-video-embed): It provides several tags to easily embed videos (e.g. Youtube, Vimeo, UStream and Ted Talks)
+- [bunto-i18n_tags](https://github.com/KrzysiekJ/bunto-i18n_tags): Translate your templates.
 
 #### Collections
 
@@ -858,6 +874,7 @@ LESS.js files during generation.
 - [Growl Notification Generator by Tate Johnson](https://gist.github.com/490101): Send Bunto notifications to Growl.
 - [Growl Notification Hook by Tate Johnson](https://gist.github.com/525267): Better alternative to the above, but requires his “hook” fork.
 - [Related Posts by Lawrence Woodman](https://github.com/LawrenceWoodman/related_posts-bunto_plugin): Overrides `site.related_posts` to use categories to assess relationship.
+- [bunto-tagging-related_posts](https://github.com/toshimaru/bunto-tagging-related_posts): Bunto related_posts function based on tags (works on Bunto3).
 - [Tiered Archives by Eli Naeher](https://gist.github.com/88cda643aa7e3b0ca1e5): Create tiered template variable that allows you to group archives by year and month.
 - [Bunto-localization](https://github.com/blackwinter/bunto-localization): Bunto plugin that adds localization features to the rendering engine.
 - [Bunto-rendering](https://github.com/blackwinter/bunto-rendering): Bunto plugin to provide alternative rendering engines.
@@ -881,6 +898,9 @@ LESS.js files during generation.
 - [Bunto Language Plugin](https://github.com/vwochnik/bunto-language-plugin): Bunto 3.0-compatible multi-language plugin for posts, pages and includes.
 - [Bunto Deploy](https://github.com/vwochnik/bunto-deploy): Adds a `deploy` sub-command to Bunto.
 - [Official Contentful Bunto Plugin](https://github.com/contentful/bunto-contentful-data-import): Adds a `contentful` sub-command to Bunto to import data from Contentful.
+- [bunto-paspagon](https://github.com/KrzysiekJ/bunto-paspagon): Sell your posts in various formats for cryptocurrencies.
+- [Hawkins](https://github.com/awood/hawkins): Adds a `liveserve` sub-command to Bunto that incorporates [LiveReload](http://livereload.com/) into your pages while you preview them.  No more hitting the refresh button in your browser!
+- [Bunto Autoprefixer](https://github.com/vwochnik/bunto-autoprefixer): Autoprefixer integration for Bunto
 
 #### Editors
 

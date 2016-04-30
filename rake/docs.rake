@@ -7,8 +7,8 @@
 namespace :docs do
   desc "Release #{docs_name} v#{version}"
   task :release => :build do
-    unless `git branch` =~ /^\* ruby$/
-      puts "You must be on the ruby branch to release!"
+    unless `git branch` =~ /^\* master$/
+      puts "You must be on the master branch to release!"
       exit!
     end
     sh "gem push pkg/#{docs_name}-#{version}.gem"

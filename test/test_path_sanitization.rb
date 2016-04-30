@@ -15,4 +15,13 @@ class TestPathSanitization < BuntoUnitTest
       assert_equal "/tmp/foobar/jail/..c:/..c:/..c:/etc/passwd", Bunto.sanitized_path("/tmp/foobar/jail", "..c:/..c:/..c:/etc/passwd")
     end
   end
+
+  should "escape tilde" do
+    assert_equal source_dir("~hi.txt"), Bunto.sanitized_path(source_dir, "~hi.txt")
+    assert_equal source_dir("files", "~hi.txt"), Bunto.sanitized_path(source_dir, "files/../files/~hi.txt")
+  end
+
+  should "remove path traversals" do
+    assert_equal source_dir("files", "hi.txt"), Bunto.sanitized_path(source_dir, "f./../../../../../../files/hi.txt")
+  end
 end

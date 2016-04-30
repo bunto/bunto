@@ -68,7 +68,11 @@ module Bunto
     end
 
     def date
-      data['date'] ||= site.time
+      data['date'] ||= (draft? ? source_file_mtime : site.time)
+    end
+
+    def source_file_mtime
+      @source_file_mtime ||= File.mtime(path)
     end
 
     # Returns whether the document is a draft. This is only the case if
@@ -217,8 +221,11 @@ module Bunto
     def destination(base_directory)
       dest = site.in_dest_dir(base_directory)
       path = site.in_dest_dir(dest, URL.unescape_path(url))
-      path = File.join(path, "index.html") if url.end_with?("/")
-      path << output_ext unless path.end_with? output_ext
+      if url.end_with? "/"
+        path = File.join(path, "index.html")
+      else
+        path << output_ext unless path.end_with? output_ext
+      end
       path
     end
 
@@ -256,7 +263,7 @@ module Bunto
         @data = SafeYAML.load_file(path)
       else
         begin
-          defaults = @site.frontmatter_defaults.all(url, collection.label.to_sym)
+          defaults = @site.frontmatter_defaults.all(relative_path, collection.label.to_sym)
           merge_data!(defaults, source: "front matter defaults") unless defaults.empty?
 
           self.content = File.read(path, Utils.merged_file_read_opts(site, opts))

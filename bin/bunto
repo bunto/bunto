@@ -12,7 +12,7 @@ Bunto::Deprecator.process(ARGV)
 
 Mercenary.program(:bunto) do |p|
   p.version Bunto::VERSION
-  p.description 'Bunto is a static site generator in Ruby'
+  p.description 'Bunto is a static site generator and web application framework in Ruby'
   p.syntax 'bunto <subcommand> [options]'
 
   p.option 'source', '-s', '--source [DIR]', 'Source directory (defaults to ./)'

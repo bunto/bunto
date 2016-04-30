@@ -4,7 +4,7 @@ title: GitHub Pages
 permalink: /docs/github-pages/
 ---
 
-[GitHub Pages](http://pages.github.com) are public web pages for users,
+[GitHub Pages](https://pages.github.com) are public web pages for users,
 organizations, and repositories, that are freely hosted on GitHub's
 `github.io` domain or on a custom domain name of your choice. GitHub Pages are
 powered by Bunto behind the scenes, so in addition to supporting regular HTML
@@ -87,7 +87,7 @@ name. For example, [@mojombo’s user page
 repository](https://github.com/mojombo/mojombo.github.io) has the name
 `mojombo.github.io`.
 
-Content from the `ruby` branch of your repository will be used to build and
+Content from the `master` branch of your repository will be used to build and
 publish the GitHub Pages site, so make sure your Bunto site is stored there.
 
 <div class="note info">
@@ -109,7 +109,7 @@ of your user pages subdomain, such as `username.github.io/project` (unless a
 custom domain is specified—see below).
 
 The Bunto project repository itself is a perfect example of this branch
-structure—the [ruby branch]({{ site.repository }}) contains the
+structure—the [master branch]({{ site.repository }}) contains the
 actual software project for Bunto, however the Bunto website (that you’re
 looking at right now) is contained in the [gh-pages
 branch]({{ site.repository }}/tree/gh-pages) of the same repository.
@@ -117,7 +117,7 @@ branch]({{ site.repository }}/tree/gh-pages) of the same repository.
 <div class="note warning">
   <h5>Source Files Must be in the Root Directory</h5>
   <p>
-GitHub Pages <a href="https://help.github.com/articles/troubleshooting-github-pages-build-failures#source-setting">overrides</a> the <a href="http://bunto.github.io/docs/configuration/#global-configuration">“Site Source”</a> configuration value, so if you locate your files anywhere other than the root directory, your site may not build correctly.
+GitHub Pages <a href="https://help.github.com/articles/troubleshooting-github-pages-build-failures#source-setting">overrides</a> the <a href="/docs/configuration/#global-configuration">“Site Source”</a> configuration value, so if you locate your files anywhere other than the root directory, your site may not build correctly.
   </p>
 </div>
 

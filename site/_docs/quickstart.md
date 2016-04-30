@@ -6,7 +6,7 @@ permalink: /docs/quickstart/
 
 For the impatient, here's how to get a boilerplate Bunto site up and running.
 
-{% highlight bash %}
+{% highlight shell %}
 ~ $ gem install bunto
 ~ $ bunto new myblog
 ~ $ cd myblog
@@ -14,8 +14,7 @@ For the impatient, here's how to get a boilerplate Bunto site up and running.
 # => Now browse to http://localhost:4000
 {% endhighlight %}
 
-If you wish to install bunto into the current directory, you can do so by
-alternatively running `bunto new .` instead of a new directory name.
+If you wish to install bunto into an existing directory, you can do so by running `bunto new .` from within the directory instead of creating a new one. If the existing directory isn't empty, you'll also have to pass the `--force` option like so `bunto new . --force`.
 
 That's nothing, though. The real magic happens when you start creating blog
 posts, using the front matter to control templates and layouts, and taking

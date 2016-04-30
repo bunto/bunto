@@ -22,7 +22,7 @@ module Bunto
 
     def no_subcommand(args)
       if args.size > 0 && args.first =~ /^--/ && !%w(--help --version).include?(args.first)
-        deprecation_message "Bunto now uses subcommands instead of just switches. Run `bunto --help` to find out more."
+        deprecation_message "Bunto now uses subcommands instead of just switches. Run `bunto help` to find out more."
         abort
       end
     end

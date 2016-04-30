@@ -14,17 +14,19 @@ Bunto’s growing use is producing a wide variety of tutorials, frameworks, exte
 - [Blogging with Git, Emacs and Bunto](http://metajack.im/2009/01/23/blogging-with-git-emacs-and-bunto/)
 - [Tips for working with GitHub Pages Integration](https://gist.github.com/jedschneider/2890453)
 
-### Integrations 
+### Integrations
 
-- [Use FormKeep as a backend for forms (contact forms, hiring forms, etc.)](https://formkeep.com/guides/how-to-make-a-contact-form-in-bunto?utm_source=github&utm_medium=bunto-docs&utm_campaign=contact-form-bunto)
-- [Use Simple Form to add a simple contact form](http://getsimpleform.com/)
+- Use a saas service as a backend for forms (contact forms, hiring forms, etc.)
+  - [Formspree (also open source)](http://formspree.io/)
+  - [FormKeep](https://formkeep.com/guides/contact-form-bunto?utm_source=github&utm_medium=bunto-docs&utm_campaign=contact-form-bunto)
+  - [Simple Form](http://getsimpleform.com/)
 - [Bunto Bootstrap](http://buntobootstrap.com), 0 to Blog in 3 minutes. Provides detailed explanations, examples, and helper-code to make getting started with Bunto easier.
 - [Integrating Twitter with Bunto](http://www.justkez.com/integrating-twitter-with-bunto/)
   > “Having migrated Justkez.com to be based on Bunto, I was pondering how I might include my recent twitterings on the front page of the site. In the WordPress world, this would have been done via a plugin which may or may not have hung the loading of the page, might have employed caching, but would certainly have had some overheads. … Not in Bunto.”
 
 ### Other commentary
 
-- [‘My Bunto Fork’, by Mike West](http://mikewest.org/2009/11/my-bunto-fork)
+- [‘My Bunto Fork’, by Mike West](https://mikewest.org/2009/11/my-bunto-fork)
 
   > “Bunto is a well-architected throwback to a time before WordPress, when men were men, and HTML was static. I like the ideas it espouses, and have made a few improvements to it’s core. Here, I’ll point out some highlights of my fork in the hopes that they see usage beyond this site.”
 
@@ -35,4 +37,4 @@ Bunto’s growing use is producing a wide variety of tutorials, frameworks, exte
 - [Generating a Tag Cloud in Bunto](http://www.justkez.com/generating-a-tag-cloud-in-bunto/) – A guide to implementing a tag cloud and per-tag content pages using Bunto.
 - A way to [extend Bunto](https://github.com/rfelix/bunto_ext) without forking and modifying the Bunto gem codebase and some [portable Bunto extensions](https://wiki.github.com/rfelix/bunto_ext/extensions) that can be reused and shared.
 - [Using your Rails layouts in Bunto](http://numbers.brighterplanet.com/2010/08/09/sharing-rails-views-with-bunto)
-- [Adding Ajax pagination to Bunto](https://eduardoboucas.com/blog/2014/11/10/adding-ajax-pagination-to-bunto.html)
+- [Adding Ajax pagination to Bunto](https://eduardoboucas.com/blog/2014/11/05/adding-ajax-pagination-to-bunto.html)

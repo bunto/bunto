@@ -178,6 +178,7 @@ class TestSite < BuntoUnitTest
         environment.html
         exploit.md
         foo.md
+        humans.txt
         index.html
         index.html
         main.scss
@@ -417,12 +418,12 @@ class TestSite < BuntoUnitTest
         assert_equal site.site_payload['site']['data']['products'], file_content
       end
 
-      should "not load symlink files in safe mode" do
+      should "load the symlink files in safe mode, as they resolve to inside site.source" do
         site = Site.new(site_configuration('safe' => true))
         site.process
-
-        assert_nil site.data['products']
-        assert_nil site.site_payload['site']['data']['products']
+        file_content = SafeYAML.load_file(File.join(source_dir, '_data', 'products.yml'))
+        assert_equal site.data['products'], file_content
+        assert_equal site.site_payload['site']['data']['products'], file_content
       end
 
     end

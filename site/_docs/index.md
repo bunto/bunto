@@ -13,13 +13,13 @@ development of Bunto itself.
 
 ## So what is Bunto, exactly?
 
-Bunto is a simple, static site generator. It takes a template
+Bunto is a simple, static site generator and web application framework. It takes a template
 directory containing raw text files in various formats, runs it through
-a converter (like [Markdown](http://daringfireball.net/projects/markdown/))
+a converter (like [Markdown](https://daringfireball.net/projects/markdown/))
 and our [Liquid](https://github.com/Shopify/liquid/wiki) renderer, and
 spits out a complete, ready-to-publish static website suitable
 for serving with your favorite web server. Bunto also happens to be the engine
-behind [GitHub Pages](http://pages.github.com), which means you can use Bunto
+behind [GitHub Pages](https://pages.github.com), which means you can use Bunto
 to host your project’s page, blog, or website from GitHub’s servers **for
 free**.
 

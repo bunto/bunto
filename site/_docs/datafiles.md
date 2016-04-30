@@ -21,8 +21,8 @@ Plugins/themes can also leverage Data Files to set configuration variables.
 
 As explained on the [directory structure](../structure/) page, the `_data`
 folder is where you can store additional data for Bunto to use when generating
-your site. These files must be YAML files
-(using either the `.yml`, `.yaml`, `.json` or `csv` extension) and they will be
+your site. These files must be YAML, JSON, or CSV files (using either
+the `.yml`, `.yaml`, `.json` or `.csv` extension), and they will be
 accessible via `site.data`.
 
 ## Example: List of members
@@ -33,8 +33,13 @@ of code in your Bunto templates:
 In `_data/members.yml`:
 
 {% highlight yaml %}
-- name: Suriyaa Kudo
-  github: SuriyaaKudoIsc
+- name: Eric Mill
+  github: konklone
+
+- name: Parker Moore
+  github: parkr
+
+- name: Liu Fengyun
   github: liufengyun
 {% endhighlight %}
 
@@ -42,7 +47,7 @@ Or `_data/members.csv`:
 
 {% highlight text %}
 name,github
-Tom Preston-Werner,mojombo
+Eric Mill,konklone
 Parker Moore,parkr
 Liu Fengyun,liufengyun
 {% endhighlight %}

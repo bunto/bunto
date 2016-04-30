@@ -1,26 +1,34 @@
-# Bunto _config.yml settings
-
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: /news/:year/:month/:day/:title/
 excerpt_separator: ""
 
 ##gauges_id: 
 ##google_analytics_id: UA-
+##google_site_verification: 
 
 repository: https://github.com/bunto/bunto
 help_url: https://github.com/bunto/bunto-help
 
-timezone: Europe/Berlin
+timezone: America/Los_Angeles
 
 collections:
   docs:
     output: true
 
-name: Bunto • Simple, static sites for everybody
-description: Transform your plain text into static websites and blogs
+name: Bunto
+description: Transform your plain text into static websites and web application framework
 url: https://bunto.github.io
+
+twitter:
+  username: buntorb
+
+logo: img/logo-2x.png
 
 gems:
   - bunto-feed
   - bunto-redirect-from
+  - bemoji
+  - bunto-sitemap
+  - bunto-seo-tag
+  - bunto-avatar

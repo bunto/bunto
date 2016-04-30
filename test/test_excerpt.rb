@@ -90,11 +90,11 @@ class TestExcerpt < BuntoUnitTest
 
       context "before render" do
         should "be the first paragraph of the page" do
-          assert_equal "First paragraph with [link ref][link].\n\n[link]: http://bunto.github.io/", @excerpt.content
+          assert_equal "First paragraph with [link ref][link].\n\n[link]: http://www.bunto.github.io/", @excerpt.content
         end
 
         should "contain any refs at the bottom of the page" do
-          assert @excerpt.content.include?("[link]: http://bunto.github.io/")
+          assert @excerpt.content.include?("[link]: http://www.bunto.github.io/")
         end
       end
 
@@ -106,11 +106,11 @@ class TestExcerpt < BuntoUnitTest
         end
 
         should "be the first paragraph of the page" do
-          assert_equal "<p>First paragraph with <a href=\"http://bunto.github.io/\">link ref</a>.</p>\n\n", @extracted_excerpt.output
+          assert_equal "<p>First paragraph with <a href=\"http://www.bunto.github.io/\">link ref</a>.</p>\n\n", @extracted_excerpt.output
         end
 
         should "link properly" do
-          assert @extracted_excerpt.content.include?("http://bunto.github.io/")
+          assert @extracted_excerpt.content.include?("http://www.bunto.github.io/")
         end
       end
     end

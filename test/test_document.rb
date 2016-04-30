@@ -122,7 +122,7 @@ class TestDocument < BuntoUnitTest
       @site = fixture_site({
         "collections" => ["slides"],
         "defaults" => [{
-          "scope"=> {"path"=>"slides", "type"=>"slides"},
+          "scope"=> {"path"=>"_slides", "type"=>"slides"},
           "values"=> {
             "nested"=> {
               "key"=>"value123",

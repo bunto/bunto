@@ -19,21 +19,19 @@ module Bunto
           options = configuration_from_options(options)
           destination = options['destination']
           metadata_file = File.join(options['source'], '.bunto-metadata')
+          sass_cache = File.join(options['source'], '.sass-cache')
 
-          if File.directory? destination
-            Bunto.logger.info "Cleaning #{destination}..."
-            FileUtils.rm_rf(destination)
-            Bunto.logger.info "", "done."
-          else
-            Bunto.logger.info "Nothing to do for #{destination}."
-          end
+          remove(destination, checker_func: :directory?)
+          remove(metadata_file, checker_func: :file?)
+          remove(sass_cache, checker_func: :directory?)
+        end
 
-          if File.file? metadata_file
-            Bunto.logger.info "Removing #{metadata_file}..."
-            FileUtils.rm_rf(metadata_file)
-            Bunto.logger.info "", "done."
+        def remove(filename, checker_func: :file?)
+          if File.public_send(checker_func, filename)
+            Bunto.logger.info "Cleaner:", "Removing #{filename}..."
+            FileUtils.rm_rf(filename)
           else
-            Bunto.logger.info "Nothing to do for #{metadata_file}."
+            Bunto.logger.info "Cleaner:", "Nothing to do for #{filename}."
           end
         end
       end

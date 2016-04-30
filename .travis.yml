@@ -1,5 +1,4 @@
 # Travis CI
-
 before_script:
   - chmod +x script/cibuild
   - chmod +x script/bootstrap
@@ -16,23 +15,17 @@ before_script:
   - gem update --system
   - gem install bundler
   - bundle update
-
 bundler_args: --without benchmark:site:development
-
 script: script/cibuild
-
 cache: bundler
-
 language: ruby
-
 sudo: false
 
 rvm:
   - &ruby1 2.3.0
   - &ruby2 2.2.4
   - &ruby3 2.1.8
-  - &ruby4 2.1.10
-  - &jruby jruby-9.0.4.0
+  - &jruby jruby-9.0.5.0
   - &rhead ruby-head
 
 matrix:
@@ -40,7 +33,6 @@ matrix:
   allow_failures:
     - rvm: *jruby
     - rvm: *rhead
-    - rvm: *ruby4
 env:
   matrix:
     - TEST_SUITE=test
@@ -48,16 +40,9 @@ env:
 
 branches:
   only:
-    - ruby
+    - master
 
 notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/8e6011bb9dce6d5c0753
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
-
   email:
     recipients:
       - SuriyaaKudoIsc@users.noreply.github.com

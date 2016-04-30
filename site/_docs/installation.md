@@ -14,11 +14,11 @@ encountered and how we might make the process easier
 Installing Bunto is easy and straight-forward, but there are a few
 requirements you’ll need to make sure your system has before you start.
 
-- [Ruby](http://www.ruby-lang.org/en/downloads/) (including development
+- [Ruby](https://www.ruby-lang.org/en/downloads/) (including development
   headers, v1.9.3 or above for Bunto 2 and v2 or above for Bunto 3)
-- [RubyGems](http://rubygems.org/pages/download)
+- [RubyGems](https://rubygems.org/pages/download)
 - Linux, Unix, or Mac OS X
-- [NodeJS](http://nodejs.org), or another JavaScript runtime (Bunto 2 and
+- [NodeJS](https://nodejs.org/), or another JavaScript runtime (Bunto 2 and
 earlier, for CoffeeScript support).
 - [Python 2.7](https://www.python.org/downloads/) (for Bunto 2 and earlier)
 
@@ -37,7 +37,7 @@ The best way to install Bunto is via
 [RubyGems](http://rubygems.org/pages/download). At the terminal prompt,
 simply run the following command to install Bunto:
 
-{% highlight bash %}
+{% highlight shell %}
 $ gem install bunto
 {% endhighlight %}
 
@@ -62,14 +62,14 @@ community can improve the experience for everyone.
 In order to install a pre-release, make sure you have all the requirements
 installed properly and run:
 
-{% highlight bash %}
+{% highlight shell %}
 gem install bunto --pre
 {% endhighlight %}
 
 This will install the latest pre-release. If you want a particular pre-release,
 use the `-v` switch to indicate the version you'd like to install:
 
-{% highlight bash %}
+{% highlight shell %}
 gem install bunto -v '2.0.0.alpha.1'
 {% endhighlight %}
 
@@ -77,7 +77,7 @@ If you'd like to install a development version of Bunto, the process is a bit
 more involved. This gives you the advantage of having the latest and greatest,
 but may be unstable.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git clone git://github.com/bunto/bunto.git
 $ cd bunto
 $ script/bootstrap

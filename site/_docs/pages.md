@@ -27,11 +27,11 @@ homepage of your Bunto-generated site.
 
 ## Where additional pages live
 
-Where you put HTML or [Markdown](http://daringfireball.net/projects/markdown/)
+Where you put HTML or [Markdown](https://daringfireball.net/projects/markdown/)
 files for pages depends on how you want the pages to work.
 There are two main ways of creating pages:
 
-- Place named HTML or [Markdown](http://daringfireball.net/projects/markdown/)
+- Place named HTML or [Markdown](https://daringfireball.net/projects/markdown/)
 files for each page in your site's root folder.
 - Create a folder in the site's root for each page, and place an index.html
 or index.md file in each page folder.
@@ -46,7 +46,7 @@ directory with a suitable name for the page you want to create. For a site with
 a homepage, an about page, and a contact page, here’s what the root directory
 and associated URLs might look like:
 
-{% highlight bash %}
+{% highlight shell %}
 .
 |-- _config.yml
 |-- _includes/
@@ -69,7 +69,7 @@ the page URL ends up being the folder name, and the web server will serve up
 the respective `index.html` file. Here's an example of what this structure
 might look like:
 
-{% highlight bash %}
+{% highlight shell %}
 .
 ├── _config.yml
 ├── _includes/
@@ -86,7 +86,7 @@ might look like:
 {% endhighlight %}
 
 This approach may not suit everyone, but for people who like clean URLs it’s
-simple and it works. In the end the decision is yours!
+simple and it works. In the end, the decision is yours!
 
 <div class="note">
   <h5>ProTip™: Use permalink Front Matter Variable</h5>

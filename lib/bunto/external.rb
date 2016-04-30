@@ -48,7 +48,7 @@ In order to use Bunto as currently configured, you'll need to install this gem.
 
 The full error message from Ruby is: '#{e.message}'
 
-If you run into trouble, you can find helpful resources at https://bunto.github.io/help/!
+If you run into trouble, you can find helpful resources at http://bunto.github.io/help/!
             MSG
             raise Bunto::Errors::MissingDependencyException.new(name)
           end

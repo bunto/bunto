@@ -44,6 +44,7 @@ module Bunto
       'port'          => '4000',
       'host'          => '127.0.0.1',
       'baseurl'       => '',
+      'show_dir_listing' => false,
 
       # Output Configuration
       'permalink'     => 'date',
@@ -285,8 +286,8 @@ module Bunto
     def renamed_key(old, new, config, _ = nil)
       if config.key?(old)
         Bunto::Deprecator.deprecation_message "The '#{old}' configuration" \
-          "option has been renamed to '#{new}'. Please update your config " \
-          "file accordingly."
+          " option has been renamed to '#{new}'. Please update your config" \
+          " file accordingly."
         config[new] = config.delete(old)
       end
     end

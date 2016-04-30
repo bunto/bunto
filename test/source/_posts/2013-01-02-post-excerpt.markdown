@@ -11,4 +11,4 @@ Second paragraph
 
 Third paragraph
 
-[link]: http://bunto.github.io/
+[link]: http://www.bunto.github.io/

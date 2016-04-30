@@ -35,6 +35,10 @@ module Bunto
             File.open(File.expand_path(initialized_post_name, new_blog_path), "w") do |f|
               f.write(scaffold_post_content)
             end
+            
+            File.open(File.expand_path("Gemfile", new_blog_path), "w") do |f|
+              f.write(gemfile_contents)
+            end
           end
 
           Bunto.logger.info "New bunto site installed in #{new_blog_path}."
@@ -59,6 +63,31 @@ module Bunto
         end
 
         private
+        
+        def gemfile_contents
+          <<-RUBY
+source "https://rubygems.org"
+  
+# Hello! This is where you manage which Bunto version is used to run.
+# When you want to use a different version, change it below, save the
+# file and run `bundle install`. Run Bunto with `bundle exec`, like so:
+#
+#     bundle exec bunto serve
+#
+# This will help ensure the proper Bunto version is running.
+# Happy Buntoing!
+gem "bunto", "#{Bunto::VERSION}"
+
+# If you want to use GitHub Pages, remove the "gem "bunto"" above and
+# uncomment the line below. To upgrade, run `bundle update github-pages`.
+# gem "github-pages", group: :bunto_plugins
+  
+# If you have any plugins, put them here!
+# group :bunto_plugins do
+#   gem "bunto-github-metadata", "~> 1.0"
+# end
+RUBY
+        end
 
         def preserve_source_location?(path, options)
           !options["force"] && !Dir["#{path}/**/*"].empty?

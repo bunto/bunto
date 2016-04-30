@@ -4,19 +4,19 @@ Hi there! Interested in contributing to Bunto? We'd love your help. Bunto is an 
 
 ## Where to get help or report a problem
 
-* If you have a question about using Bunto, start a discussion on [Bunto Talk](https://talk.buntorb.com).
+* If you have a question about using Bunto, start a discussion on [Bunto Talk](https://bunto.github.io/talk/).
 * If you think you've found a bug within a Bunto plugin, open an issue in that plugin's repository.
 * If you think you've found a bug within Bunto itself, [open an issue](https://github.com/bunto/bunto/issues/new).
-* More resources are listed on our [Help page](https://buntorb.com/help/).
+* More resources are listed on our [Help page](https://bunto.github.io/help/).
 
 ## Ways to contribute
 
 Whether you're a developer, a designer, or just a Bunto devotee, there are lots of ways to contribute. Here's a few ideas:
 
-* [Install Bunto on your computer](https://buntorb.com/docs/installation/) and kick the tires. Does it work? Does it do what you'd expect? If not, [open an issue](https://github.com/bunto/bunto/issues/new) and let us know.
+* [Install Bunto on your computer](https://bunto.github.io/docs/installation/) and kick the tires. Does it work? Does it do what you'd expect? If not, [open an issue](https://github.com/bunto/bunto/issues/new) and let us know.
 * Comment on some of the project's [open issues](https://github.com/bunto/bunto/issues). Have you experienced the same problem? Know a work around? Do you have a suggestion for how the feature could be better?
-* Read through [the documentation](https://buntorb.com/docs/home/), and click the "improve this page" button, any time you see something confusing, or have a suggestion for something that could be improved.
-* Browse through [the Bunto discussion forum](https://talk.buntorb.com/), and lend a hand answering questions. There's a good chance you've already experienced what another user is experiencing.
+* Read through [the documentation](https://bunto.github.io/docs/home/), and click the "improve this page" button, any time you see something confusing, or have a suggestion for something that could be improved.
+* Browse through [the Bunto discussion forum](https://bunto.github.io/talk//), and lend a hand answering questions. There's a good chance you've already experienced what another user is experiencing.
 * Find [an open issue](https://github.com/bunto/bunto/issues) (especially [those labeled `help-wanted`](https://github.com/bunto/bunto/issues?q=is%3Aopen+is%3Aissue+label%3Ahelp-wanted)), and submit a proposed fix. If it's your first pull request, we promise we won't bite, and are glad to answer any questions.
 * Help evaluate [open pull requests](https://github.com/bunto/bunto/pulls), by testing the changes locally and reviewing what's proposed.
 
@@ -62,13 +62,13 @@ We want the Bunto documentation to be the best it can be. We've open-sourced our
 
 ### How to submit changes
 
-You can find the documentation for buntorb.com in the [site](https://github.com/bunto/bunto/tree/ruby/site) directory. See the section above, [submitting a pull request](#submitting-a-pull-request) for information on how to propose a change.
+You can find the documentation for bunto.github.io in the [site](https://github.com/bunto/bunto/tree/master/site) directory. See the section above, [submitting a pull request](#submitting-a-pull-request) for information on how to propose a change.
 
-One gotcha, all pull requests should be directed at the `ruby` branch (the default branch).
+One gotcha, all pull requests should be directed at the `master` branch (the default branch).
 
 ### Adding plugins
 
-If you want to add your plugin to the [list of plugins](https://buntorb.com/docs/plugins/#available-plugins), please submit a pull request modifying the [plugins page source file](site/_docs/plugins.md) by adding a link to your plugin under the proper subheading depending upon its type.
+If you want to add your plugin to the [list of plugins](https://bunto.github.io/docs/plugins/#available-plugins), please submit a pull request modifying the [plugins page source file](site/_docs/plugins.md) by adding a link to your plugin under the proper subheading depending upon its type.
 
 ## Code Contributions
 
@@ -80,7 +80,7 @@ Any time you propose a code change, you should also include updates to the docum
 
 #### Documentation
 
-If your contribution changes any Bunto behavior, make sure to update the documentation. Documentation lives in the `site/_docs` folder (spoiler alert: it's a Bunto site!). If the docs are missing information, please feel free to add it in. Great docs make a great project. Include changes to the documentation within your pull request, and once merged, `buntorb.com` will be updated.
+If your contribution changes any Bunto behavior, make sure to update the documentation. Documentation lives in the `site/_docs` folder (spoiler alert: it's a Bunto site!). If the docs are missing information, please feel free to add it in. Great docs make a great project. Include changes to the documentation within your pull request, and once merged, `bunto.github.io` will be updated.
 
 #### Tests
 

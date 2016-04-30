@@ -6,49 +6,43 @@
 [![Security](https://hakiri.io/github/bunto/bunto/ruby.svg)][hakiri]
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)][freenode]
-<!--
-[![Test Coverage](https://codeclimate.com/github/bunto/bunto/badges/coverage.svg)][coverage]
-[![Code Climate](https://codeclimate.com/github/bunto/bunto/badges/gpa.svg)][codeclimate]
-[![Dependency Status](https://gemnasium.com/bunto/bunto.svg)][gemnasium]
--->
 
 [ruby-gems]: https://rubygems.org/gems/bunto
-<!--
-[gemnasium]: https://gemnasium.com/bunto/bunto
-[codeclimate]: https://codeclimate.com/github/bunto/bunto
-[coverage]: https://codeclimate.com/github/bunto/bunto/coverage
--->
 [hakiri]: https://hakiri.io/github/bunto/bunto/ruby
 [travis]: https://travis-ci.org/bunto/bunto
 [freenode]: http://webchat.freenode.net/?channels=bunto
 
-By Suriyaa Kudo, Tom Preston-Werner and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
+By Suriyaa Kudo, Tom Preston-Werner, Parker Moore and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
 
-Bunto is a Web Application Framework and can be used as a static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Bunto takes your content, renders HTML and CSS templates, and spits out a complete, static website ready to be served by Apache, hostSE, Nginx or another web server. Bunto is the engine behind [GitHub Pages](http://pages.github.com), which you can use to host sites right from your GitHub repositories.
+Bunto is a Web Application Framework and can be used as a static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Bunto takes your content, renders HTML and CSS templates, and spits out a complete, static website ready to be served by Apache, hostSE, Nginx or another web server. Bunto is the engine behind [GitHub Pages](https://pages.github.com), which you can use to host sites right from your GitHub repositories.
+
+## Philosophy
+
+Bunto does what you tell it to do — no more, no less. It doesn't try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Bunto gets out of your way and allows you to concentrate on what truly matters: your content.
 
 ## Getting Started
 
-* [Install](https://bunto.github.io/bunto/docs/installation/) the gem
+* [Install](https://bunto.github.io/docs/installation/) the gem
 * Read up about its [Usage](https://bunto.github.io/docs/usage/) and [Configuration](https://bunto.github.io/docs/configuration/)
 * Take a gander at some existing [Sites](https://wiki.github.com/bunto/bunto/sites)
-* Fork and [Contribute](https://bunto.github.io/docs/contributing/) your own modifications
+* [Fork](https://github.com/bunto/bunto/fork) and [Contribute](https://bunto.github.io/docs/contributing/) your own modifications
 * Have questions? Check out our official forum community [Bunto Talk](https://bunto.github.io/talk/) or [`#bunto` on irc.freenode.net](https://botbot.me/freenode/bunto/)
 
 ## Code of Conduct
 
 In order to have a more open and welcoming community, Bunto adheres to a
-[code of conduct](CONDUCT.md) adapted from the Ruby on Rails code of
+[code of conduct](CONDUCT.markdown) adapted from the Ruby on Rails code of
 conduct.
 
 Please adhere to this code of conduct in any interactions you have in the
 Bunto community. It is strictly enforced on all official Bunto
 repositories, websites, and resources. If you encounter someone violating
-these terms, please let a maintainer (@SuriyaaKudoIsc) know
+these terms, please let a maintainer ([@SuriyaaKudoIsc](https://github.com/SuriyaaKudoIsc) know
 and we will address it as soon as possible.
 
 ## Diving In
 
-* [Migrate](http://bunto.github.io/import/docs/home/) from your previous system
+* [Migrate](https://bunto-import.tk/docs/home/) from your previous system
 * Learn how the [YAML Front Matter](https://bunto.github.io/docs/frontmatter/) works
 * Put information on your site with [Variables](https://bunto.github.io/docs/variables/)
 * Customize the [Permalinks](https://bunto.github.io/docs/permalinks/) your posts are generated with
@@ -57,4 +51,4 @@ and we will address it as soon as possible.
 
 ## License
 
-See the [LICENSE](https://github.com/bunto/bunto/blob/master/LICENSE) file. 
+See the [LICENSE](https://github.com/bunto/bunto/blob/master/LICENSE) file.

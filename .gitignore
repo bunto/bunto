@@ -12,6 +12,7 @@
 /test/source/file_name.txt
 /vendor
 Gemfile.lock
+_site/
 bbin/
 coverage
 gh-pages/

@@ -1,3 +1,4 @@
+
 module Bunto
   module Utils
     extend self
@@ -20,7 +21,7 @@ module Bunto
 
     def titleize_slug(slug)
       slug.split("-").map! do |val|
-        val.capitalize!
+        val.capitalize
       end.join(" ")
     end
 
@@ -126,7 +127,7 @@ module Bunto
     def parse_date(input, msg = "Input could not be parsed.")
       Time.parse(input).localtime
     rescue ArgumentError
-      raise Errors::FatalException.new("Invalid date '#{input}': " + msg)
+      raise Errors::InvalidDateError, "Invalid date '#{input}': #{msg}"
     end
 
     # Determines whether a given file has

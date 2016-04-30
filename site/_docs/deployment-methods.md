@@ -25,7 +25,8 @@ There are also a number of ways to easily automate the deployment of a Bunto sit
 
 ### Git post-update hook
 
-If you store your Bunto site in [Git](http://git-scm.com/) (you are using version control, right?), it’s pretty easy to automate the
+If you store your Bunto site in [Git](https://git-scm.com/) (you are using
+version control, right?), it’s pretty easy to automate the
 deployment process by setting up a post-update hook in your Git
 repository, [like
 this](http://web.archive.org/web/20091223025644/http://www.taknado.com/en/2009/03/26/deploying-a-bunto-generated-site/).
@@ -34,7 +35,7 @@ this](http://web.archive.org/web/20091223025644/http://www.taknado.com/en/2009/0
 
 To have a remote server handle the deploy for you every time you push changes using Git, you can create a user account which has all the public keys that are authorized to deploy in its `authorized_keys` file. With that in place, setting up the post-receive hook is done as follows:
 
-{% highlight bash %}
+{% highlight shell %}
 laptop$ ssh deployer@example.com
 server$ mkdir myrepo.git
 server$ cd myrepo.git
@@ -46,7 +47,7 @@ server$ mkdir /var/www/myrepo
 Next, add the following lines to hooks/post-receive and be sure Bunto is
 installed on the server:
 
-{% highlight bash %}
+{% highlight shell %}
 GIT_REPO=$HOME/myrepo.git
 TMP_GIT_CLONE=$HOME/tmp/myrepo
 PUBLIC_WWW=/var/www/myrepo
@@ -60,14 +61,14 @@ exit
 Finally, run the following command on any users laptop that needs to be able to
 deploy using this hook:
 
-{% highlight bash %}
+{% highlight shell %}
 laptops$ git remote add deploy deployer@example.com:~/myrepo.git
 {% endhighlight %}
 
 Deploying is now as easy as telling nginx or Apache to look at
 `/var/www/myrepo` and running the following:
 
-{% highlight bash %}
+{% highlight shell %}
 laptops$ git push deploy master
 {% endhighlight %}
 
@@ -90,13 +91,20 @@ Setup steps are fully documented
 
 ### Rake
 
-Another way to deploy your Bunto site is to use [Rake](https://github.com/jimweirich/rake), [HighLine](https://github.com/JEG2/highline), and
+Another way to deploy your Bunto site is to use [Rake](https://github.com/ruby/rake), [HighLine](https://github.com/JEG2/highline), and
 [Net::SSH](https://github.com/net-ssh/net-ssh). A more complex example of deploying Bunto with Rake that deals with multiple branches can be found in [Git Ready](https://github.com/gitready/gitready/blob/cdfbc4ec5321ff8d18c3ce936e9c749dbbc4f190/Rakefile).
 
 
 ### scp
 
-Once you’ve generated the `_site` directory, you can easily scp it using a `tasks/deploy` shell script similar to [this deploy script here](https://github.com/henrik/henrik.nyh.se/blob/master/script/deploy). You’d obviously need to change the values to reflect your site’s details. There is even [a matching TextMate command](http://gist.github.com/214959) that will help you run this script from within Textmate.
+Once you’ve generated the `_site` directory, you can easily scp it using a
+`tasks/deploy` shell script similar to [this deploy script][]. You’d obviously
+need to change the values to reflect your site’s details. There is even [a 
+matching TextMate command][] that will help you run this script.
+
+[this deploy script here]: https://github.com/henrik/henrik.nyh.se/blob/master/script/deploy
+
+[a matching TextMate command]: https://gist.github.com/henrik/214959
 
 ### rsync
 
@@ -109,7 +117,7 @@ process. It makes sense to restrict rsync access only to the directory which it 
 
 If it is not already installed by your host, you can do it yourself:
 
-- [Download rrsync](http://ftp.samba.org/pub/unpacked/rsync/support/rrsync)
+- [Download rrsync](https://ftp.samba.org/pub/unpacked/rsync/support/rrsync)
 - Place it in the `bin` subdirectory of your home folder  (`~/bin`)
 - Make it executable (`chmod +x`)
 
@@ -121,7 +129,7 @@ is to put the restriction to certificate-based authorization in
 `~/.ssh/authorized_keys`. Then, launch `rrsync` and supply
 it with the folder it shall have read-write access to:
 
-{% highlight bash %}
+{% highlight shell %}
 command="$HOME/bin/rrsync <folder>",no-agent-forwarding,no-port-forwarding,no-pty,no-user-rc,no-X11-forwarding ssh-rsa <cert>
 {% endhighlight %}
 
@@ -131,10 +139,10 @@ command="$HOME/bin/rrsync <folder>",no-agent-forwarding,no-port-forwarding,no-pt
 
 Add the `deploy` script to the site source folder:
 
-{% highlight bash %}
+{% highlight shell %}
 #!/bin/sh
 
-rsync -crvz --rsh=ssh -p2222' --delete-after --delete-excluded   <folder> <user>@<site>:
+rsync -crvz --rsh='ssh -p2222' --delete-after --delete-excluded   <folder> <user>@<site>:
 {% endhighlight %}
 
 Command line parameters are:
@@ -147,7 +155,7 @@ your host uses a different port than the default (e.g, HostGator)
 
 Using this setup, you might run the following command:
 
-{% highlight bash %}
+{% highlight shell %}
 rsync -crvz --rsh='ssh -p2222' --delete-after --delete-excluded   _site/ hostuser@example.org:
 {% endhighlight %}
 
@@ -178,7 +186,7 @@ script executes.
 
 [Rack-Bunto](https://github.com/adaoraul/rack-bunto/) is an easy way to deploy your site on any Rack server such as Amazon EC2, Slicehost, Heroku, and so forth. It also can run with [shotgun](https://github.com/rtomayko/shotgun/), [rackup](https://github.com/rack/rack), [mongrel](https://github.com/mongrel/mongrel), [unicorn](https://github.com/defunkt/unicorn/), and [others](https://github.com/adaoraul/rack-bunto#readme).
 
-Read [this post](http://blog.crowdint.com/2010/08/02/instant-blog-using-bunto-and-heroku.html) on how to deploy to Heroku using Rack-Bunto.
+Read [this post](http://andycroll.com/ruby/serving-a-bunto-blog-using-heroku) on how to deploy to Heroku using Rack-Bunto.
 
 ## Bunto-Admin for Rails
 
@@ -211,3 +219,9 @@ Use [Kickster](http://kickster.nielsenramon.com/) for easy (automated) deploys t
 Kickster provides a basic Bunto project setup packed with web best practises and useful optimization tools increasing your overall project quality. Kickster ships with automated and worry-free deployment scripts for GitHub Pages.
 
 Setting up Kickster is very easy, just install the gem and you are good to go. More documentation can here found [here](https://github.com/nielsenramon/kickster#kickster). If you do not want to use the gem or start a new project you can just copy paste the deployment scripts for [Travis CI](https://github.com/nielsenramon/kickster/tree/master/snippets/travis) or [Circle CI](https://github.com/nielsenramon/kickster#automated-deployment-with-circle-ci).
+
+## Aerobatic
+
+[Aerobatic](https://www.aerobatic.com) is an add-on for Bitbucket that brings GitHub Pages style functionality to Bitbucket users. It includes continuous deployment, custom domains with a wildcard SSL cert, CDN, basic auth, and staging branches all in the box.
+
+Automating the build and deployment of a Bunto site is just as simple as GitHub Pages - push your changes to your repo (excluding the `_site` directory) and within seconds a build will be triggered and your built site deployed to our highly- available, globally distributed hosting service. The build process will even install and execute custom Ruby plugins. See our [Bunto docs](https://www.aerobatic.com/docs/static-generators#bunto) for more details.
