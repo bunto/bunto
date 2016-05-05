@@ -37,7 +37,7 @@ conduct.
 Please adhere to this code of conduct in any interactions you have in the
 Bunto community. It is strictly enforced on all official Bunto
 repositories, websites, and resources. If you encounter someone violating
-these terms, please let a maintainer ([@SuriyaaKudoIsc](https://github.com/SuriyaaKudoIsc) know
+these terms, please let a maintainer ([@SuriyaaKudoIsc](https://github.com/SuriyaaKudoIsc)) know
 and we will address it as soon as possible.
 
 ## Diving In
