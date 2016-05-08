@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
 
   s.summary       = 'A simple, static site generator & web application framework.'
   s.description   = 'Bunto is a simple, static site generator & web application framework.'
+  s.post_install_message = "Bunto is a Web Application Framework which can be used as a simple, static site generator for personal, project, or organization sites."
 
   s.authors       = ['Suriyaa Kudo']
   s.email         = 'SuriyaaKudoIsc@users.noreply.github.com'
