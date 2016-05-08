@@ -2,13 +2,13 @@
 > **Bunto** is a Web Application Framework which can be used as a simple, static site generator for personal, project, or organization sites. 
 
 [![Gem Version](https://img.shields.io/gem/v/bunto.svg)][ruby-gems]
-[![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=ruby)][travis]
-[![Security](https://hakiri.io/github/bunto/bunto/ruby.svg)][hakiri]
+[![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=master)][travis]
+[![Security](https://hakiri.io/github/bunto/bunto/master.svg)][hakiri]
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)][freenode]
 
 [ruby-gems]: https://rubygems.org/gems/bunto
-[hakiri]: https://hakiri.io/github/bunto/bunto/ruby
+[hakiri]: https://hakiri.io/github/bunto/bunto/master
 [travis]: https://travis-ci.org/bunto/bunto
 [freenode]: http://webchat.freenode.net/?channels=bunto
 
