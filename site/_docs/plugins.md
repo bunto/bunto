@@ -757,6 +757,7 @@ LESS.js files during generation.
 - [Textile converter](https://github.com/bunto/bunto-textile-converter): Convert `.textile` files into HTML. Also includes the `textilize` Liquid filter.
 - [Slim plugin](https://github.com/slim-template/bunto-slim): Slim converter and includes for Bunto with support for Liquid tags.
 - [Jade plugin by John Papandriopoulos](https://github.com/snappylabs/jade-bunto-plugin): Jade converter for Bunto.
+- [Pug plugin by Josh Waller](https://github.com/mdxprograms/pug-jekyll-plugin): Pug (previously Jade) converter for Jekyll. 
 - [HAML plugin by Sam Z](https://gist.github.com/517556): HAML converter for Bunto.
 - [HAML-Sass Converter by Adam Pearson](https://gist.github.com/481456): Simple HAML-Sass converter for Bunto. [Fork](https://gist.github.com/528642) by Sam X.
 - [Sass SCSS Converter by Mark Wolfe](https://gist.github.com/960150): Sass converter which uses the new CSS compatible syntax, based Sam X’s fork above.
