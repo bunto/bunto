@@ -757,7 +757,7 @@ LESS.js files during generation.
 - [Textile converter](https://github.com/bunto/bunto-textile-converter): Convert `.textile` files into HTML. Also includes the `textilize` Liquid filter.
 - [Slim plugin](https://github.com/slim-template/bunto-slim): Slim converter and includes for Bunto with support for Liquid tags.
 - [Jade plugin by John Papandriopoulos](https://github.com/snappylabs/jade-bunto-plugin): Jade converter for Bunto.
-- [Pug plugin by Josh Waller](https://github.com/mdxprograms/pug-jekyll-plugin): Pug (previously Jade) converter for Jekyll. 
+- [Pug plugin by Josh Waller](https://github.com/bunto/pug-bunto-plugin): Pug (previously Jade) converter for Bunto. 
 - [HAML plugin by Sam Z](https://gist.github.com/517556): HAML converter for Bunto.
 - [HAML-Sass Converter by Adam Pearson](https://gist.github.com/481456): Simple HAML-Sass converter for Bunto. [Fork](https://gist.github.com/528642) by Sam X.
 - [Sass SCSS Converter by Mark Wolfe](https://gist.github.com/960150): Sass converter which uses the new CSS compatible syntax, based Sam X’s fork above.
@@ -902,6 +902,7 @@ LESS.js files during generation.
 - [bunto-paspagon](https://github.com/KrzysiekJ/bunto-paspagon): Sell your posts in various formats for cryptocurrencies.
 - [Hawkins](https://github.com/awood/hawkins): Adds a `liveserve` sub-command to Bunto that incorporates [LiveReload](http://livereload.com/) into your pages while you preview them.  No more hitting the refresh button in your browser!
 - [Bunto Autoprefixer](https://github.com/vwochnik/bunto-autoprefixer): Autoprefixer integration for Bunto
+- [Bunto-breadcrumbs](https://github.com/bunto/bunto-breadcrumbs): Creates breadcrumbs for Bunto 3.x, includes features like SEO optimization, optional breadcrumb item translation and more.
 
 #### Editors
 
