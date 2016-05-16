@@ -4,7 +4,6 @@ gemspec :name => "bunto"
 gem "rake", "~> 11.0"
 group :development do
   gem "launchy", "~> 2.3"
-  gem "rubocop"
   gem "pry"
 
   unless RUBY_ENGINE == "jruby"
@@ -15,6 +14,7 @@ end
 #
 
 group :test do
+  gem "rubocop"
   gem "cucumber", "~> 2.1"
   gem "bunto_test_plugin"
   gem "bunto_test_plugin_malicious"
