@@ -8,6 +8,8 @@ Bunto’s growing use is producing a wide variety of tutorials, frameworks, exte
 
 ### Useful Guides
 
+- [Bunto Tips](https://Bunto.tips) is a set of resources to help folks get up and running with Bunto. The cover all skill levels, and even include some great video tutorials.
+- [Bunto Cheatsheet](https://cheat.bunto.tips) is a single-page resource for Bunto filters, variables, and the like.
 - [“Creating and Hosting a Personal Site on GitHub”](http://jmcglone.com/guides/github-pages/)
 - [‘Build A Blog With Bunto And GitHub Pages’ on Smashing Magazine](http://www.smashingmagazine.com/2014/08/01/build-blog-bunto-github-pages/)
 - Publishing to GitHub Pages? [Check out our documentation page for just that purpose](/docs/github-pages/).
