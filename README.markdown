@@ -4,12 +4,14 @@
 [![Gem Version](https://img.shields.io/gem/v/bunto.svg)][ruby-gems]
 [![Build Status](https://travis-ci.org/bunto/bunto.svg?branch=master)][travis]
 [![Security](https://hakiri.io/github/bunto/bunto/master.svg)][hakiri]
+[![CodeShip](https://codeship.com/projects/08e147e0-a427-0133-caa4-324d11c03594/status?branch=master)][codeship]
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)][freenode]
 
 [ruby-gems]: https://rubygems.org/gems/bunto
 [hakiri]: https://hakiri.io/github/bunto/bunto/master
 [travis]: https://travis-ci.org/bunto/bunto
+[codeship]: https://codeship.com/projects/129378
 [freenode]: http://webchat.freenode.net/?channels=bunto
 
 By Suriyaa Kudo, Tom Preston-Werner, Parker Moore and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
