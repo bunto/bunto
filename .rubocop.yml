@@ -1,80 +1,199 @@
-Metrics/MethodLength: { Max:  24 }
-Metrics/ClassLength:  { Max: 240 }
-Metrics/ModuleLength: { Max: 240 }
-Metrics/LineLength:   { Max: 112 }
-Metrics/CyclomaticComplexity: { Max: 8 }
-Metrics/PerceivedComplexity: { Max: 8 }
-Metrics/ParameterLists: { Max: 4 }
-Metrics/MethodLength: { Max: 24 }
-Metrics/AbcSize: { Max: 20 }
-
-Style/IndentHash: { EnforcedStyle: consistent }
-Style/HashSyntax: { EnforcedStyle: hash_rockets }
-Style/SignalException: { EnforcedStyle: only_raise }
-Style/AlignParameters: { EnforcedStyle: with_fixed_indentation }
-Style/StringLiteralsInInterpolation: { EnforcedStyle: double_quotes }
-Style/MultilineMethodCallIndentation: { EnforcedStyle: indented }
-Style/MultilineOperationIndentation: { EnforcedStyle: indented }
-Style/FirstParameterIndentation: { EnforcedStyle: consistent }
-Style/StringLiterals: { EnforcedStyle: double_quotes }
-Style/RegexpLiteral: { EnforcedStyle: slashes }
-Style/IndentArray: { EnforcedStyle: consistent }
-Style/ExtraSpacing: { AllowForAlignment: true }
-
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%q': '{}'
-    '%Q': '{}'
-    '%r': '!!'
-    '%s': '()'
-    '%w': '()'
-    '%W': '()'
-    '%x': '()'
-
-Style/AlignArray:                     { Enabled: false }
-Style/StringLiterals:                 { Enabled: false }
-Style/Documentation:                  { Enabled: false }
-Style/DoubleNegation:                 { Enabled: false }
-Style/UnneededCapitalW:               { Enabled: false }
-Style/EmptyLinesAroundModuleBody:     { Enabled: false }
-Style/EmptyLinesAroundAccessModifier: { Enabled: false }
-Style/BracesAroundHashParameters:     { Enabled: false }
-Style/SpaceInsideBrackets:            { Enabled: false }
-Style/IfUnlessModifier:               { Enabled: false }
-Style/ModuleFunction:                 { Enabled: false }
-Style/RescueModifier:                 { Enabled: false }
-Style/GuardClause:                    { Enabled: false }
-Style/FileName:                       { Enabled: false }
-Lint/UselessAccessModifier:           { Enabled: false }
-Style/SpaceAroundOperators:           { Enabled: false }
-Style/RedundantReturn:                { Enabled: false }
-Style/SingleLineMethods:              { Enabled: false }
-
+---
 AllCops:
   TargetRubyVersion: 2.0
   Include:
   - lib/**/*.rb
-
   Exclude:
-  - .rubocop.yml
-  - .codeclimate.yml
-  - .travis.yml
-  - .gitignore
-  - .rspec
-
-  - Gemfile.lock
-  - CHANGELOG.{md,markdown,txt,textile}
-  - CONTRIBUTING.{md,markdown,txt,textile}
-  - readme.{md,markdown,txt,textile}
-  - README.{md,markdown,txt,textile}
-  - Readme.{md,markdown,txt,textile}
-  - ReadMe.{md,markdown,txt,textile}
-  - COPYING
-  - LICENSE
-
-  - site/**/*
-  - test/**/*
-  - vendor/**/*
-  - features/**/*
+  - lib/bunto/cleaner.rb
+  - lib/bunto/collection.rb
+  - lib/bunto/command.rb
+  - lib/bunto/commands/build.rb
+  - lib/bunto/commands/clean.rb
+  - lib/bunto/commands/doctor.rb
+  - lib/bunto/commands/help.rb
+  - lib/bunto/commands/new.rb
+  - lib/bunto/commands/serve
+  - lib/bunto/commands/serve/servlet.rb
+  - lib/bunto/commands/serve.rb
+  - lib/bunto/configuration.rb
+  - lib/bunto/converter.rb
+  - lib/bunto/converters/identity.rb
+  - lib/bunto/converters/markdown
+  - lib/bunto/converters/markdown/kramdown_parser.rb
+  - lib/bunto/converters/markdown/rdiscount_parser.rb
+  - lib/bunto/converters/markdown/redcarpet_parser.rb
+  - lib/bunto/converters/markdown.rb
+  - lib/bunto/converters/smartypants.rb
+  - lib/bunto/convertible.rb
+  - lib/bunto/deprecator.rb
+  - lib/bunto/document.rb
+  - lib/bunto/drops/collection_drop.rb
+  - lib/bunto/drops/document_drop.rb
+  - lib/bunto/drops/drop.rb
+  - lib/bunto/drops/bunto_drop.rb
+  - lib/bunto/drops/site_drop.rb
+  - lib/bunto/drops/unified_payload_drop.rb
+  - lib/bunto/drops/url_drop.rb
+  - lib/bunto/entry_filter.rb
+  - lib/bunto/errors.rb
+  - lib/bunto/excerpt.rb
+  - lib/bunto/external.rb
+  - lib/bunto/filters.rb
+  - lib/bunto/frontmatter_defaults.rb
+  - lib/bunto/generator.rb
+  - lib/bunto/hooks.rb
+  - lib/bunto/layout.rb
+  - lib/bunto/liquid_extensions.rb
+  - lib/bunto/liquid_renderer/file.rb
+  - lib/bunto/liquid_renderer/table.rb
+  - lib/bunto/liquid_renderer.rb
+  - lib/bunto/log_adapter.rb
+  - lib/bunto/page.rb
+  - lib/bunto/plugin.rb
+  - lib/bunto/plugin_manager.rb
+  - lib/bunto/publisher.rb
+  - lib/bunto/reader.rb
+  - lib/bunto/readers/collection_reader.rb
+  - lib/bunto/readers/data_reader.rb
+  - lib/bunto/readers/layout_reader.rb
+  - lib/bunto/readers/page_reader.rb
+  - lib/bunto/readers/post_reader.rb
+  - lib/bunto/readers/static_file_reader.rb
+  - lib/bunto/regenerator.rb
+  - lib/bunto/related_posts.rb
+  - lib/bunto/renderer.rb
+  - lib/bunto/site.rb
+  - lib/bunto/static_file.rb
+  - lib/bunto/stevenson.rb
+  - lib/bunto/tags/highlight.rb
+  - lib/bunto/tags/include.rb
+  - lib/bunto/tags/link.rb
+  - lib/bunto/tags/post_url.rb
+  - lib/bunto/theme.rb
+  - lib/bunto/url.rb
+  - lib/bunto/utils/ansi.rb
+  - lib/bunto/utils/platforms.rb
+  - lib/bunto/utils.rb
+  - lib/bunto/version.rb
+  - lib/bunto.rb
+  - bin/**/*
   - script/**/*
-  - spec/**/*
+  - vendor/**/*
+Lint/AmbiguousRegexpLiteral:
+  Exclude:
+  - features/step_definitions.rb
+Lint/EndAlignment:
+  Severity: error
+Lint/UnreachableCode:
+  Severity: error
+Lint/UselessAccessModifier:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 20
+Metrics/ClassLength:
+  Max: 240
+  Exclude:
+  - !ruby/regexp /features\/.*.rb$/
+Metrics/CyclomaticComplexity:
+  Max: 8
+Metrics/LineLength:
+  Max: 90
+  Severity: warning
+  Exclude:
+  - !ruby/regexp /features\/.*.rb/
+Metrics/MethodLength:
+  Max: 20
+  CountComments: false
+  Severity: error
+Metrics/ModuleLength:
+  Max: 240
+Metrics/ParameterLists:
+  Max: 4
+Metrics/PerceivedComplexity:
+  Max: 8
+Style/Alias:
+  Enabled: false
+Style/AlignArray:
+  Enabled: false
+Style/AlignHash:
+  SupportedLastArgumentHashStyles: always_ignore
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  Enabled: false
+Style/AndOr:
+  Severity: error
+Style/Attr:
+  Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+  Exclude:
+  - !ruby/regexp /features\/.*.rb$/
+Style/DoubleNegation:
+  Enabled: false
+Style/EmptyLinesAroundAccessModifier:
+  Enabled: false
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+Style/ExtraSpacing:
+  AllowForAlignment: true
+Style/FileName:
+  Enabled: false
+Style/FirstParameterIndentation:
+  EnforcedStyle: consistent
+Style/GuardClause:
+  Enabled: false
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+  Severity: error
+Style/IfUnlessModifier:
+  Enabled: false
+Style/IndentArray:
+  EnforcedStyle: consistent
+Style/IndentHash:
+  EnforcedStyle: consistent
+Style/IndentationWidth:
+  Severity: error
+Style/ModuleFunction:
+  Enabled: false
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+Style/MultilineTernaryOperator:
+  Severity: error
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    "%q": "{}"
+    "%Q": "{}"
+    "%r": "{}"
+    "%s": "()"
+    "%w": "()"
+    "%W": "()"
+    "%x": "()"
+Style/RedundantReturn:
+  Enabled: false
+Style/RedundantSelf:
+  Enabled: false
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+Style/RescueModifier:
+  Enabled: false
+Style/SignalException:
+  EnforcedStyle: only_raise
+Style/SingleLineMethods:
+  Enabled: false
+Style/SpaceAroundOperators:
+  Enabled: false
+Style/SpaceInsideBrackets:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+  EnforcedStyle: double_quotes
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+Style/UnneededCapitalW:
+  Enabled: false
