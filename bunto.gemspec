@@ -37,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('rouge', '~> 1.7')
   s.add_runtime_dependency('bunto-sass-converter', '~> 2.0')
   s.add_runtime_dependency('bunto-watch', '~> 1.0')
+  s.add_runtime_dependency("pathutil", "~> 0.9")
 end
