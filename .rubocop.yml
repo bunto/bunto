@@ -6,14 +6,6 @@ AllCops:
   Exclude:
   - lib/bunto/collection.rb
   - lib/bunto/command.rb
-  - lib/bunto/commands/build.rb
-  - lib/bunto/commands/clean.rb
-  - lib/bunto/commands/doctor.rb
-  - lib/bunto/commands/help.rb
-  - lib/bunto/commands/new.rb
-  - lib/bunto/commands/serve
-  - lib/bunto/commands/serve/servlet.rb
-  - lib/bunto/commands/serve.rb
   - lib/bunto/configuration.rb
   - lib/bunto/converter.rb
   - lib/bunto/converters/identity.rb
@@ -153,7 +145,7 @@ Style/Alias:
 Style/AlignArray:
   Enabled: false
 Style/AlignHash:
-  SupportedLastArgumentHashStyles: always_ignore
+  EnforcedHashRocketStyle: table
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   Enabled: false
