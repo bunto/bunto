@@ -25,8 +25,7 @@ module Bunto
           super || super(req, res, "#{basename}.html")
         end
 
-        #
-
+		# rubocop:disable Style/MethodName
         def do_GET(req, res)
           rtn = super
           validate_and_ensure_charset(req, res)

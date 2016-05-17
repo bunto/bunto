@@ -171,9 +171,11 @@ module Bunto
         # forget to add one of the certificates.
 
         private
+		# rubocop:disable Metrics/AbcSize
         def enable_ssl(opts)
           return if !opts[:BuntoOptions]["ssl_cert"] && !opts[:BuntoOptions]["ssl_key"]
           if !opts[:BuntoOptions]["ssl_cert"] || !opts[:BuntoOptions]["ssl_key"]
+            # rubocop:disable Style/RedundantException
             raise RuntimeError, "--ssl-cert or --ssl-key missing."
           end
 
