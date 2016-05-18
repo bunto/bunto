@@ -1,7 +1,7 @@
 # Bunto _config.yml settings
 
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: /news/:year/:month/:day/:title/
 excerpt_separator: ""
 
