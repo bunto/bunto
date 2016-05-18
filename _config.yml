@@ -22,5 +22,5 @@ description: Transform your plain text into static websites and blogs
 url: https://bunto.github.io
 
 gems:
-  - bunto-feed
-  - bunto-redirect-from
+  - jekyll-feed
+  - jekyll-redirect-from
