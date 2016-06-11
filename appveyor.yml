@@ -38,11 +38,6 @@ install:
   - gem install bundler
   - bundle install --retry=3
 
-before_test:
-  - ruby --version
-  - gem --version
-  - bundler --version
-
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
@@ -56,6 +51,12 @@ build: off
 #---------------------------------#
 #       tests configuration       #
 #---------------------------------#
+
+# test before these commands
+before_test:
+  - ruby --version
+  - gem --version
+  - bundler --version
 
 # to run your custom scripts instead of automatic tests
 test_script:
