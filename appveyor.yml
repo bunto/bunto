@@ -31,6 +31,10 @@ environment:
     - ruby_version: "22"
     - ruby_version: "22-x64"
 
+# enable bundler cache
+cache:
+  - vendor/bundle
+
 # scripts that run after cloning repository
 install:
   - echo "Install Bunto on AppVeyor CI..."
