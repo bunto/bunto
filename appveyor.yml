@@ -1,0 +1,79 @@
+# AppVeyor CI (http://www.appveyor.com/docs/appveyor-yml)
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: {build}
+
+# branches to build
+branches:
+  # whitelist
+  only:
+    - master
+
+  # blacklist
+  except:
+    - master-old
+    - gh-pages
+    - quexy
+
+# Do not build on tags (GitHub and BitBucket)
+skip_tags: true
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+environment:
+  matrix:
+    - ruby_version: "200"
+    - ruby_version: "200-x64"
+    - ruby_version: "21"
+    - ruby_version: "21-x64"
+    - ruby_version: "22"
+    - ruby_version: "22-x64"
+
+# scripts that run after cloning repository
+install:
+  - echo "Install Bunto on AppVeyor CI..."
+  - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
+  - gem install bundler
+  - bundle install --retry=3
+  - ruby --version
+  - gem --version
+  - bundler --version
+
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform: Any CPU
+
+# to disable automatic builds
+build: off
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+# to run your custom scripts instead of automatic tests
+test_script:
+  - bundle exec rake
+
+#---------------------------------#
+#         notifications           #
+#---------------------------------#
+  
+notifications:
+
+  # Email
+  - provider: Email
+    to:
+      - SuriyaaKudoIsc@users.noreply.github.com
+    subject: 'AppVeyor CI - Build {{status}}'
+    message: "{{message}}, {{commitId}}, ..."
+    on_build_status_changed: true
