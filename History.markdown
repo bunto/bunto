@@ -3,6 +3,9 @@
 
 ----
 
+### Minor Enhancements
+* Move bin/bunto to exe/bunto to prevent collision with binstubs (#78)
+
 ## 3.0.0 / 2016-0?-??
 
 ### Minor Enhancements
