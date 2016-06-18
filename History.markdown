@@ -6,6 +6,9 @@
 ### Minor Enhancements
 * Move bin/bunto to exe/bunto to prevent collision with binstubs (#78)
 
+### Development Fixes
+* Fix rubocop offenses in exe/bunto (#79)
+
 ## 3.0.0 / 2016-0?-??
 
 ### Minor Enhancements
