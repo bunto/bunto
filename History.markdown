@@ -8,6 +8,7 @@
 
 ### Development Fixes
 * Fix rubocop offenses in exe/bunto (#79)
+* Rubocop: test/* (#80)
 
 ## 3.0.0 / 2016-0?-??
 
