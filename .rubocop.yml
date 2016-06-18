@@ -5,108 +5,12 @@ AllCops:
   - lib/**/*.rb
   Exclude:
   - lib/bunto/collection.rb
-  - lib/bunto/command.rb
   - lib/bunto/configuration.rb
-  - lib/bunto/converter.rb
-  - lib/bunto/converters/identity.rb
-  - lib/bunto/converters/markdown
-  - lib/bunto/converters/markdown/kramdown_parser.rb
-  - lib/bunto/converters/markdown/rdiscount_parser.rb
-  - lib/bunto/converters/markdown/redcarpet_parser.rb
-  - lib/bunto/converters/markdown.rb
-  - lib/bunto/converters/smartypants.rb
   - lib/bunto/convertible.rb
-  - lib/bunto/deprecator.rb
   - lib/bunto/document.rb
-  - lib/bunto/drops/collection_drop.rb
-  - lib/bunto/drops/document_drop.rb
-  - lib/bunto/drops/drop.rb
-  - lib/bunto/drops/bunto_drop.rb
-  - lib/bunto/drops/site_drop.rb
-  - lib/bunto/drops/unified_payload_drop.rb
-  - lib/bunto/drops/url_drop.rb
-  - lib/bunto/entry_filter.rb
-  - lib/bunto/errors.rb
-  - lib/bunto/excerpt.rb
-  - lib/bunto/external.rb
-  - lib/bunto/filters.rb
-  - lib/bunto/frontmatter_defaults.rb
-  - lib/bunto/generator.rb
-  - lib/bunto/hooks.rb
-  - lib/bunto/layout.rb
-  - lib/bunto/liquid_extensions.rb
-  - lib/bunto/liquid_renderer/file.rb
-  - lib/bunto/liquid_renderer/table.rb
-  - lib/bunto/liquid_renderer.rb
-  - lib/bunto/log_adapter.rb
-  - lib/bunto/page.rb
-  - lib/bunto/plugin.rb
-  - lib/bunto/plugin_manager.rb
-  - lib/bunto/publisher.rb
-  - lib/bunto/reader.rb
-  - lib/bunto/readers/collection_reader.rb
-  - lib/bunto/readers/data_reader.rb
-  - lib/bunto/readers/layout_reader.rb
-  - lib/bunto/readers/page_reader.rb
-  - lib/bunto/readers/post_reader.rb
-  - lib/bunto/readers/static_file_reader.rb
   - lib/bunto/regenerator.rb
-  - lib/bunto/related_posts.rb
   - lib/bunto/renderer.rb
-  - lib/bunto/site.rb
-  - lib/bunto/static_file.rb
-  - lib/bunto/stevenson.rb
-  - lib/bunto/tags/highlight.rb
-  - lib/bunto/tags/include.rb
-  - lib/bunto/tags/link.rb
-  - lib/bunto/tags/post_url.rb
-  - lib/bunto/theme.rb
-  - lib/bunto/url.rb
-  - lib/bunto/utils/ansi.rb
-  - lib/bunto/utils/platforms.rb
   - lib/bunto/utils.rb
-  - lib/bunto/version.rb
-  - lib/bunto.rb
-  - features/step_definitions.rb
-  - features/support/formatter.rb
-  - features/support/helpers.rb
-  - test/helper.rb
-  - test/simplecov_custom_profile.rb
-  - test/test_ansi.rb
-  - test/test_cleaner.rb
-  - test/test_coffeescript.rb
-  - test/test_collections.rb
-  - test/test_command.rb
-  - test/test_commands_serve.rb
-  - test/test_configuration.rb
-  - test/test_convertible.rb
-  - test/test_doctor_command.rb
-  - test/test_document.rb
-  - test/test_entry_filter.rb
-  - test/test_excerpt.rb
-  - test/test_filters.rb
-  - test/test_front_matter_defaults.rb
-  - test/test_generated_site.rb
-  - test/test_kramdown.rb
-  - test/test_layout_reader.rb
-  - test/test_liquid_extensions.rb
-  - test/test_liquid_renderer.rb
-  - test/test_log_adapter.rb
-  - test/test_new_command.rb
-  - test/test_page.rb
-  - test/test_path_sanitization.rb
-  - test/test_plugin_manager.rb
-  - test/test_rdiscount.rb
-  - test/test_redcarpet.rb
-  - test/test_regenerator.rb
-  - test/test_related_posts.rb
-  - test/test_sass.rb
-  - test/test_site.rb
-  - test/test_static_file.rb
-  - test/test_tags.rb
-  - test/test_theme.rb
-  - test/test_url.rb
-  - test/test_utils.rb
   - bin/**/*
   - benchmark/**/*
   - script/**/*
@@ -120,9 +24,10 @@ Lint/UselessAccessModifier:
 Metrics/AbcSize:
   Max: 20
 Metrics/ClassLength:
-  Max: 240
+  Max: 300
   Exclude:
   - !ruby/regexp /features\/.*.rb$/
+  - !ruby/regexp /test\/.*.rb$/
 Metrics/CyclomaticComplexity:
   Max: 8
 Metrics/LineLength:
@@ -208,7 +113,7 @@ Style/RedundantReturn:
 Style/RedundantSelf:
   Enabled: false
 Style/RegexpLiteral:
-  EnforcedStyle: slashes
+  EnforcedStyle: percent_r
 Style/RescueModifier:
   Enabled: false
 Style/SignalException:
