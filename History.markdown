@@ -5,6 +5,7 @@
 
 ### Minor Enhancements
 * Move bin/bunto to exe/bunto to prevent collision with binstubs (#78)
+* Run Site#generate for 'bunto doctor' to catch plugin issues (#82)
 
 ### Development Fixes
 * Fix rubocop offenses in exe/bunto (#79)
