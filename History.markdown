@@ -13,6 +13,7 @@
 
 ### Site Enhancements
 * Update normalize.css to v4.0.0. (#81)
+* Update template links to point to core Liquid site (#83)
 
 ## 3.0.0 / 2016-0?-??
 
