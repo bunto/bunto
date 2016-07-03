@@ -10,6 +10,9 @@
 * Fix rubocop offenses in exe/bunto (#79)
 * Rubocop: test/* (#80)
 
+### Site Enhancements
+* Update normalize.css to v4.0.0. (#81)
+
 ## 3.0.0 / 2016-0?-??
 
 ### Minor Enhancements
