@@ -10,6 +10,7 @@
       <th>Hakiri</th>
       <th>CodeShip</th>
       <th>RubyGems</th>
+      <th>Gemnasium</th>
     </tr>
   </thead>
   <tbody>
@@ -28,6 +29,9 @@
       </td>
       <td align="center">
         <a href="https://rubygems.org/gems/bunto"><img src="https://img.shields.io/gem/v/bunto.svg" alt="Gem Version"></a>
+      </td>
+      <td align="center">
+        <a href="https://gemnasium.com/bunto/bunto"><img src="https://gemnasium.com/bunto/bunto.svg" alt="Dependency Status"></a>
       </td>
     </tr>
   </tbody>
