@@ -84,6 +84,7 @@ and we will address it as soon as possible.
 ## Have a problem? Come chat with us!
 [![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)](http://webchat.freenode.net/?channels=bunto)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Facebook.svg" width="60">](https://www.facebook.com/groups/BuntoWAF)
 
 ## License
 
