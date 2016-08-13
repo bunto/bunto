@@ -73,7 +73,7 @@ One gotcha, all pull requests should be directed at the `master` branch (the def
 
 ### Adding plugins
 
-If you want to add your plugin to the [list of plugins](https://bunto.github.io/docs/plugins/#available-plugins), please submit a pull request modifying the [plugins page source file](site/_docs/plugins.md) by adding a link to your plugin under the proper subheading depending upon its type.
+If you want to add your plugin to the [list of plugins](https://bunto.github.io/docs/plugins/#available-plugins), please submit a pull request modifying the [plugins page source file](https://github.com/bunto/bunto/blob/master/site/_docs/plugins.md) by adding a link to your plugin under the proper subheading depending upon its type.
 
 ## Code Contributions
 
@@ -95,7 +95,7 @@ If your contribution changes any Bunto behavior, make sure to update the documen
 
 ### Code contributions generally
 
-* Bunto follows the [GitHub Ruby Styleguide](https://github.com/styleguide/ruby).
+* Bunto uses the [Rubocop](https://github.com/bbatsov/rubocop) static analyzer to ensure that contributions follow the [GitHub Ruby Styleguide](https://github.com/styleguide/ruby). Please check your code using `script/fmt` and resolve any errors before pushing your branch.
 
 * Don't bump the Gem version in your pull request (if you don't know what that means, you probably didn't).
 

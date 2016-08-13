@@ -9,7 +9,7 @@ module Bunto
     def initialize(post)
       @post = post
       @site = post.site
-      Bunto::External.require_with_graceful_fail('classifier-reborn') if site.lsi
+      Bunto::External.require_with_graceful_fail("classifier-reborn") if site.lsi
     end
 
     def build

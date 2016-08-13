@@ -5,8 +5,8 @@ module Bunto
         # Create the Mercenary command for the Bunto CLI for this Command
         def init_with_program(prog)
           prog.command(:build) do |c|
-            c.syntax      'build [options]'
-            c.description 'Build your site'
+            c.syntax      "build [options]"
+            c.description "Build your site"
             c.alias :b
 
             add_build_options(c)
@@ -27,15 +27,17 @@ module Bunto
           options = configuration_from_options(options)
           site = Bunto::Site.new(options)
 
-          if options.fetch('skip_initial_build', false)
-            Bunto.logger.warn "Build Warning:", "Skipping the initial build. This may result in an out-of-date site."
+          if options.fetch("skip_initial_build", false)
+            Bunto.logger.warn "Build Warning:", "Skipping the initial build." \
+                        " This may result in an out-of-date site."
           else
             build(site, options)
           end
 
-          if options.fetch('detach', false)
-            Bunto.logger.info "Auto-regeneration:", "disabled when running server detached."
-          elsif options.fetch('watch', false)
+          if options.fetch("detach", false)
+            Bunto.logger.info "Auto-regeneration:",
+              "disabled when running server detached."
+          elsif options.fetch("watch", false)
             watch(site, options)
           else
             Bunto.logger.info "Auto-regeneration:", "disabled. Use --watch to enable."
@@ -50,12 +52,13 @@ module Bunto
         # Returns nothing.
         def build(site, options)
           t = Time.now
-          source      = options['source']
-          destination = options['destination']
-          incremental = options['incremental']
+          source      = options["source"]
+          destination = options["destination"]
+          incremental = options["incremental"]
           Bunto.logger.info "Source:", source
           Bunto.logger.info "Destination:", destination
-          Bunto.logger.info "Incremental build:", (incremental ? "enabled" : "disabled. Enable with --incremental")
+          Bunto.logger.info "Incremental build:",
+            (incremental ? "enabled" : "disabled. Enable with --incremental")
           Bunto.logger.info "Generating..."
           process_site(site)
           Bunto.logger.info "", "done in #{(Time.now - t).round(3)} seconds."
@@ -67,9 +70,14 @@ module Bunto
         # options - A Hash of options passed to the command
         #
         # Returns nothing.
-        def watch(_site, options)
-          External.require_with_graceful_fail 'bunto-watch'
-          Bunto::Watcher.watch(options)
+        def watch(site, options)
+          External.require_with_graceful_fail "bunto-watch"
+          watch_method = Bunto::Watcher.method(:watch)
+          if watch_method.parameters.size == 1
+            watch_method.call(options)
+          else
+            watch_method.call(options, site)
+          end
         end
       end # end of class << self
     end

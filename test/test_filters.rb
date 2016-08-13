@@ -15,6 +15,10 @@ class TestFilters < BuntoUnitTest
     end
   end
 
+  class SelectDummy
+    def select; end
+  end
+
   context "filters" do
     setup do
       @filter = BuntoFilter.new({
@@ -22,10 +26,11 @@ class TestFilters < BuntoUnitTest
         "destination" => dest_dir,
         "timezone"    => "UTC"
       })
-      @sample_time = Time.utc(2013, 03, 27, 11, 22, 33)
+      @sample_time = Time.utc(2013, 3, 27, 11, 22, 33)
       @sample_date = Date.parse("2013-03-27")
       @time_as_string = "September 11, 2001 12:46:30 -0000"
       @time_as_numeric = 1_399_680_607
+      @integer_as_string = "142857"
       @array_of_objects = [
         { "color" => "red",  "size" => "large"  },
         { "color" => "red",  "size" => "medium" },
@@ -37,6 +42,13 @@ class TestFilters < BuntoUnitTest
       assert_equal(
         "<p>something <strong>really</strong> simple</p>\n",
         @filter.markdownify("something **really** simple")
+      )
+    end
+
+    should "markdownify with a number" do
+      assert_equal(
+        "<p>404</p>\n",
+        @filter.markdownify(404)
       )
     end
 
@@ -81,6 +93,13 @@ class TestFilters < BuntoUnitTest
         assert_equal "5 &gt; 4", @filter.smartify("5 > 4")
         assert_equal "This &amp; that", @filter.smartify("This & that")
       end
+
+      should "convert a number to a string" do
+        assert_equal(
+          "404",
+          @filter.smartify(404)
+        )
+      end
     end
 
     should "sassify with simple string" do
@@ -117,6 +136,30 @@ class TestFilters < BuntoUnitTest
         "chunky, bacon, bits, and pieces",
         @filter.array_to_sentence_string(%w(chunky bacon bits pieces))
       )
+    end
+
+    context "normalize_whitespace filter" do
+      should "replace newlines with a space" do
+        assert_equal "a b", @filter.normalize_whitespace("a\nb")
+        assert_equal "a b", @filter.normalize_whitespace("a\n\nb")
+      end
+
+      should "replace tabs with a space" do
+        assert_equal "a b", @filter.normalize_whitespace("a\tb")
+        assert_equal "a b", @filter.normalize_whitespace("a\t\tb")
+      end
+
+      should "replace multiple spaces with a single space" do
+        assert_equal "a b", @filter.normalize_whitespace("a  b")
+        assert_equal "a b", @filter.normalize_whitespace("a\t\nb")
+        assert_equal "a b", @filter.normalize_whitespace("a \t \n\nb")
+      end
+
+      should "strip whitespace from beginning and end of string" do
+        assert_equal "a", @filter.normalize_whitespace("a ")
+        assert_equal "a", @filter.normalize_whitespace(" a")
+        assert_equal "a", @filter.normalize_whitespace(" a ")
+      end
     end
 
     context "date filters" do
@@ -197,6 +240,13 @@ class TestFilters < BuntoUnitTest
             @filter.date_to_rfc822(@time_as_string)
           )
         end
+
+        should "convert a String to Integer" do
+          assert_equal(
+            142_857,
+            @filter.to_integer(@integer_as_string)
+          )
+        end
       end
 
       context "with a Numeric object" do
@@ -220,6 +270,15 @@ class TestFilters < BuntoUnitTest
             "Sat, 10 May 2014 00:10:07 +0000",
             @filter.date_to_rfc822(@time_as_numeric)
           )
+        end
+      end
+
+      context "without input" do
+        should "raise an error if input is nil" do
+          err = assert_raises Bunto::Errors::InvalidDateError do
+            @filter.date_to_xmlschema(nil)
+          end
+          assert_equal "Invalid Date: 'nil' is not a valid datetime.", err.message
         end
       end
     end
@@ -492,6 +551,11 @@ class TestFilters < BuntoUnitTest
         assert_equal 1, results.length
         assert_equal 4.7, results[0]["rating"]
       end
+
+      should "always return an array if the object responds to `select`" do
+        results = @filter.where(SelectDummy.new, "obj", "1 == 1")
+        assert_equal [], results
+      end
     end
 
     context "where_exp filter" do
@@ -556,6 +620,19 @@ class TestFilters < BuntoUnitTest
         assert_equal "b", results[1]["id"]
         assert_equal "d", results[2]["id"]
       end
+
+      should "filter posts" do
+        site = fixture_site.tap(&:read)
+        posts = site.site_payload["site"]["posts"]
+        results = @filter.where_exp(posts, "obj", "obj.title == 'Foo Bar'")
+        assert_equal 1, results.length
+        assert_equal site.posts.find { |p| p.title == "Foo Bar" }, results.first
+      end
+
+      should "always return an array if the object responds to `select`" do
+        results = @filter.where_exp(SelectDummy.new, "obj", "1 == 1")
+        assert_equal [], results
+      end
     end
 
     context "sort filter" do
@@ -594,6 +671,28 @@ class TestFilters < BuntoUnitTest
       should "return sorted by property array with nils last" do
         assert_equal [{ "a" => 1 }, { "a" => 2 }, { "b" => 1 }],
           @filter.sort([{ "a" => 2 }, { "b" => 1 }, { "a" => 1 }], "a", "last")
+      end
+    end
+
+    context "to_integer filter" do
+      should "raise Exception when input is not integer or string" do
+        assert_raises NoMethodError do
+          @filter.to_integer([1, 2])
+        end
+      end
+      should "return 0 when input is nil" do
+        assert_equal 0, @filter.to_integer(nil)
+      end
+      should "return integer when input is boolean" do
+        assert_equal 0, @filter.to_integer(false)
+        assert_equal 1, @filter.to_integer(true)
+      end
+      should "return integers" do
+        assert_equal 0, @filter.to_integer(0)
+        assert_equal 1, @filter.to_integer(1)
+        assert_equal 1, @filter.to_integer(1.42857)
+        assert_equal(-1, @filter.to_integer(-1))
+        assert_equal(-1, @filter.to_integer(-1.42857))
       end
     end
 

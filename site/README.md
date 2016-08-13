@@ -1,6 +1,6 @@
 # Bunto docs site
 
-This directory contains the code for the Bunto docs site, [buntorb.com](https://bunto.github.io/).
+This directory contains the code for the Bunto docs site, [bunto.github.io](https://bunto.github.io/).
 
 ## Contributing
 

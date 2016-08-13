@@ -1,10 +1,10 @@
-require 'helper'
+require "helper"
 
 class TestSass < BuntoUnitTest
   context "importing partials" do
     setup do
       @site = Bunto::Site.new(Bunto.configuration({
-        "source" => source_dir,
+        "source"      => source_dir,
         "destination" => dest_dir
       }))
       @site.process
@@ -16,11 +16,13 @@ class TestSass < BuntoUnitTest
     end
 
     should "register the SCSS converter" do
-      assert !!@site.find_converter_instance(Bunto::Converters::Scss), "SCSS converter implementation should exist."
+      message = "SCSS converter implementation should exist."
+      assert !!@site.find_converter_instance(Bunto::Converters::Scss), message
     end
 
     should "register the Sass converter" do
-      assert !!@site.find_converter_instance(Bunto::Converters::Sass), "Sass converter implementation should exist."
+      message = "Sass converter implementation should exist."
+      assert !!@site.find_converter_instance(Bunto::Converters::Sass), message
     end
   end
 end

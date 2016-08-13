@@ -1,9 +1,10 @@
-require 'helper'
+require "helper"
 
 class TestLayoutReader < BuntoUnitTest
   context "reading layouts" do
     setup do
-      config = Bunto::Configuration::DEFAULTS.merge({'source' => source_dir, 'destination' => dest_dir})
+      config = Bunto::Configuration::DEFAULTS.merge({ "source"      => source_dir,
+                                                       "destination" => dest_dir })
       @site = fixture_site(config)
     end
 

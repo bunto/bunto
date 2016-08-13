@@ -17,7 +17,7 @@ send them to your host through FTP.
 
 ## Self-managed web server
 
-If you have direct access yourself to the deployment web server yourself, the process is essentially the same, except you might have other methods available to you (such as `scp`, or even direct filesystem access) for transferring the files. Just remember to make sure the contents of the generated `_site` folder get placed in the appropriate web root directory for your web server.
+If you have direct access to the deployment web server, the process is essentially the same, except you might have other methods available to you (such as `scp`, or even direct filesystem access) for transferring the files. Just remember to make sure the contents of the generated `_site` folder get placed in the appropriate web root directory for your web server.
 
 ## Automated methods
 
@@ -99,7 +99,7 @@ Another way to deploy your Bunto site is to use [Rake](https://github.com/ruby/r
 
 Once you’ve generated the `_site` directory, you can easily scp it using a
 `tasks/deploy` shell script similar to [this deploy script][]. You’d obviously
-need to change the values to reflect your site’s details. There is even [a 
+need to change the values to reflect your site’s details. There is even [a
 matching TextMate command][] that will help you run this script.
 
 [this deploy script here]: https://github.com/henrik/henrik.nyh.se/blob/master/script/deploy
@@ -156,7 +156,7 @@ your host uses a different port than the default (e.g, HostGator)
 Using this setup, you might run the following command:
 
 {% highlight shell %}
-rsync -crvz --rsh='ssh -p2222' --delete-after --delete-excluded   _site/ hostuser@example.org:
+rsync -crvz --rsh='ssh -p2222' --delete-after --delete-excluded _site/ hostuser@example.org:
 {% endhighlight %}
 
 Don't forget the column `:` after server name!
@@ -178,7 +178,7 @@ Alternatively, you can use an `rsync-exclude.txt` file to control which files wi
 
 #### Done!
 
-Now it's possible to publish your website simply by running the  `deploy` 
+Now it's possible to publish your website simply by running the `deploy`
 script. If your SSH certificate  is [passphrase-protected](https://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html), you will be asked to enter it when the
 script executes.
 

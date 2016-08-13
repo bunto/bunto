@@ -2,7 +2,7 @@
 require 'benchmark/ips'
 
 # For this pull request, which changes Page#dir
-# https://github.com/bunto/bunto/pull/41
+# https://github.com/bunto/bunto/issues/41
 
 FORWARD_SLASH = '/'.freeze
 

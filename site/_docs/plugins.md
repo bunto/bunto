@@ -751,13 +751,14 @@ LESS.js files during generation.
 - [Bunto Flickr Plugin](https://github.com/lawmurray/indii-bunto-flickr) by [Lawrence Murray](http://www.indii.org): Generates posts for photos uploaded to a Flickr photostream.
 - [Bunto::Paginate::Category](https://github.com/midnightSuyama/bunto-paginate-category): Pagination Generator for Bunto Category.
 - [AMP-Bunto by Juuso Mikkonen](https://github.com/juusaw/amp-bunto): Generate [Accelerated Mobile Pages](https://www.ampproject.org) of Bunto posts.
+- [Bunto Art Gallery plugin](https://github.com/alexivkin/Bunto-Art-Gallery-Plugin): An advanced art/photo gallery generation plugin for creating galleries from a set of image folders. Supports image tagging, thumbnails, sorting, image rotation, post-processing (remove EXIF, add watermark), multiple collections and much more.
 
 #### Converters
 
 - [Textile converter](https://github.com/bunto/bunto-textile-converter): Convert `.textile` files into HTML. Also includes the `textilize` Liquid filter.
 - [Slim plugin](https://github.com/slim-template/bunto-slim): Slim converter and includes for Bunto with support for Liquid tags.
 - [Jade plugin by John Papandriopoulos](https://github.com/snappylabs/jade-bunto-plugin): Jade converter for Bunto.
-- [Pug plugin by Josh Waller](https://github.com/bunto/pug-bunto-plugin): Pug (previously Jade) converter for Bunto. 
+- [Pug plugin by Josh Waller](https://github.com/bunto/pug-bunto-plugin): Pug (previously Jade) converter for Bunto.
 - [HAML plugin by Sam Z](https://gist.github.com/517556): HAML converter for Bunto.
 - [HAML-Sass Converter by Adam Pearson](https://gist.github.com/481456): Simple HAML-Sass converter for Bunto. [Fork](https://gist.github.com/528642) by Sam X.
 - [Sass SCSS Converter by Mark Wolfe](https://gist.github.com/960150): Sass converter which uses the new CSS compatible syntax, based Sam X’s fork above.
@@ -827,7 +828,6 @@ LESS.js files during generation.
 - [Bunto-citation](https://github.com/archome/bunto-citation): Render BibTeX-formatted bibliographies/citations included in posts and pages (pure Ruby).
 - [Bunto Dribbble Set Tag](https://github.com/ericdfields/Bunto-Dribbble-Set-Tag): Builds Dribbble image galleries from any user.
 - [Debbugs](https://gist.github.com/2218470): Allows posting links to Debian BTS easily.
-- [Refheap_tag](https://github.com/aburdette/refheap_tag): Liquid tag that allows embedding pastes from [refheap](https://www.refheap.com/).
 - [Bunto-devonly_tag](https://gist.github.com/2403522): A block tag for including markup only during development.
 - [BuntoGalleryTag](https://github.com/redwallhp/BuntoGalleryTag) by [redwallhp](https://github.com/redwallhp): Generates thumbnails from a directory of images and displays them in a grid.
 - [Youku and Tudou Embed](https://gist.github.com/Yexiaoxing/5891929): Liquid plugin for embedding Youku and Tudou videos.
@@ -860,6 +860,9 @@ LESS.js files during generation.
 - [bunto-figure](https://github.com/paulrobertlloyd/bunto-figure): A liquid tag for Bunto that generates `<figure>` elements.
 - [Bunto Video Embed](https://github.com/eug/bunto-video-embed): It provides several tags to easily embed videos (e.g. Youtube, Vimeo, UStream and Ted Talks)
 - [bunto-i18n_tags](https://github.com/KrzysiekJ/bunto-i18n_tags): Translate your templates.
+- [Bunto Ideal Image Slider](https://github.com/xHN35RQ/bunto-ideal-image-slider): Liquid tag plugin to create image sliders using [Ideal Image Slider](https://github.com/gilbitron/Ideal-Image-Slider).
+- [Bunto Tags List Plugin](https://github.com/crispgm/bunto-tags-list-plugin): A Liquid tag plugin that creates tags list in specific order.
+- [Bunto Maps](https://github.com/ayastreb/bunto-maps) by [Anatoliy Yastreb](https://github.com/ayastreb): A Bunto plugin to easily embed maps with filterable locations.
 
 #### Collections
 
@@ -903,6 +906,7 @@ LESS.js files during generation.
 - [Hawkins](https://github.com/awood/hawkins): Adds a `liveserve` sub-command to Bunto that incorporates [LiveReload](http://livereload.com/) into your pages while you preview them.  No more hitting the refresh button in your browser!
 - [Bunto Autoprefixer](https://github.com/vwochnik/bunto-autoprefixer): Autoprefixer integration for Bunto
 - [Bunto-breadcrumbs](https://github.com/bunto/bunto-breadcrumbs): Creates breadcrumbs for Bunto 3.x, includes features like SEO optimization, optional breadcrumb item translation and more.
+- [generator-buntoized](https://github.com/sondr3/generator-buntoized): A Yeoman generator for rapidly developing sites with Gulp. Live reload your site, automatically minify and optimize your assets and much more.
 
 #### Editors
 

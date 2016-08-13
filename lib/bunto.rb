@@ -6,78 +6,79 @@ $LOAD_PATH.unshift File.dirname(__FILE__) # For use/testing when no gem is insta
 #
 # Returns nothing.
 def require_all(path)
-  glob = File.join(File.dirname(__FILE__), path, '*.rb')
-  Dir[glob].each do |f|
+  glob = File.join(File.dirname(__FILE__), path, "*.rb")
+  Dir[glob].sort.each do |f|
     require f
   end
 end
 
 # rubygems
-require 'rubygems'
+require "rubygems"
 
 # stdlib
 require "pathutil"
-require 'forwardable'
-require 'fileutils'
-require 'time'
-require 'English'
-require 'pathname'
-require 'logger'
-require 'set'
+require "forwardable"
+require "fileutils"
+require "time"
+require "English"
+require "pathname"
+require "logger"
+require "set"
 
 # 3rd party
-require 'safe_yaml/load'
-require 'liquid'
-require 'kramdown'
-require 'colorator'
+require "safe_yaml/load"
+require "liquid"
+require "kramdown"
+require "colorator"
 
 SafeYAML::OPTIONS[:suppress_warnings] = true
 
 module Bunto
   # internal requires
-  autoload :Cleaner,             'bunto/cleaner'
-  autoload :Collection,          'bunto/collection'
-  autoload :Configuration,       'bunto/configuration'
-  autoload :Convertible,         'bunto/convertible'
-  autoload :Deprecator,          'bunto/deprecator'
-  autoload :Document,            'bunto/document'
-  autoload :Draft,               'bunto/draft'
-  autoload :EntryFilter,         'bunto/entry_filter'
-  autoload :Errors,              'bunto/errors'
-  autoload :Excerpt,             'bunto/excerpt'
-  autoload :External,            'bunto/external'
-  autoload :FrontmatterDefaults, 'bunto/frontmatter_defaults'
-  autoload :Hooks,               'bunto/hooks'
-  autoload :Layout,              'bunto/layout'
-  autoload :CollectionReader,    'bunto/readers/collection_reader'
-  autoload :DataReader,          'bunto/readers/data_reader'
-  autoload :LayoutReader,        'bunto/readers/layout_reader'
-  autoload :PostReader,          'bunto/readers/post_reader'
-  autoload :PageReader,          'bunto/readers/page_reader'
-  autoload :StaticFileReader,    'bunto/readers/static_file_reader'
-  autoload :LogAdapter,          'bunto/log_adapter'
-  autoload :Page,                'bunto/page'
-  autoload :PluginManager,       'bunto/plugin_manager'
-  autoload :Publisher,           'bunto/publisher'
-  autoload :Reader,              'bunto/reader'
-  autoload :Regenerator,         'bunto/regenerator'
-  autoload :RelatedPosts,        'bunto/related_posts'
-  autoload :Renderer,            'bunto/renderer'
-  autoload :LiquidRenderer,      'bunto/liquid_renderer'
-  autoload :Site,                'bunto/site'
-  autoload :StaticFile,          'bunto/static_file'
-  autoload :Stevenson,           'bunto/stevenson'
-  autoload :Theme,               'bunto/theme'
-  autoload :URL,                 'bunto/url'
-  autoload :Utils,               'bunto/utils'
-  autoload :VERSION,             'bunto/version'
+  autoload :Cleaner,             "bunto/cleaner"
+  autoload :Collection,          "bunto/collection"
+  autoload :Configuration,       "bunto/configuration"
+  autoload :Convertible,         "bunto/convertible"
+  autoload :Deprecator,          "bunto/deprecator"
+  autoload :Document,            "bunto/document"
+  autoload :Draft,               "bunto/draft"
+  autoload :EntryFilter,         "bunto/entry_filter"
+  autoload :Errors,              "bunto/errors"
+  autoload :Excerpt,             "bunto/excerpt"
+  autoload :External,            "bunto/external"
+  autoload :FrontmatterDefaults, "bunto/frontmatter_defaults"
+  autoload :Hooks,               "bunto/hooks"
+  autoload :Layout,              "bunto/layout"
+  autoload :CollectionReader,    "bunto/readers/collection_reader"
+  autoload :DataReader,          "bunto/readers/data_reader"
+  autoload :LayoutReader,        "bunto/readers/layout_reader"
+  autoload :PostReader,          "bunto/readers/post_reader"
+  autoload :PageReader,          "bunto/readers/page_reader"
+  autoload :StaticFileReader,    "bunto/readers/static_file_reader"
+  autoload :LogAdapter,          "bunto/log_adapter"
+  autoload :Page,                "bunto/page"
+  autoload :PluginManager,       "bunto/plugin_manager"
+  autoload :Publisher,           "bunto/publisher"
+  autoload :Reader,              "bunto/reader"
+  autoload :Regenerator,         "bunto/regenerator"
+  autoload :RelatedPosts,        "bunto/related_posts"
+  autoload :Renderer,            "bunto/renderer"
+  autoload :LiquidRenderer,      "bunto/liquid_renderer"
+  autoload :Site,                "bunto/site"
+  autoload :StaticFile,          "bunto/static_file"
+  autoload :Stevenson,           "bunto/stevenson"
+  autoload :Theme,               "bunto/theme"
+  autoload :ThemeBuilder,        "bunto/theme_builder"
+  autoload :URL,                 "bunto/url"
+  autoload :Utils,               "bunto/utils"
+  autoload :VERSION,             "bunto/version"
 
   # extensions
-  require 'bunto/plugin'
-  require 'bunto/converter'
-  require 'bunto/generator'
-  require 'bunto/command'
-  require 'bunto/liquid_extensions'
+  require "bunto/plugin"
+  require "bunto/converter"
+  require "bunto/generator"
+  require "bunto/command"
+  require "bunto/liquid_extensions"
   require "bunto/filters"
 
   class << self
@@ -86,29 +87,29 @@ module Bunto
     # images and allows you to skip that when working in development.
 
     def env
-      ENV["JEKYLL_ENV"] || "development"
+      ENV["BUNTO_ENV"] || "development"
     end
 
     # Public: Generate a Bunto configuration Hash by merging the default
     # options with anything in _config.yml, and adding the given options on top.
     #
     # override - A Hash of config directives that override any options in both
-    #            the defaults and the config file. See Bunto::Configuration::DEFAULTS for a
+    #            the defaults and the config file.
+    #            See Bunto::Configuration::DEFAULTS for a
     #            list of option names and their defaults.
     #
     # Returns the final configuration Hash.
     def configuration(override = {})
-      config = Configuration[Configuration::DEFAULTS]
+      config = Configuration.new
       override = Configuration[override].stringify_keys
-      unless override.delete('skip_config_files')
+      unless override.delete("skip_config_files")
         config = config.read_config_files(config.config_files(override))
       end
 
       # Merge DEFAULTS < _config.yml < override
-      config = Utils.deep_merge_hashes(config, override).stringify_keys
-      set_timezone(config['timezone']) if config['timezone']
-
-      config
+      Configuration.from(Utils.deep_merge_hashes(config, override)).tap do |obj|
+        set_timezone(obj["timezone"]) if obj["timezone"]
+      end
     end
 
     # Public: Set the TZ environment variable to use the timezone specified
@@ -116,15 +117,17 @@ module Bunto
     # timezone - the IANA Time Zone
     #
     # Returns nothing
+    # rubocop:disable Style/AccessorMethodName
     def set_timezone(timezone)
-      ENV['TZ'] = timezone
+      ENV["TZ"] = timezone
     end
+    # rubocop:enable Style/AccessorMethodName
 
     # Public: Fetch the logger instance for this Bunto process.
     #
     # Returns the LogAdapter instance.
     def logger
-      @logger ||= LogAdapter.new(Stevenson.new, (ENV["JEKYLL_LOG_LEVEL"] || :info).to_sym)
+      @logger ||= LogAdapter.new(Stevenson.new, (ENV["BUNTO_LOG_LEVEL"] || :info).to_sym)
     end
 
     # Public: Set the log writer.
@@ -135,7 +138,7 @@ module Bunto
     #
     # Returns the new logger.
     def logger=(writer)
-      @logger = LogAdapter.new(writer, (ENV["JEKYLL_LOG_LEVEL"] || :info).to_sym)
+      @logger = LogAdapter.new(writer, (ENV["BUNTO_LOG_LEVEL"] || :info).to_sym)
     end
 
     # Public: An array of sites
@@ -155,11 +158,11 @@ module Bunto
     def sanitized_path(base_directory, questionable_path)
       return base_directory if base_directory.eql?(questionable_path)
 
-      questionable_path.insert(0, '/') if questionable_path.start_with?('~')
+      questionable_path.insert(0, "/") if questionable_path.start_with?("~")
       clean_path = File.expand_path(questionable_path, "/")
-      clean_path.sub!(/\A\w\:\//, '/')
+      clean_path.sub!(%r!\A\w:/!, "/")
 
-      if clean_path.start_with?(base_directory.sub(/\A\w\:\//, '/'))
+      if clean_path.start_with?(base_directory.sub(%r!\A\w:/!, "/"))
         clean_path
       else
         File.join(base_directory, clean_path)
@@ -167,16 +170,17 @@ module Bunto
     end
 
     # Conditional optimizations
-    Bunto::External.require_if_present('liquid-c')
+    Bunto::External.require_if_present("liquid-c")
   end
 end
 
 require "bunto/drops/drop"
-require_all 'bunto/commands'
-require_all 'bunto/converters'
-require_all 'bunto/converters/markdown'
-require_all 'bunto/drops'
-require_all 'bunto/generators'
-require_all 'bunto/tags'
+require "bunto/drops/document_drop"
+require_all "bunto/commands"
+require_all "bunto/converters"
+require_all "bunto/converters/markdown"
+require_all "bunto/drops"
+require_all "bunto/generators"
+require_all "bunto/tags"
 
-require 'bunto-sass-converter'
+require "bunto-sass-converter"

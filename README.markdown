@@ -43,7 +43,7 @@ Bunto is a Web Application Framework and can be used as a static site generator 
 
 ## Philosophy
 
-Bunto does what you tell it to do — no more, no less. It doesn't try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Bunto gets out of your way and allows you to concentrate on what truly matters: your content.
+Bunto does what you tell it to do — no more, no less. It doesn't try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Bunto gets out of your way and allows you to concentrate on what truly matters: your content.
 
 ## Getting Started
 

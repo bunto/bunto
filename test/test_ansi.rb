@@ -6,7 +6,7 @@ class TestAnsi < BuntoUnitTest
       @subject = Bunto::Utils::Ansi
     end
 
-    Bunto::Utils::Ansi::COLORS.each do |color, val|
+    Bunto::Utils::Ansi::COLORS.each do |color, _val|
       should "respond_to? #{color}" do
         assert @subject.respond_to?(color)
       end

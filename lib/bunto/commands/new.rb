@@ -72,6 +72,9 @@ ruby RUBY_VERSION
 # Happy Buntoing!
 gem "bunto", "#{Bunto::VERSION}"
 
+# This is the default theme for new Bunto sites. You may change this to anything you like.
+gem "minima"
+
 # If you want to use GitHub Pages, remove the "gem "bunto"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
 # gem "github-pages", group: :bunto_plugins

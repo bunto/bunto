@@ -17,13 +17,13 @@ module Bunto
       #
       # names - a string gem name or array of gem names
       #
-      def require_if_present(names, &block)
+      def require_if_present(names)
         Array(names).each do |name|
           begin
             require name
           rescue LoadError
             Bunto.logger.debug "Couldn't load #{name}. Skipping."
-            block.call(name) if block
+            yield(name) if block_given?
             false
           end
         end
@@ -39,7 +39,7 @@ module Bunto
       def require_with_graceful_fail(names)
         Array(names).each do |name|
           begin
-            Bunto.logger.debug "Requiring:", "#{name}"
+            Bunto.logger.debug "Requiring:", name.to_s
             require name
           rescue LoadError => e
             Bunto.logger.error "Dependency Error:", <<-MSG
@@ -50,7 +50,7 @@ The full error message from Ruby is: '#{e.message}'
 
 If you run into trouble, you can find helpful resources at http://bunto.github.io/help/!
             MSG
-            raise Bunto::Errors::MissingDependencyException.new(name)
+            raise Bunto::Errors::MissingDependencyException, name
           end
         end
       end

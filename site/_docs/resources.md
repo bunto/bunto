@@ -8,8 +8,8 @@ Bunto’s growing use is producing a wide variety of tutorials, frameworks, exte
 
 ### Useful Guides
 
-- [Bunto Tips](https://Bunto.tips) is a set of resources to help folks get up and running with Bunto. The cover all skill levels, and even include some great video tutorials.
-- [Bunto Cheatsheet](https://cheat.bunto.tips) is a single-page resource for Bunto filters, variables, and the like.
+- [Bunto Tips](http://bunto.tips) is a set of resources created by [CloudCannon](https://cloudcannon.com) to help folks get up and running with Bunto. They cover all skill levels, and even include some great video tutorials.
+- [Bunto Cheatsheet](http://cheat.bunto.tips) is a single-page resource for Bunto filters, variables, and the like.
 - [“Creating and Hosting a Personal Site on GitHub”](http://jmcglone.com/guides/github-pages/)
 - [‘Build A Blog With Bunto And GitHub Pages’ on Smashing Magazine](http://www.smashingmagazine.com/2014/08/01/build-blog-bunto-github-pages/)
 - Publishing to GitHub Pages? [Check out our documentation page for just that purpose](/docs/github-pages/).
@@ -22,6 +22,7 @@ Bunto’s growing use is producing a wide variety of tutorials, frameworks, exte
   - [Formspree (also open source)](http://formspree.io/)
   - [FormKeep](https://formkeep.com/guides/contact-form-bunto?utm_source=github&utm_medium=bunto-docs&utm_campaign=contact-form-bunto)
   - [Simple Form](http://getsimpleform.com/)
+  - [Formingo](https://www.formingo.co/guides/bunto?utm_source=github&utm_medium=bunto-docs&utm_campaign=Bunto%20Documentation)
 - [Bunto Bootstrap](http://buntobootstrap.com), 0 to Blog in 3 minutes. Provides detailed explanations, examples, and helper-code to make getting started with Bunto easier.
 - [Integrating Twitter with Bunto](http://www.justkez.com/integrating-twitter-with-bunto/)
   > “Having migrated Justkez.com to be based on Bunto, I was pondering how I might include my recent twitterings on the front page of the site. In the WordPress world, this would have been done via a plugin which may or may not have hung the loading of the page, might have employed caching, but would certainly have had some overheads. … Not in Bunto.”

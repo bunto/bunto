@@ -3,20 +3,66 @@
 
 ----
 
+## 3.2.1 / 2016-08-13
+
 ### Minor Enhancements
-* Move bin/bunto to exe/bunto to prevent collision with binstubs (#78)
-* Run Site#generate for 'bunto doctor' to catch plugin issues (#82)
-* Add Gemnasium Badge (#84)
+
+  * Move bin/bunto to exe/bunto to prevent collision with binstubs
+  * Run Site#generate for 'bunto doctor' to catch plugin issues
+  * Add CodeShip Badge (#69)
+  * Add Gemnasium Badge (#84) 
+  * Add Facebook Group Badge (#87) 
+  
+
+### Bug Fixes
+
+  * Include theme directories in default gemspec
+  * Fix for symlinked themes
+  * Layout: set `relative_path` without using Pathname
+  * Drop support for Ruby 2.1.8 & 2.2.4
+  * Fix 'Permission denied' error (#90)
+  * Fix symbolic links (#91)
+  * Fix 'W: Metrics/LineLength' (#97) 
+
+### Issues
+  * Travis CI - filters group_by filter should successfully group array of Bunto::Page's. (#13)
+  * Travis CI - in safe mode should not allow symlinks. (#14)
+  * Travis CI - Filtering entries should include symlinks in unsafe mode. (#15)
+  * Travis CI - Filtering entries should not include symlinks in safe mode. (#16)
+  * Travis CI - generated sites should print a nice list of static files. (#17)
+  * Travis CI - a static file in a collection should be set to write. (#18)
+  * Travis CI - a static file in a collection should be a static file. (#19)
+  * Travis CI - a static file in a collection should be in the list of docs_to_write. (#20)
+  * Travis CI - a static file in a collection should be output in the correct place. (#21)
+  * Travis CI - creating sites should sort pages alphabetically. (#22)
+  * Travis CI - creating sites data directory should not load symlink files in safe mode. (#23)
+  * Travis CI - `Utils.parse_date` method errors & failures (#37)
+  * Travis CI - An extracted excerpt #content after render should be the first paragraph of the page (#93)
+  * Travis CI - configuring sites should have an array for plugins by default. (#95)
 
 ### Development Fixes
-* Fix rubocop offenses in exe/bunto (#79)
-* Rubocop: test/* (#80)
+
+  * Fix rubocop offenses in exe/bunto
+  * Rubocop: test/*
+  * Add test to build the default site
+  * script/default-site: specify `BUNDLE_GEMFILE` for new site
+  * script/default-site: read Bunto source from local clone
 
 ### Site Enhancements
-* Update normalize.css to v4.0.0. (#81)
-* Update template links to point to core Liquid site (#83)
 
-## 3.0.0 / 2016-0?-??
+  * Enable site excerpts
+  * Initial 404 page
+  * Remove the "this feature is unreleased" warning from the theme docs
+  * Future True on GitHub Pages note
+  * Minor updates and corrections
+  * index.html: update instructions to require bundler
+  * docs/quickstart: update instructions to require bundler
+  * Update normalize.css to v4.0.0.
+  * Update template links to point to core Liquid site
+
+----
+
+## 3.0.0 / 2016-04-30
 
 ### Minor Enhancements
 
@@ -526,7 +572,7 @@
 
 ----
 
-## 2.0.0.pre / 
+## 2.0.0.pre / 2016-04-04
 
   * Second pre-release!
 

@@ -91,7 +91,7 @@ common tasks easier.
     <tr>
       <td>
         <p class="name"><strong>Where Expression</strong></p>
-        <p>Select all the objects in an array where the expression is true.</p>
+        <p>Select all the objects in an array where the expression is true. Bunto v3.2.1 & later.</p>
       </td>
       <td class="align-center">
         <p>
@@ -253,6 +253,17 @@ common tasks easier.
       <td class="align-center">
         <p>
          <code class="filter">{% raw %}{{ site.data.projects | jsonify }}{% endraw %}</code>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="name"><strong>Normalize Whitespace</strong></p>
+        <p>Replace any occurrence of whitespace with a single space.</p>
+      </td>
+      <td class="align-center">
+        <p>
+         <code class="filter">{% raw %}{{ "a \n b" | normalize_whitepace }}{% endraw %}</code>
         </p>
       </td>
     </tr>

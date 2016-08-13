@@ -10,7 +10,8 @@ For the impatient, here's how to get a boilerplate Bunto site up and running.
 ~ $ gem install bunto
 ~ $ bunto new myblog
 ~ $ cd myblog
-~/myblog $ bunto serve
+~/myblog $ bundle install
+~/myblog $ bundle exec bunto serve
 # => Now browse to http://localhost:4000
 {% endhighlight %}
 

@@ -9,7 +9,6 @@ module Bunto
           "detach"             => ["-B", "--detach", "Run the server in the background"],
           "ssl_key"            => ["--ssl-key [KEY]", "X.509 (SSL) Private Key."],
           "port"               => ["-P", "--port [PORT]", "Port to listen on"],
-          "baseurl"            => ["-b", "--baseurl [URL]", "Base URL"],
           "show_dir_listing"   => ["--show-dir-listing",
             "Show a directory listing instead of loading your index file."],
           "skip_initial_build" => ["skip_initial_build", "--skip-initial-build",
@@ -33,7 +32,9 @@ module Bunto
             cmd.action do |_, opts|
               opts["serving"] = true
               opts["watch"  ] = true unless opts.key?("watch")
+              config = opts["config"]
               Build.process(opts)
+              opts["config"] = config
               Serve.process(opts)
             end
           end

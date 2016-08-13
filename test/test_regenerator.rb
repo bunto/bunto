@@ -166,7 +166,7 @@ class TestRegenerator < BuntoUnitTest
       assert_equal File.mtime(@path), @regenerator.metadata[@path]["mtime"]
     end
 
-    should "read legacy yaml metadata" do
+    should "read legacy YAML metadata" do
       metadata_file = source_dir(".bunto-metadata")
       @regenerator = Regenerator.new(@site)
 
@@ -305,7 +305,7 @@ class TestRegenerator < BuntoUnitTest
     end
   end
 
-  context "when incremental regen is disabled" do
+  context "when incremental regeneration is disabled" do
     setup do
       FileUtils.rm_rf(source_dir(".bunto-metadata"))
       @site = Site.new(Bunto.configuration({

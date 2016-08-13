@@ -91,7 +91,7 @@ end
 def run_bunto(args)
   args = args.strip.split(" ") # Shellwords?
   process = run_in_shell(Paths.bunto_bin.to_s, *args, "--trace")
-  process.exitstatus == 0
+  process.exitstatus.zero?
 end
 
 #

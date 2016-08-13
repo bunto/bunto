@@ -43,7 +43,7 @@ Bunto IRC channel.
 Search through the issues on the main Bunto development. Think you've
 found a bug? File a new issue.
 
-### [@buntorb on Twitter](https://twitter.com/buntorb)
+### [@buntowaf on Twitter](https://twitter.com/buntowaf)
 
 The official Bunto Twitter account. It's not checked often, so try the
 above first.

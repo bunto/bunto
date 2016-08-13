@@ -4,6 +4,7 @@
 # which you are expected to set up once and rarely edit after that. If you find
 # yourself editing these this file very often, consider using Bunto's data files
 # feature for the data you need to update frequently.
+#
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bunto serve'. If you change this file, please restart the server process.
 
@@ -20,8 +21,9 @@ description: > # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://example.com" # the base hostname & protocol for your site
-twitter_username: buntorb
+twitter_username: buntowaf
 github_username:  bunto
 
 # Build settings
 markdown: kramdown
+theme: minima

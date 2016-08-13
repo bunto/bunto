@@ -2,6 +2,10 @@ source "https://rubygems.org"
 gemspec :name => "bunto"
 
 gem "rake", "~> 11.0"
+
+# Dependency of bunto-mentions. RubyGems in Ruby 2.1 doesn't shield us from this.
+gem "activesupport", "~> 4.2", :groups => [:test_legacy, :site] if RUBY_VERSION < '2.2.2'
+
 group :development do
   gem "launchy", "~> 2.3"
   gem "pry"
@@ -23,6 +27,8 @@ group :test do
   gem "nokogiri"
   gem "rspec"
   gem "test-theme", path: File.expand_path("./test/fixtures/test-theme", File.dirname(__FILE__))
+
+  gem "jruby-openssl" if RUBY_ENGINE == "jruby"
 end
 
 #
@@ -57,11 +63,11 @@ group :bunto_optional_dependencies do
   gem "toml", "~> 0.1.0"
   gem "coderay", "~> 1.1.0"
   gem "bunto-docs", :path => '../docs' if Dir.exist?('../docs') && ENV['BUNTO_VERSION']
-  gem "bunto-gist", "~> 2.0"
-  gem "bunto-feed", "~> 1.0"
-  gem "bunto-coffeescript", "~> 4.0"
-  gem "bunto-redirect-from", "~> 5.0"
-  gem "bunto-paginate", "~> 2.0"
+  gem "bunto-gist"
+  gem "bunto-feed"
+  gem "bunto-coffeescript"
+  gem "bunto-redirect-from"
+  gem "bunto-paginate"
   gem "mime-types", "~> 3.0"
   gem "kramdown", "~> 1.9"
   gem "rdoc", "~> 4.2"
@@ -84,7 +90,7 @@ group :site do
 
   gem "bemoji", "3.0.0"
   gem "bunto-sitemap"
-  gem "bunto-seo-tag", "~> 5.0"
+  gem "bunto-seo-tag"
   gem "bunto-avatar"
   gem "bunto-mentions"
 end

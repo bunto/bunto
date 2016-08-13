@@ -1,4 +1,5 @@
 require "helper"
+require "colorator"
 
 class TestConfiguration < BuntoUnitTest
   test_config = {
@@ -260,7 +261,9 @@ class TestConfiguration < BuntoUnitTest
       allow(SafeYAML).to receive(:load_file).with(@path) do
         raise SystemCallError, "No such file or directory - #{@path}"
       end
-      allow($stderr).to receive(:puts).with("Configuration file: none".yellow)
+      allow($stderr).to receive(:puts).with(
+        Colorator.yellow("Configuration file: none")
+      )
       assert_equal site_configuration, Bunto.configuration(test_config)
     end
 
@@ -275,13 +278,12 @@ class TestConfiguration < BuntoUnitTest
       allow($stderr)
         .to receive(:puts)
         .and_return(
-          ("WARNING: "
-             .rjust(20) + "Error reading configuration. Using defaults (and options).")
-              .yellow
+          "WARNING: ".rjust(20) +
+          Colorator.yellow("Error reading configuration. Using defaults (and options).")
         )
       allow($stderr)
         .to receive(:puts)
-        .and_return("Configuration file: (INVALID) #{@path}".yellow)
+        .and_return(Colorator.yellow("Configuration file: (INVALID) #{@path}"))
       assert_equal site_configuration, Bunto.configuration(test_config)
     end
 
@@ -291,10 +293,10 @@ class TestConfiguration < BuntoUnitTest
       end
       allow($stderr)
         .to receive(:puts)
-        .with((
+        .with(Colorator.red(
           "Fatal: ".rjust(20) + \
           "The configuration file '#{@user_config}' could not be found."
-        ).red)
+        ))
       assert_raises LoadError do
         Bunto.configuration({ "config" => [@user_config] })
       end
@@ -325,12 +327,23 @@ class TestConfiguration < BuntoUnitTest
       allow(SafeYAML)
         .to receive(:load_file)
         .with(@paths[:other])
-        .and_return({ "baseurl" => "http://wahoo.dev" })
+        .and_return({ "baseurl" => "http://example.com" })
       allow($stdout).to receive(:puts).with("Configuration file: #{@paths[:other]}")
-      Bunto.configuration({ "config" => @paths[:other] })
       assert_equal \
-        site_configuration({ "baseurl" => "http://wahoo.dev" }),
+        site_configuration({ "baseurl" => "http://example.com" }),
         Bunto.configuration(test_config.merge({ "config" => @paths[:other] }))
+    end
+
+    should "load different config if specified with symbol key" do
+      allow(SafeYAML).to receive(:load_file).with(@paths[:default]).and_return({})
+      allow(SafeYAML)
+        .to receive(:load_file)
+        .with(@paths[:other])
+        .and_return({ "baseurl" => "http://example.com" })
+      allow($stdout).to receive(:puts).with("Configuration file: #{@paths[:other]}")
+      assert_equal \
+        site_configuration({ "baseurl" => "http://example.com" }),
+        Bunto.configuration(test_config.merge({ :config => @paths[:other] }))
     end
 
     should "load default config if path passed is empty" do
@@ -377,7 +390,7 @@ class TestConfiguration < BuntoUnitTest
       allow(SafeYAML)
         .to receive(:load_file)
         .with(@paths[:other])
-        .and_return({ "baseurl" => "http://wahoo.dev" })
+        .and_return({ "baseurl" => "http://example.com" })
       allow($stdout)
         .to receive(:puts)
         .with("Configuration file: #{@paths[:default]}")
@@ -385,7 +398,7 @@ class TestConfiguration < BuntoUnitTest
         .to receive(:puts)
         .with("Configuration file: #{@paths[:other]}")
       assert_equal \
-        site_configuration({ "baseurl" => "http://wahoo.dev" }),
+        site_configuration({ "baseurl" => "http://example.com" }),
         Bunto.configuration(
           test_config.merge({ "config" => [@paths[:default], @paths[:other]] })
         )

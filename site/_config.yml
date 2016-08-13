@@ -1,7 +1,6 @@
 markdown: kramdown
 highlighter: rouge
 permalink: /news/:year/:month/:day/:title/
-excerpt_separator: ""
 
 ##gauges_id: 
 ##google_analytics_id: UA-
@@ -16,12 +15,12 @@ collections:
   docs:
     output: true
 
-name: Bunto
+name: Bunto • Simple, WAF-aware, static sites
 description: Transform your plain text into static websites and web application framework
 url: https://bunto.github.io
 
 twitter:
-  username: buntorb
+  username: buntowaf
 
 logo: img/logo-2x.png
 
@@ -32,3 +31,4 @@ gems:
   - bunto-sitemap
   - bunto-seo-tag
   - bunto-avatar
+  - bunto-mentions

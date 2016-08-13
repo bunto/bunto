@@ -84,8 +84,8 @@ In `_data/orgs/bunto.yml`:
 username: bunto
 name: Bunto
 members:
-  - name: Tom Preston-Werner
-    github: mojombo
+  - name: Suriyaa Kudo
+    github: SuriyaaKudoIsc
 
   - name: Parker Moore
     github: parkr

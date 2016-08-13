@@ -1,4 +1,4 @@
-require 'helper'
+require "helper"
 
 class TestRelatedPosts < BuntoUnitTest
   context "building related posts without lsi" do
@@ -18,7 +18,7 @@ class TestRelatedPosts < BuntoUnitTest
     end
   end
 
-  context "building related posts with lsi" do
+  context "building related posts with LSI" do
     setup do
       if jruby?
         skip(
@@ -33,26 +33,29 @@ class TestRelatedPosts < BuntoUnitTest
 
       @site.reset
       @site.read
-      require 'classifier-reborn'
+      require "classifier-reborn"
       Bunto::RelatedPosts.lsi = nil
     end
 
     should "index Bunto::Post objects" do
       @site.posts.docs = @site.posts.docs.first(1)
-      expect_any_instance_of(::ClassifierReborn::LSI).to receive(:add_item).with(kind_of(Bunto::Document))
+      expect_any_instance_of(::ClassifierReborn::LSI).to \
+        receive(:add_item).with(kind_of(Bunto::Document))
       Bunto::RelatedPosts.new(@site.posts.last).build_index
     end
 
     should "find related Bunto::Post objects, given a Bunto::Post object" do
       post = @site.posts.last
       allow_any_instance_of(::ClassifierReborn::LSI).to receive(:build_index)
-      expect_any_instance_of(::ClassifierReborn::LSI).to receive(:find_related).with(post, 11).and_return(@site.posts[-1..-9])
+      expect_any_instance_of(::ClassifierReborn::LSI).to \
+        receive(:find_related).with(post, 11).and_return(@site.posts[-1..-9])
 
       Bunto::RelatedPosts.new(post).build
     end
 
-    should "use lsi for the related posts" do
-      allow_any_instance_of(::ClassifierReborn::LSI).to receive(:find_related).and_return(@site.posts[-1..-9])
+    should "use LSI for the related posts" do
+      allow_any_instance_of(::ClassifierReborn::LSI).to \
+        receive(:find_related).and_return(@site.posts[-1..-9])
       allow_any_instance_of(::ClassifierReborn::LSI).to receive(:build_index)
 
       assert_equal @site.posts[-1..-9], Bunto::RelatedPosts.new(@site.posts.last).build

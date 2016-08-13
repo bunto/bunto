@@ -208,7 +208,7 @@ class="flag">flags</code> (specified on the command-line) that control them.
         <p class="description">Use a specific environment value in the build.</p>
       </td>
       <td class="align-center">
-        <p><code class="flag">JEKYLL_ENV=production</code></p>
+        <p><code class="flag">BUNTO_ENV=production</code></p>
       </td>
     </tr>
     <tr class="setting">
@@ -383,7 +383,7 @@ before your site is served.
   </p>
 </div>
 
-## Custom WEBRick Headers
+## Custom WEBrick Headers
 
 You can provide custom headers for your site by adding them to `_config.yml`
 
@@ -397,9 +397,10 @@ webrick:
 
 ### Defaults
 
-We only provide one default and that's a Content-Type header that disables
-caching in development so that you don't have to fight with Chrome's aggressive
-caching when you are in development mode.
+We provide by default `Content-Type` and `Cache-Control` response headers: one
+dynamic in order to specify the nature of the data being served, the other
+static in order to disable caching so that you don't have to fight with Chrome's
+aggressive caching when you are in development mode.
 
 ## Specifying a Bunto environment at build time
 
@@ -418,12 +419,12 @@ For example, suppose you set this conditional statement in your code:
 When you build your Bunto site, the content inside the `if` statement won't be run unless you also specify a `production` environment in the build command, like this:
 
 {% highlight sh %}
-JEKYLL_ENV=production bunto build
+BUNTO_ENV=production bunto build
 {% endhighlight %}
 
 Specifying an environment value allows you to make certain content available only within specific environments.
 
-The default value for `JEKYLL_ENV` is `development`. Therefore if you omit `JEKYLL_ENV` from the build arguments, the default value will be `JEKYLL_ENV=development`. Any content inside `{% raw %}{% if bunto.environment == "development" %}{% endraw %}` tags will automatically appear in the build.
+The default value for `BUNTO_ENV` is `development`. Therefore if you omit `BUNTO_ENV` from the build arguments, the default value will be `BUNTO_ENV=development`. Any content inside `{% raw %}{% if bunto.environment == "development" %}{% endraw %}` tags will automatically appear in the build.
 
 Your environment values can be anything you want (not just `development` or `production`). Some elements you might want to hide in development environments include Disqus comment forms or Google Analytics. Conversely, you might want to expose an "Edit me in GitHub" button in a development environment but not include it in production environments.
 
@@ -435,7 +436,7 @@ Using [YAML Front Matter](../frontmatter/) is one way that you can specify confi
 
 Often times, you will find that you are repeating a lot of configuration options. Setting the same layout in each file, adding the same category - or categories - to a post, etc. You can even add custom variables like author names, which might be the same for the majority of posts on your blog.
 
-Instead of repeating this configuration each time you create a new post or page, Bunto provides a way to set these defaults in the site configuration. To do this, you can specify  site-wide defaults using the `defaults` key in the `_config.yml` file in your project's root directory.
+Instead of repeating this configuration each time you create a new post or page, Bunto provides a way to set these defaults in the site configuration. To do this, you can specify site-wide defaults using the `defaults` key in the `_config.yml` file in your project's root directory.
 
 The `defaults` key holds an array of scope/values pairs that define what defaults should be set for a particular file path, and optionally, a file type in that path.
 
@@ -462,7 +463,7 @@ defaults:
   </p>
 </div>
 
-Here, we are scoping the `values` to any file that exists in the scopes path. Since the path is set as an empty string, it will apply to **all files** in your project. You probably don't want to set a layout on every file in your project - like css files, for example - so you can also specify a `type` value under the `scope` key.
+Here, we are scoping the `values` to any file that exists in the path `scope`. Since the path is set as an empty string, it will apply to **all files** in your project. You probably don't want to set a layout on every file in your project - like css files, for example - so you can also specify a `type` value under the `scope` key.
 
 {% highlight yaml %}
 defaults:
@@ -496,7 +497,7 @@ defaults:
       author: "Mr. Hyde"
 {% endhighlight %}
 
-With these defaults, all posts would use the `my-site` layout. Any html files that exist in the `projects/` folder will use the `project` layout, if it exists. Those files will also have the `page.author` [liquid variable](../variables/) set to `Mr. Hyde` as well as have the category for the page set to `project`.
+With these defaults, all posts would use the `my-site` layout. Any html files that exist in the `projects/` folder will use the `project` layout, if it exists. Those files will also have the `page.author` [liquid variable](../variables/) set to `Mr. Hyde`.
 
 {% highlight yaml %}
 collections:
@@ -570,11 +571,13 @@ file or on the command-line.
 # Where things are
 source:       .
 destination:  ./_site
-plugins_dir:  ./_plugins
-layouts_dir:  ./_layouts
-data_dir:     ./_data
-includes_dir: ./_includes
-collections:  null
+plugins_dir:  _plugins
+layouts_dir:  _layouts
+data_dir:     _data
+includes_dir: _includes
+collections:
+  posts:
+    output:   true
 
 # Handling Reading
 safe:         false
@@ -606,6 +609,7 @@ detach:  false
 port:    4000
 host:    127.0.0.1
 baseurl: "" # does not include hostname
+show_dir_listing: false
 
 # Outputting
 permalink:     date
@@ -613,7 +617,11 @@ paginate_path: /page:num
 timezone:      null
 
 quiet:    false
+verbose:  false
 defaults: []
+
+liquid:
+  error_mode: warn
 
 # Markdown Processors
 rdiscount:
@@ -628,16 +636,19 @@ kramdown:
   entity_output:  as_char
   toc_levels:     1..6
   smart_quotes:   lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
-
-  coderay:
-    coderay_wrap:              div
-    coderay_line_numbers:      inline
-    coderay_line_number_start: 1
-    coderay_tab_width:         4
-    coderay_bold_every:        10
-    coderay_css:               style
+  input:          GFM
+  hard_wrap:      false
+  footnote_nr:    1
 {% endhighlight %}
+
+## Liquid Options
+
+Liquid's response to errors can be configured by setting `error_mode`. The
+options are
+
+- `lax` --- Ignore all errors.
+- `warn` --- Output a warning on the console for each error.
+- `strict` --- Output an error message and stop the build.
 
 ## Markdown Options
 
@@ -687,16 +698,6 @@ extensions are:
 - `autolink`
 
 [redcarpet_extensions]: https://github.com/vmg/redcarpet/blob/v3.2.2/README.markdown#and-its-like-really-simple-to-use
-
-### Kramdown
-
-In addition to the defaults mentioned above, you can also turn on recognition
-of GitHub Flavored Markdown by passing an `input` option with a value of "GFM".
-
-For example, in your `_config.yml`:
-
-    kramdown:
-      input: GFM
 
 ### Custom Markdown Processors
 

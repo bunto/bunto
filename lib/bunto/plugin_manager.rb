@@ -24,7 +24,9 @@ module Bunto
     #
     # Returns nothing.
     def require_gems
-      Bunto::External.require_with_graceful_fail(site.gems.select { |gem| plugin_allowed?(gem) })
+      Bunto::External.require_with_graceful_fail(
+        site.gems.select { |gem| plugin_allowed?(gem) }
+      )
     end
 
     def self.require_from_bundler
@@ -33,7 +35,8 @@ module Bunto
 
         Bundler.setup
         required_gems = Bundler.require(:bunto_plugins)
-        Bunto.logger.debug("PluginManager:", "Required #{required_gems.map(&:name).join(', ')}")
+        message = "Required #{required_gems.map(&:name).join(", ")}"
+        Bunto.logger.debug("PluginManager:", message)
         ENV["BUNTO_NO_BUNDLER_REQUIRE"] = "true"
 
         true
@@ -57,7 +60,7 @@ module Bunto
     # Returns an array of strings, each string being the name of a gem name
     #   that is allowed to be used.
     def whitelist
-      @whitelist ||= Array[site.config['whitelist']].flatten
+      @whitelist ||= Array[site.config["whitelist"]].flatten
     end
 
     # Require all .rb files if safe mode is off
@@ -76,16 +79,17 @@ module Bunto
     #
     # Returns an Array of plugin search paths
     def plugins_path
-      if site.config['plugins_dir'] == Bunto::Configuration::DEFAULTS['plugins_dir']
-        [site.in_source_dir(site.config['plugins_dir'])]
+      if site.config["plugins_dir"].eql? Bunto::Configuration::DEFAULTS["plugins_dir"]
+        [site.in_source_dir(site.config["plugins_dir"])]
       else
-        Array(site.config['plugins_dir']).map { |d| File.expand_path(d) }
+        Array(site.config["plugins_dir"]).map { |d| File.expand_path(d) }
       end
     end
 
     def deprecation_checks
-      pagination_included = (site.config['gems'] || []).include?('bunto-paginate') || defined?(Bunto::Paginate)
-      if site.config['paginate'] && !pagination_included
+      pagination_included = (site.config["gems"] || []).include?("bunto-paginate") ||
+        defined?(Bunto::Paginate)
+      if site.config["paginate"] && !pagination_included
         Bunto::Deprecator.deprecation_message "You appear to have pagination " \
           "turned on, but you haven't included the `bunto-paginate` gem. " \
           "Ensure you have `gems: [bunto-paginate]` in your configuration file."

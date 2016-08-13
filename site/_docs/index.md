@@ -13,7 +13,7 @@ development of Bunto itself.
 
 ## So what is Bunto, exactly?
 
-Bunto is a simple, static site generator and web application framework. It takes a template
+Bunto is a simple, blog-aware, static site generator. It takes a template
 directory containing raw text files in various formats, runs it through
 a converter (like [Markdown](https://daringfireball.net/projects/markdown/))
 and our [Liquid](https://github.com/Shopify/liquid/wiki) renderer, and

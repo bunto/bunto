@@ -8,7 +8,7 @@ module Bunto
 
       def parse(content)
         measure_time do
-          @template = Liquid::Template.parse(content, line_numbers: true)
+          @template = Liquid::Template.parse(content, :line_numbers => true)
         end
 
         self
@@ -28,6 +28,10 @@ module Bunto
             @template.render!(*args)
           end
         end
+      end
+
+      def warnings
+        @template.warnings
       end
 
       private
