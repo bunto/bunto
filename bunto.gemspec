@@ -47,7 +47,7 @@ msg
   s.add_runtime_dependency('safe_yaml', '~> 1.0')
   s.add_runtime_dependency('colorator', '~> 1.0')
   s.add_runtime_dependency('rouge', '~> 1.7')
-  s.add_runtime_dependency('bunto-sass-converter', '~> 2.0')
-  s.add_runtime_dependency('bunto-watch', '~> 1.0')
+  s.add_runtime_dependency('bunto-sass-converter', '>= 3.0')
+  s.add_runtime_dependency('bunto-watch', '>= 1.0')
   s.add_runtime_dependency("pathutil", "~> 0.9")
 end
