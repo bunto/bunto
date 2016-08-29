@@ -3,6 +3,10 @@
 
 ----
 
+### Site Enhancements
+
+  * Document `link` Liquid tag (#100)
+
 ### Development Fixes
 
   * Improve tests for Bunto::PluginManager (#99)
