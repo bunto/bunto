@@ -41,13 +41,18 @@ class TestPluginManager < BuntoUnitTest
   end
 
   context "require gems" do
-    should "check if configured gems are allowed" do
-      allow(Bunto::External).to receive(:require_with_graceful_fail).and_return(nil)
-      site = double(:gems => %w(bemoji foobar))
+    should "invoke `require_with_graceful_fail`" do
+      gems = %w(bemojii foobar)
+
+      expect(Bunto::External).to(
+        receive(:require_with_graceful_fail).with(gems).and_return(nil)
+      )
+      site = double(:gems => gems)
       plugin_manager = PluginManager.new(site)
 
-      expect(plugin_manager).to receive(:plugin_allowed?).with("bemoji")
-      expect(plugin_manager).to receive(:plugin_allowed?).with("foobar")
+      allow(plugin_manager).to receive(:plugin_allowed?).with("foobar").and_return(true)
+      allow(plugin_manager).to receive(:plugin_allowed?).with("bemojii").and_return(true)
+
       plugin_manager.require_gems
     end
   end
