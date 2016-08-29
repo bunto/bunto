@@ -3,6 +3,12 @@
 
 ----
 
+### Development Fixes
+
+  * Improve tests for Bunto::PluginManager (#99)
+
+----
+
 ## 3.2.1 / 2016-08-13
 
 ### Minor Enhancements
