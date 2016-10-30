@@ -50,7 +50,6 @@ branches:
     - 3.2.1
 
 notifications:
-notifications:
   slack:
     secure: YZjawNDiMMMVPCIH+Z00wBr39Qftdia1Uq+CaaPPe8xYRzDi9gOowvnmfkjDQE8PIuHMVtuAF6L3yO8gHrCVnf3aKkj/frYNOgLmtkTr3xSbP/OvmWalS9Y4R/LpGIfKaUG/GE5hW6ZULbiB2ou5yOloWfeSBze5f1JWjyJrHao=
   email:
