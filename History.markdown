@@ -3,6 +3,9 @@
 
 ----
 
+### Minor Enhancements
+  * Add Slack notification (#102)
+
 ### Site Enhancements
 
   * Document `link` Liquid tag (#100)
