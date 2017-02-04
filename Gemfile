@@ -94,3 +94,6 @@ group :site do
   gem "bunto-avatar"
   gem "bunto-mentions"
 end
+
+gem 'danger'
+
