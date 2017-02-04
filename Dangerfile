@@ -21,3 +21,6 @@ end
 
 # Ensure that labels have been used on the PR
 fail "Please add labels to this PR" if github.pr_labels.empty?
+
+# Ensure that all PRs have an assignee
+warn "This PR does not have any assignees yet." unless github.pr_json["assignee"]
