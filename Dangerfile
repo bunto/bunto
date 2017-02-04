@@ -18,3 +18,6 @@ if !github.pr_title.downcase.include?('version bump') &&
    github.pr_body.match(/#\d+/).nil?
   warn("Before submitting a Pull Request, please create an issue on GitHub to discuss the change. Please add a link to the issue in the PR body.")
 end
+
+# Ensure that labels have been used on the PR
+fail "Please add labels to this PR" if github.pr_labels.empty?
