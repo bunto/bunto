@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-This is the base Bunto theme. You can find out more info about customizing your Bunto theme, as well as basic Bunto usage documentation at [bunto.github.io](http://bunto.github.io/)
+This is the base Bunto theme. You can find out more info about customizing your Bunto theme, as well as basic Bunto usage documentation at [buntowaf.tk](https://buntowaf.tk/)
 
 You can find the source code for the Bunto new theme at:
 {% include icon-github.html username="bunto" %} /

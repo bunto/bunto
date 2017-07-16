@@ -10,9 +10,9 @@ module Bunto
           "ssl_key"            => ["--ssl-key [KEY]", "X.509 (SSL) Private Key."],
           "port"               => ["-P", "--port [PORT]", "Port to listen on"],
           "show_dir_listing"   => ["--show-dir-listing",
-            "Show a directory listing instead of loading your index file."],
+            "Show a directory listing instead of loading your index file.",],
           "skip_initial_build" => ["skip_initial_build", "--skip-initial-build",
-            "Skips the initial site build which occurs before the server is started."]
+            "Skips the initial site build which occurs before the server is started.",],
         }.freeze
 
         #
@@ -33,6 +33,7 @@ module Bunto
               opts["serving"] = true
               opts["watch"  ] = true unless opts.key?("watch")
               config = opts["config"]
+              opts["url"] = default_url(opts) if Bunto.env == "development"
               Build.process(opts)
               opts["config"] = config
               Serve.process(opts)
@@ -47,11 +48,7 @@ module Bunto
           destination = opts["destination"]
           setup(destination)
 
-          server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
-          server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
-          Bunto.logger.info "Server address:", server_address(server, opts)
-          launch_browser server, opts if opts["open_url"]
-          boot_or_detach server, opts
+          start_up_webrick(opts, destination)
         end
 
         # Do a base pre-setup of WEBRick so that everything is in place
@@ -91,7 +88,7 @@ module Bunto
               index.rhtml
               index.cgi
               index.xml
-            )
+            ),
           }
 
           opts[:DirectoryIndex] = [] if opts[:BuntoOptions]["show_dir_listing"]
@@ -101,6 +98,17 @@ module Bunto
           opts
         end
 
+        #
+
+        private
+        def start_up_webrick(opts, destination)
+          server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
+          server.mount(opts["baseurl"].to_s, Servlet, destination, file_handler_opts)
+          Bunto.logger.info "Server address:", server_address(server, opts)
+          launch_browser server, opts if opts["open_url"]
+          boot_or_detach server, opts
+        end
+
         # Recreate NondisclosureName under utf-8 circumstance
 
         private
@@ -108,21 +116,43 @@ module Bunto
           WEBrick::Config::FileHandler.merge({
             :FancyIndexing     => true,
             :NondisclosureName => [
-              ".ht*", "~*"
-            ]
+              ".ht*", "~*",
+            ],
           })
         end
 
         #
 
         private
-        def server_address(server, opts)
+        def server_address(server, options = {})
+          format_url(
+            server.config[:SSLEnable],
+            server.config[:BindAddress],
+            server.config[:Port],
+            options["baseurl"]
+          )
+        end
+
+        private
+        def format_url(ssl_enabled, address, port, baseurl = nil)
           format("%{prefix}://%{address}:%{port}%{baseurl}", {
-            :prefix  => server.config[:SSLEnable] ? "https" : "http",
-            :baseurl => opts["baseurl"] ? "#{opts["baseurl"]}/" : "",
-            :address => server.config[:BindAddress],
-            :port    => server.config[:Port]
+            :prefix  => ssl_enabled ? "https" : "http",
+            :address => address,
+            :port    => port,
+            :baseurl => baseurl ? "#{baseurl}/" : "",
           })
+        end
+
+        #
+
+        private
+        def default_url(opts)
+          config = configuration_from_options(opts)
+          format_url(
+            config["ssl_cert"] && config["ssl_key"],
+            config["host"] == "127.0.0.1" ? "localhost" : config["host"],
+            config["port"]
+          )
         end
 
         #

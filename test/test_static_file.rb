@@ -16,33 +16,34 @@ class TestStaticFile < BuntoUnitTest
   end
 
   def setup_static_file(base, dir, name)
-    StaticFile.new(@site, base, dir, name)
+    Dir.chdir(@site.source) { StaticFile.new(@site, base, dir, name) }
   end
 
   def setup_static_file_with_collection(base, dir, name, metadata)
     site = fixture_site("collections" => { "foo" => metadata })
-    StaticFile.new(site, base, dir, name, site.collections["foo"])
+    Dir.chdir(site.source) do
+      StaticFile.new(site, base, dir, name, site.collections["foo"])
+    end
   end
 
   def setup_static_file_with_defaults(base, dir, name, defaults)
     site = fixture_site("defaults" => defaults)
-    StaticFile.new(site, base, dir, name)
+    Dir.chdir(site.source) do
+      StaticFile.new(site, base, dir, name)
+    end
   end
 
   context "A StaticFile" do
     setup do
       clear_dest
-      @old_pwd = Dir.pwd
-      Dir.chdir source_dir
       @site = fixture_site
       @filename = "static_file.txt"
       make_dummy_file(@filename)
-      @static_file = setup_static_file(nil, nil, @filename)
+      @static_file = setup_static_file(@site.source, "", @filename)
     end
 
     teardown do
       remove_dummy_file(@filename) if File.exist?(source_dir(@filename))
-      Dir.chdir @old_pwd
     end
 
     should "have a source file path" do
@@ -57,7 +58,7 @@ class TestStaticFile < BuntoUnitTest
 
     should "have a destination relative directory without a collection" do
       static_file = setup_static_file("root", "dir/subdir", "file.html")
-      assert_equal nil, static_file.type
+      assert_nil static_file.type
       assert_equal "dir/subdir/file.html", static_file.url
       assert_equal "dir/subdir", static_file.destination_rel_dir
     end
@@ -95,8 +96,8 @@ class TestStaticFile < BuntoUnitTest
     should "use the _config.yml defaults to determine writability" do
       defaults = [{
         "scope"  => { "path" => "private" },
-        "values" => { "published" => false }
-      }]
+        "values" => { "published" => false },
+      },]
       static_file = setup_static_file_with_defaults(
         "root",
         "private/dir/subdir",
@@ -110,6 +111,14 @@ class TestStaticFile < BuntoUnitTest
 
     should "know its last modification time" do
       assert_equal Time.new.to_i, @static_file.mtime
+    end
+
+    should "only set modified time if not a symlink" do
+      expect(File).to receive(:symlink?).and_return(true)
+      expect(File).not_to receive(:utime)
+      @static_file.write(dest_dir)
+
+      allow(File).to receive(:symlink?).and_call_original
     end
 
     should "known if the source path is modified, when it is" do
@@ -134,11 +143,14 @@ class TestStaticFile < BuntoUnitTest
 
     should "be able to convert to liquid" do
       expected = {
+        "basename"      => "static_file",
+        "name"          => "static_file.txt",
         "extname"       => ".txt",
         "modified_time" => @static_file.modified_time,
-        "path"          => "/static_file.txt"
+        "path"          => "/static_file.txt",
+        "collection"    => nil,
       }
-      assert_equal expected, @static_file.to_liquid
+      assert_equal expected, @static_file.to_liquid.to_h
     end
   end
 end

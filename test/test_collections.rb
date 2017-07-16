@@ -91,9 +91,9 @@ class TestCollections < BuntoUnitTest
       @site = fixture_site({
         "collections" => {
           "methods" => {
-            "permalink" => "/awesome/:path/"
-          }
-        }
+            "permalink" => "/awesome/:path/",
+          },
+        },
       })
       @site.process
       @collection = @site.collections["methods"]
@@ -107,7 +107,7 @@ class TestCollections < BuntoUnitTest
   context "with a collection" do
     setup do
       @site = fixture_site({
-        "collections" => ["methods"]
+        "collections" => ["methods"],
       })
       @site.process
       @collection = @site.collections["methods"]
@@ -132,6 +132,7 @@ class TestCollections < BuntoUnitTest
           _methods/um_hi.md
           _methods/escape-+\ #%20[].md
           _methods/yaml_with_dots.md
+          _methods/3940394-21-9393050-fifif1323-test.md
         ), doc.relative_path
       end
     end
@@ -157,9 +158,9 @@ class TestCollections < BuntoUnitTest
         "collections" => {
           "methods" => {
             "foo" => "bar",
-            "baz" => "whoo"
-          }
-        }
+            "baz" => "whoo",
+          },
+        },
       })
       @site.process
       @collection = @site.collections["methods"]
@@ -174,7 +175,7 @@ class TestCollections < BuntoUnitTest
     setup do
       @site = fixture_site({
         "collections" => ["methods"],
-        "safe"        => true
+        "safe"        => true,
       })
       @site.process
       @collection = @site.collections["methods"]
@@ -186,6 +187,9 @@ class TestCollections < BuntoUnitTest
     end
 
     should "include the symlinked file from site.source in the list of docs" do
+      # no support for including symlinked file on Windows
+      skip_if_windows "Bunto does not currently support symlinks on Windows."
+
       assert_includes @collection.docs.map(&:relative_path), "_methods/um_hi.md"
     end
   end
@@ -194,7 +198,7 @@ class TestCollections < BuntoUnitTest
     setup do
       @site = fixture_site({
         "collections" => ["with.dots"],
-        "safe"        => true
+        "safe"        => true,
       })
       @site.process
       @collection = @site.collections["with.dots"]

@@ -1,7 +1,4 @@
-## HEAD
-> The history log of the Bunto project. See all commits in https://github.com/bunto/bunto/commits/ruby!
-
-----
+## 3.4.5 / 2017-07-17 (#106)
 
 ### Minor Enhancements
   * Add Slack notification (#102)
@@ -13,8 +10,7 @@
 ### Development Fixes
 
   * Improve tests for Bunto::PluginManager (#99)
-
-----
+  * Fix issues at Travis CI, AppVeyor, CodeShip & CodeClimate
 
 ## 3.2.1 / 2016-08-13
 
@@ -583,8 +579,6 @@
 
   * Update the Code of Conduct to the latest version
 
-----
-
 ## 2.0.0.pre / 2016-04-04
 
   * Second pre-release!
@@ -593,13 +587,9 @@
 
   * Bunto 2 requires newer version of Ruby.
 
-----
-
 ## 1.0.0 / 2016-02-14
 
   * First release!
-
-----
 
 ## 0.0.1 / 2015-05-30
 

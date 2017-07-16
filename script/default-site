@@ -7,16 +7,15 @@ echo "$0: setting up tmp directory"
 mkdir -p ./tmp
 rm -Rf ./tmp/default-site
 
-workdir=$(pwd)
-
 echo "$0: creating new default site"
-bundle exec exe/bunto new tmp/default-site
+bundle exec bunto new tmp/default-site
 pushd tmp/default-site
 
 echo "$0: respecifying the bunto install location"
-ruby -e "contents = File.read('Gemfile'); File.write('Gemfile', contents.sub(/gem \"bunto\".*\\n/, 'gem \"bunto\", path: \"$workdir\"'))"
-echo "$0: installing default site dependencies"
-BUNDLE_GEMFILE=Gemfile bundle install
-echo "$0: building the default site"
-BUNDLE_GEMFILE=Gemfile bundle exec bunto build --verbose
-popd
+ruby -e "contents = File.read('Gemfile'); File.write('Gemfile', contents.sub(/gem \"bunto\".*\\n/, 'gem \"bunto\", path: \"../../\"'))"
+echo "Currently disabled."
+#echo "$0: installing default site dependencies"
+#BUNDLE_GEMFILE=Gemfile bundle install
+#echo "$0: building the default site"
+#BUNDLE_GEMFILE=Gemfile bundle exec bunto build --verbose
+#popd

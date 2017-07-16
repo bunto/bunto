@@ -11,6 +11,7 @@ module Bunto
 
             c.option "force", "--force", "Force creation even if PATH already exists"
             c.option "blank", "--blank", "Creates scaffolding but with empty files"
+            c.option "skip-bundle", "--skip-bundle", "Skip 'bundle install'"
 
             c.action do |args, options|
               Bunto::Commands::New.process(args, options)
@@ -34,7 +35,7 @@ module Bunto
             create_site new_blog_path
           end
 
-          Bunto.logger.info "New bunto site installed in #{new_blog_path}."
+          after_install(new_blog_path, options)
         end
 
         def create_blank_site(path)
@@ -73,16 +74,20 @@ ruby RUBY_VERSION
 gem "bunto", "#{Bunto::VERSION}"
 
 # This is the default theme for new Bunto sites. You may change this to anything you like.
-gem "minima"
+gem "minima", "~> 2.0"
 
 # If you want to use GitHub Pages, remove the "gem "bunto"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
 # gem "github-pages", group: :bunto_plugins
 
 # If you have any plugins, put them here!
-# group :bunto_plugins do
-#   gem "bunto-github-metadata", "~> 1.0"
-# end
+group :bunto_plugins do
+   gem "bunto-feed", "~> 0.6"
+end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 RUBY
         end
 
@@ -113,6 +118,31 @@ RUBY
 
         def scaffold_path
           "_posts/0000-00-00-welcome-to-bunto.markdown.erb"
+        end
+
+        # After a new blog has been created, print a success notification and
+        # then automatically execute bundle install from within the new blog dir
+        # unless the user opts to generate a blank blog or skip 'bundle install'.
+
+        def after_install(path, options = {})
+          unless options["blank"] || options["skip-bundle"]
+            bundle_install path
+          end
+
+          Bunto.logger.info "New bunto site installed in #{path.cyan}."
+          Bunto.logger.info "Bundle install skipped." if options["skip-bundle"]
+        end
+
+        def bundle_install(path)
+          Bunto::External.require_with_graceful_fail "bundler"
+          Bunto.logger.info "Running bundle install in #{path.cyan}..."
+          Dir.chdir(path) do
+            process, output = Bunto::Utils::Exec.run("bundle", "install")
+            output.to_s.each_line do |line|
+              Bunto.logger.info("Bundler:".green, line.strip) unless line.to_s.empty?
+            end
+            raise SystemExit unless process.success?
+          end
         end
       end
     end

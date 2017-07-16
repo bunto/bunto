@@ -43,26 +43,23 @@
 
 By Suriyaa Kudo, Tom Preston-Werner, Parker Moore and many [awesome contributors](https://github.com/bunto/bunto/graphs/contributors)!
 
-Bunto is a Web Application Framework and can be used as a static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Bunto takes your content, renders HTML and CSS templates, and spits out a complete, static website ready to be served by Apache, hostSE, Nginx or another web server. Bunto is the engine behind [GitHub Pages](https://pages.github.com), which you can use to host sites right from your GitHub repositories.
+Bunto is a Web Application Framework and can be used as a simple, blog-aware, static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Bunto takes your content, renders Markdown and Liquid templates, and spits out a complete, static website ready to be served by Apache, Nginx or another web server. Bunto is the engine behind [GitHub Pages](https://pages.github.com), which you can use to host sites right from your GitHub repositories.
 
 ## Philosophy
 
-Bunto does what you tell it to do — no more, no less. It doesn't try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Bunto gets out of your way and allows you to concentrate on what truly matters: your content.
+Bunto does what you tell it to do — no more, no less. It doesn't try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Bunto gets out of your way and allows you to concentrate on what truly matters: your content.
+
+## Having trouble with OS X El Capitan?
+
+See: https://buntowaf.tk/docs/troubleshooting/#bunto-amp-mac-os-x-1011
 
 ## Getting Started
 
-Bunto will work on most systems out-of-the-box. You need only to install [RubyGems](https://rubygems.org/pages/download) on your system.
-After that run in your command line program this command:
-
-``` bash
-gem install bunto
-```
-
-* [Install](https://bunto.github.io/docs/installation/) the gem
-* Read up about its [Usage](https://bunto.github.io/docs/usage/) and [Configuration](https://bunto.github.io/docs/configuration/)
+* [Install](https://buntowaf.tk/docs/installation/) the gem
+* Read up about its [Usage](https://buntowaf.tk/docs/usage/) and [Configuration](https://buntowaf.tk/docs/configuration/)
 * Take a gander at some existing [Sites](https://wiki.github.com/bunto/bunto/sites)
-* [Fork](https://github.com/bunto/bunto/fork) and [Contribute](https://bunto.github.io/docs/contributing/) your own modifications
-* Have questions? Check out our official forum community [Bunto Talk](https://bunto.github.io/talk/) or [`#bunto` on irc.freenode.net](https://botbot.me/freenode/bunto/)
+* [Fork](https://github.com/bunto/bunto/fork) and [Contribute](https://buntowaf.tk/docs/contributing/) your own modifications
+* Have questions? Check out our official forum community [Bunto Talk](https://talk.buntowaf.tk/) or [`#bunto` on irc.freenode.net](https://botbot.me/freenode/bunto/)
 
 ## Code of Conduct
 
@@ -73,22 +70,16 @@ conduct.
 Please adhere to this code of conduct in any interactions you have in the
 Bunto community. It is strictly enforced on all official Bunto
 repositories, websites, and resources. If you encounter someone violating
-these terms, please let a maintainer ([@SuriyaaKudoIsc](https://github.com/SuriyaaKudoIsc)) know
-and we will address it as soon as possible.
+these terms, please let a maintainer ([@parkr](https://github.com/parkr), [@envygeeks](https://github.com/envygeeks), [@mattr-](https://github.com/mattr-), or [@alfredxing](https://github.com/alfredxing)) know and we will address it as soon as possible.
 
 ## Diving In
 
-* [Migrate](https://bunto-import.tk/docs/home/) from your previous system
-* Learn how the [YAML Front Matter](https://bunto.github.io/docs/frontmatter/) works
-* Put information on your site with [Variables](https://bunto.github.io/docs/variables/)
-* Customize the [Permalinks](https://bunto.github.io/docs/permalinks/) your posts are generated with
-* Use the built-in [Liquid Extensions](https://bunto.github.io/docs/templates/) to make your life easier
-* Use custom [Plugins](https://bunto.github.io/docs/plugins/) to generate content specific to your site
-
-## Have a problem? Come chat with us!
-[![Join the chat at https://gitter.im/bunto/bunto](https://badges.gitter.im/bunto/bunto.svg)](https://gitter.im/bunto/bunto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![IRC - #bunto on freenode WebChat](https://img.shields.io/badge/freenode-bunto-yellowgreen.svg?style=flat)](http://webchat.freenode.net/?channels=bunto)
-[<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Facebook.svg" width="60">](https://www.facebook.com/groups/BuntoWAF)
+* [Migrate](http://import.buntowaf.tk/docs/home/) from your previous system
+* Learn how the [YAML Front Matter](https://buntowaf.tk/docs/frontmatter/) works
+* Put information on your site with [Variables](https://buntowaf.tk/docs/variables/)
+* Customize the [Permalinks](https://buntowaf.tk/docs/permalinks/) your posts are generated with
+* Use the built-in [Liquid Extensions](https://buntowaf.tk/docs/templates/) to make your life easier
+* Use custom [Plugins](https://buntowaf.tk/docs/plugins/) to generate content specific to your site
 
 ## License
 

@@ -42,7 +42,7 @@ class TestPluginManager < BuntoUnitTest
 
   context "require gems" do
     should "invoke `require_with_graceful_fail`" do
-      gems = %w(bemojii foobar)
+      gems = %w(jemojii foobar)
 
       expect(Bunto::External).to(
         receive(:require_with_graceful_fail).with(gems).and_return(nil)
@@ -51,7 +51,7 @@ class TestPluginManager < BuntoUnitTest
       plugin_manager = PluginManager.new(site)
 
       allow(plugin_manager).to receive(:plugin_allowed?).with("foobar").and_return(true)
-      allow(plugin_manager).to receive(:plugin_allowed?).with("bemojii").and_return(true)
+      allow(plugin_manager).to receive(:plugin_allowed?).with("jemojii").and_return(true)
 
       plugin_manager.require_gems
     end
@@ -68,7 +68,7 @@ class TestPluginManager < BuntoUnitTest
     should "require plugin files" do
       site = double({ :safe          => false,
                       :config        => { "plugins_dir" => "_plugins" },
-                      :in_source_dir => "/tmp/" })
+                      :in_source_dir => "/tmp/", })
       plugin_manager = PluginManager.new(site)
 
       expect(Bunto::External).to receive(:require_with_graceful_fail)
@@ -78,10 +78,10 @@ class TestPluginManager < BuntoUnitTest
 
   context "site is marked as safe" do
     should "allow plugins if they are whitelisted" do
-      site = double({ :safe => true, :config => { "whitelist" => ["bemoji"] } })
+      site = double({ :safe => true, :config => { "whitelist" => ["jemoji"] } })
       plugin_manager = PluginManager.new(site)
 
-      assert plugin_manager.plugin_allowed?("bemoji")
+      assert plugin_manager.plugin_allowed?("jemoji")
       assert !plugin_manager.plugin_allowed?("not_allowed_plugin")
     end
 
@@ -98,9 +98,9 @@ class TestPluginManager < BuntoUnitTest
     should "call site's in_source_dir" do
       site = double({
         :config        => {
-          "plugins_dir" => Bunto::Configuration::DEFAULTS["plugins_dir"]
+          "plugins_dir" => Bunto::Configuration::DEFAULTS["plugins_dir"],
         },
-        :in_source_dir => "/tmp/"
+        :in_source_dir => "/tmp/",
       })
       plugin_manager = PluginManager.new(site)
 
@@ -132,7 +132,7 @@ class TestPluginManager < BuntoUnitTest
 
     should "print no deprecation warning if bunto-paginate is present" do
       site = double({
-        :config => { "paginate" => true, "gems" => ["bunto-paginate"] }
+        :config => { "paginate" => true, "gems" => ["bunto-paginate"] },
       })
       plugin_manager = PluginManager.new(site)
 

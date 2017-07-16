@@ -30,8 +30,7 @@ module Bunto
       @data
     end
 
-    def trigger_hooks(*)
-    end
+    def trigger_hooks(*); end
 
     # 'Path' of the excerpt.
     #
@@ -118,7 +117,7 @@ module Bunto
       if tail.empty?
         head
       else
-        "" << head << "\n\n" << tail.scan(%r!^\[[^\]]+\]:.+$!).join("\n")
+        "" << head << "\n\n" << tail.scan(%r!^ {0,3}\[[^\]]+\]:.+$!).join("\n")
       end
     end
   end

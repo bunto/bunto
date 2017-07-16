@@ -10,7 +10,7 @@ tags:
 - first
 - second
 - third
-- bunto.github.io
+- buntowaf.tk
 ---
 
 First paragraph with [link ref][link].
@@ -21,4 +21,4 @@ Second paragraph
 
 Third paragraph
 
-[link]: https://bunto.github.io/
+[link]: https://buntowaf.tk/

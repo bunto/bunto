@@ -41,7 +41,6 @@ module Bunto
   autoload :Convertible,         "bunto/convertible"
   autoload :Deprecator,          "bunto/deprecator"
   autoload :Document,            "bunto/document"
-  autoload :Draft,               "bunto/draft"
   autoload :EntryFilter,         "bunto/entry_filter"
   autoload :Errors,              "bunto/errors"
   autoload :Excerpt,             "bunto/excerpt"
@@ -55,6 +54,7 @@ module Bunto
   autoload :PostReader,          "bunto/readers/post_reader"
   autoload :PageReader,          "bunto/readers/page_reader"
   autoload :StaticFileReader,    "bunto/readers/static_file_reader"
+  autoload :ThemeAssetsReader,   "bunto/readers/theme_assets_reader"
   autoload :LogAdapter,          "bunto/log_adapter"
   autoload :Page,                "bunto/page"
   autoload :PluginManager,       "bunto/plugin_manager"
@@ -119,7 +119,11 @@ module Bunto
     # Returns nothing
     # rubocop:disable Style/AccessorMethodName
     def set_timezone(timezone)
-      ENV["TZ"] = timezone
+      ENV["TZ"] = if Utils::Platforms.really_windows?
+                    Utils::WinTZ.calculate(timezone)
+                  else
+                    timezone
+                  end
     end
     # rubocop:enable Style/AccessorMethodName
 
@@ -160,11 +164,13 @@ module Bunto
 
       questionable_path.insert(0, "/") if questionable_path.start_with?("~")
       clean_path = File.expand_path(questionable_path, "/")
-      clean_path.sub!(%r!\A\w:/!, "/")
 
-      if clean_path.start_with?(base_directory.sub(%r!\A\w:/!, "/"))
+      return clean_path if clean_path.eql?(base_directory)
+
+      if clean_path.start_with?(base_directory.sub(%r!\z!, "/"))
         clean_path
       else
+        clean_path.sub!(%r!\A\w:/!, "/")
         File.join(base_directory, clean_path)
       end
     end

@@ -2,14 +2,17 @@
 module Bunto
   module Utils
     extend self
-    autoload :Platforms, "bunto/utils/platforms"
     autoload :Ansi, "bunto/utils/ansi"
+    autoload :Exec, "bunto/utils/exec"
+    autoload :Platforms, "bunto/utils/platforms"
+    autoload :WinTZ, "bunto/utils/win_tz"
 
     # Constants for use in #slugify
-    SLUGIFY_MODES = %w(raw default pretty).freeze
+    SLUGIFY_MODES = %w(raw default pretty ascii).freeze
     SLUGIFY_RAW_REGEXP = Regexp.new('\\s+').freeze
     SLUGIFY_DEFAULT_REGEXP = Regexp.new("[^[:alnum:]]+").freeze
     SLUGIFY_PRETTY_REGEXP = Regexp.new("[^[:alnum:]._~!$&'()+,;=@]+").freeze
+    SLUGIFY_ASCII_REGEXP = Regexp.new("[^[A-Za-z0-9]]+").freeze
 
     # Takes an indented string and removes the preceding spaces on each line
 
@@ -160,6 +163,9 @@ module Bunto
     # When mode is "pretty", some non-alphabetic characters (._~!$&'()+,;=@)
     # are not replaced with hyphen.
     #
+    # When mode is "ascii", some everything else except ASCII characters
+    # a-z (lowercase), A-Z (uppercase) and 0-9 (numbers) are not replaced with hyphen.
+    #
     # If cased is true, all uppercase letters in the result string are
     # replaced with their lowercase counterparts.
     #
@@ -172,6 +178,9 @@ module Bunto
     #
     #   slugify("The _config.yml file", "pretty", true)
     #   # => "The-_config.yml file"
+    #
+    #   slugify("The _config.yml file", "ascii")
+    #   # => "the-config.yml-file"
     #
     # Returns the slugified string.
     def slugify(string, mode: nil, cased: false)
@@ -193,6 +202,11 @@ module Bunto
           # "._~!$&'()+,;=@" is human readable (not URI-escaped) in URL
           # and is allowed in both extN and NTFS.
           SLUGIFY_PRETTY_REGEXP
+        when "ascii"
+          # For web servers not being able to handle Unicode, the safe
+          # method is to ditch anything else but latin letters and numeric
+          # digits.
+          SLUGIFY_ASCII_REGEXP
         end
 
       # Strip according to the mode

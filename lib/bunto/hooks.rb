@@ -6,7 +6,7 @@ module Bunto
     PRIORITY_MAP = {
       :low    => 10,
       :normal => 20,
-      :high   => 30
+      :high   => 30,
     }.freeze
 
     # initial empty hooks
@@ -17,26 +17,26 @@ module Bunto
         :post_read   => [],
         :pre_render  => [],
         :post_render => [],
-        :post_write  => []
+        :post_write  => [],
       },
       :pages     => {
         :post_init   => [],
         :pre_render  => [],
         :post_render => [],
-        :post_write  => []
+        :post_write  => [],
       },
       :posts     => {
         :post_init   => [],
         :pre_render  => [],
         :post_render => [],
-        :post_write  => []
+        :post_write  => [],
       },
       :documents => {
         :post_init   => [],
         :pre_render  => [],
         :post_render => [],
-        :post_write  => []
-      }
+        :post_write  => [],
+      },
     }
 
     # map of all hooks and their priorities
@@ -54,7 +54,7 @@ module Bunto
 
     # Ensure the priority is a Fixnum
     def self.priority_value(priority)
-      return priority if priority.is_a?(Fixnum)
+      return priority if priority.is_a?(Integer)
       PRIORITY_MAP[priority] || DEFAULT_PRIORITY
     end
 
@@ -64,7 +64,7 @@ module Bunto
         :post_init   => [],
         :pre_render  => [],
         :post_render => [],
-        :post_write  => []
+        :post_write  => [],
       }
 
       unless @registry[owner][event]
@@ -80,7 +80,7 @@ module Bunto
     end
 
     def self.insert_hook(owner, event, priority, &block)
-      @hook_priority[block] = "#{priority}.#{@hook_priority.size}".to_f
+      @hook_priority[block] = [-priority, @hook_priority.size]
       @registry[owner][event] << block
     end
 

@@ -12,11 +12,12 @@ class TestTags < BuntoUnitTest
 
     site.posts.docs.concat(PostReader.new(site).read_posts("")) if override["read_posts"]
     CollectionReader.new(site).read if override["read_collections"]
+    site.read if override["read_all"]
 
     info = { :filters => [Bunto::Filters], :registers => { :site => site } }
     @converter = site.converters.find { |c| c.class == converter_class }
     payload = { "highlighter_prefix" => @converter.highlighter_prefix,
-                "highlighter_suffix" => @converter.highlighter_suffix }
+                "highlighter_suffix" => @converter.highlighter_suffix, }
 
     @result = Liquid::Template.parse(content).render!(payload, info)
     @result = @converter.convert(@result)
@@ -58,6 +59,7 @@ CONTENT
       assert_match r, "xml+cheetah"
       assert_match r, "x.y"
       assert_match r, "coffee-script"
+      assert_match r, "shell_session"
 
       refute_match r, "blah^"
 
@@ -485,7 +487,7 @@ CONTENT
         end
 
         create_post(@content, {
-          "markdown" => "rdiscount"
+          "markdown" => "rdiscount",
         })
       end
 
@@ -515,7 +517,7 @@ CONTENT
         end
 
         create_post(@content, {
-          "markdown" => "redcarpet"
+          "markdown" => "redcarpet",
         })
       end
 
@@ -539,7 +541,7 @@ CONTENT
         "permalink"   => "pretty",
         "source"      => source_dir,
         "destination" => dest_dir,
-        "read_posts"  => true
+        "read_posts"  => true,
       })
     end
 
@@ -547,8 +549,34 @@ CONTENT
       refute_match(%r!markdown\-html\-error!, @result)
     end
 
-    should "have the URL to the \"complex\" post from 2008-11-21" do
+    should "have the URL to the 'complex' post from 2008-11-21" do
       assert_match %r!/2008/11/21/complex/!, @result
+    end
+  end
+
+  context "simple page with post linking containing special characters" do
+    setup do
+      content = <<CONTENT
+---
+title: Post linking
+---
+
+{% post_url 2016-11-26-special-chars-(+) %}
+CONTENT
+      create_post(content, {
+        "permalink"   => "pretty",
+        "source"      => source_dir,
+        "destination" => dest_dir,
+        "read_posts"  => true,
+      })
+    end
+
+    should "not cause an error" do
+      refute_match(%r!markdown\-html\-error!, @result)
+    end
+
+    should "have the URL to the 'special-chars' post from 2016-11-26" do
+      assert_match %r!/2016/11/26/special-chars-\(\+\)/!, @result
     end
   end
 
@@ -568,7 +596,7 @@ CONTENT
         "permalink"   => "pretty",
         "source"      => source_dir,
         "destination" => dest_dir,
-        "read_posts"  => true
+        "read_posts"  => true,
       })
     end
 
@@ -576,14 +604,48 @@ CONTENT
       refute_match(%r!markdown\-html\-error!, @result)
     end
 
-    should "have the URL to the \"complex\" post from 2008-11-21" do
+    should "have the URL to the 'complex' post from 2008-11-21" do
       assert_match %r!1\s/2008/11/21/complex/!, @result
       assert_match %r!2\s/2008/11/21/complex/!, @result
     end
 
-    should "have the URL to the \"nested\" post from 2008-11-21" do
+    should "have the URL to the 'nested' post from 2008-11-21" do
       assert_match %r!3\s/2008/11/21/nested/!, @result
       assert_match %r!4\s/2008/11/21/nested/!, @result
+    end
+  end
+
+  context "simple page with nested post linking and path not used in `post_url`" do
+    setup do
+      content = <<CONTENT
+---
+title: Deprecated Post linking
+---
+
+- 1 {% post_url 2008-11-21-nested %}
+CONTENT
+      create_post(content, {
+        "permalink"   => "pretty",
+        "source"      => source_dir,
+        "destination" => dest_dir,
+        "read_posts"  => true,
+      })
+    end
+
+    should "not cause an error" do
+      refute_match(%r!markdown\-html\-error!, @result)
+    end
+
+    should "have the url to the 'nested' post from 2008-11-21" do
+      assert_match %r!1\s/2008/11/21/nested/!, @result
+    end
+
+    should "throw a deprecation warning" do
+      deprecation_warning = "       Deprecation: A call to "\
+        "'{{ post_url 2008-11-21-nested }}' did not match a post using the new matching "\
+        "method of checking name (path-date-slug) equality. Please make sure that you "\
+        "change this tag to match the post's name exactly."
+      assert_includes Bunto.logger.messages, deprecation_warning
     end
   end
 
@@ -602,7 +664,7 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
     end
@@ -621,9 +683,44 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
+    end
+  end
+
+  context "simple page with linking to a page" do
+    setup do
+      content = <<CONTENT
+---
+title: linking
+---
+
+{% link contacts.html %}
+{% link info.md %}
+{% link /css/screen.css %}
+CONTENT
+      create_post(content, {
+        "source"      => source_dir,
+        "destination" => dest_dir,
+        "read_all"    => true,
+      })
+    end
+
+    should "not cause an error" do
+      refute_match(%r!markdown\-html\-error!, @result)
+    end
+
+    should "have the URL to the 'contacts' item" do
+      assert_match(%r!/contacts\.html!, @result)
+    end
+
+    should "have the URL to the 'info' item" do
+      assert_match(%r!/info\.html!, @result)
+    end
+
+    should "have the URL to the 'screen.css' item" do
+      assert_match(%r!/css/screen\.css!, @result)
     end
   end
 
@@ -640,7 +737,7 @@ CONTENT
         "source"           => source_dir,
         "destination"      => dest_dir,
         "collections"      => { "methods" => { "output" => true } },
-        "read_collections" => true
+        "read_collections" => true,
       })
     end
 
@@ -648,7 +745,7 @@ CONTENT
       refute_match(%r!markdown\-html\-error!, @result)
     end
 
-    should "have the URL to the \"yaml_with_dots\" item" do
+    should "have the URL to the 'yaml_with_dots' item" do
       assert_match(%r!/methods/yaml_with_dots\.html!, @result)
     end
   end
@@ -667,7 +764,7 @@ CONTENT
         "source"           => source_dir,
         "destination"      => dest_dir,
         "collections"      => { "methods" => { "output" => true } },
-        "read_collections" => true
+        "read_collections" => true,
       })
     end
 
@@ -675,11 +772,11 @@ CONTENT
       refute_match(%r!markdown\-html\-error!, @result)
     end
 
-    should "have the URL to the \"sanitized_path\" item" do
+    should "have the URL to the 'sanitized_path' item" do
       assert_match %r!1\s/methods/sanitized_path\.html!, @result
     end
 
-    should "have the URL to the \"site/generate\" item" do
+    should "have the URL to the 'site/generate' item" do
       assert_match %r!2\s/methods/site/generate\.html!, @result
     end
   end
@@ -699,7 +796,7 @@ CONTENT
           "source"           => source_dir,
           "destination"      => dest_dir,
           "collections"      => { "methods" => { "output" => true } },
-          "read_collections" => true
+          "read_collections" => true,
         })
       end
     end
@@ -723,7 +820,7 @@ CONTENT
             "source"      => source_dir,
             "destination" => dest_dir,
             "read_posts"  => true,
-            "safe"        => true
+            "safe"        => true,
           })
         end
         @result ||= ""
@@ -745,7 +842,7 @@ CONTENT
             "source"      => source_dir,
             "destination" => dest_dir,
             "read_posts"  => true,
-            "safe"        => true
+            "safe"        => true,
           })
         end
         assert_match(
@@ -771,7 +868,7 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
 
@@ -799,7 +896,7 @@ CONTENT
             "permalink"   => "pretty",
             "source"      => source_dir,
             "destination" => dest_dir,
-            "read_posts"  => true
+            "read_posts"  => true,
           })
         end
 
@@ -816,7 +913,7 @@ CONTENT
             "permalink"   => "pretty",
             "source"      => source_dir,
             "destination" => dest_dir,
-            "read_posts"  => true
+            "read_posts"  => true,
           })
         end
       end
@@ -835,7 +932,7 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
 
@@ -862,7 +959,7 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
 
@@ -885,7 +982,7 @@ CONTENT
           "permalink"    => "pretty",
           "source"       => source_dir,
           "destination"  => dest_dir,
-          "read_posts"   => true
+          "read_posts"   => true,
         })
       end
 
@@ -907,7 +1004,7 @@ CONTENT
           "permalink"   => "pretty",
           "source"      => source_dir,
           "destination" => dest_dir,
-          "read_posts"  => true
+          "read_posts"  => true,
         })
       end
 
@@ -933,7 +1030,7 @@ CONTENT
             "permalink"   => "pretty",
             "source"      => source_dir,
             "destination" => dest_dir,
-            "read_posts"  => true
+            "read_posts"  => true,
           })
         end
         assert_match(
@@ -1028,7 +1125,7 @@ CONTENT
               "permalink"   => "pretty",
               "source"      => source_dir,
               "destination" => dest_dir,
-              "read_posts"  => true
+              "read_posts"  => true,
             })
           end
           assert_match "Could not locate the included file 'missing.html' in any of " \
@@ -1053,7 +1150,7 @@ CONTENT
               "permalink"   => "pretty",
               "source"      => source_dir,
               "destination" => dest_dir,
-              "read_posts"  => true
+              "read_posts"  => true,
             })
           end
           assert_equal(
@@ -1083,7 +1180,7 @@ CONTENT
             "source"      => source_dir,
             "destination" => dest_dir,
             "read_posts"  => true,
-            "safe"        => true
+            "safe"        => true,
           })
         end
         @result ||= ""
@@ -1105,7 +1202,7 @@ CONTENT
             "source"      => source_dir,
             "destination" => dest_dir,
             "read_posts"  => true,
-            "safe"        => true
+            "safe"        => true,
           })
         end
         assert_match(

@@ -8,10 +8,15 @@ class TestFilters < BuntoUnitTest
     attr_accessor :site, :context
 
     def initialize(opts = {})
-      @site = Bunto::Site.new(
-        Bunto.configuration(opts.merge("skip_config_files" => true))
-      )
+      @site = Bunto::Site.new(opts.merge("skip_config_files" => true))
       @context = Liquid::Context.new({}, {}, { :site => @site })
+    end
+  end
+
+  def make_filter_mock(opts = {})
+    BuntoFilter.new(site_configuration(opts)).tap do |f|
+      tz = f.site.config["timezone"]
+      Bunto.set_timezone(tz) if tz
     end
   end
 
@@ -21,10 +26,10 @@ class TestFilters < BuntoUnitTest
 
   context "filters" do
     setup do
-      @filter = BuntoFilter.new({
-        "source"      => source_dir,
-        "destination" => dest_dir,
-        "timezone"    => "UTC"
+      @filter = make_filter_mock({
+        "timezone" => "UTC",
+        "url"      => "http://example.com",
+        "baseurl"  => "/base",
       })
       @sample_time = Time.utc(2013, 3, 27, 11, 22, 33)
       @sample_date = Date.parse("2013-03-27")
@@ -34,7 +39,7 @@ class TestFilters < BuntoUnitTest
       @array_of_objects = [
         { "color" => "red",  "size" => "large"  },
         { "color" => "red",  "size" => "medium" },
-        { "color" => "blue", "size" => "medium" }
+        { "color" => "blue", "size" => "medium" },
       ]
     end
 
@@ -65,7 +70,7 @@ class TestFilters < BuntoUnitTest
       end
 
       should "escapes special characters when configured to do so" do
-        kramdown = BuntoFilter.new({ :kramdown => { :entity_output => :symbolic } })
+        kramdown = make_filter_mock({ :kramdown => { :entity_output => :symbolic } })
         assert_equal(
           "&ldquo;This filter&rsquo;s test&hellip;&rdquo;",
           kramdown.smartify(%q{"This filter's test..."})
@@ -136,6 +141,11 @@ class TestFilters < BuntoUnitTest
         "chunky, bacon, bits, and pieces",
         @filter.array_to_sentence_string(%w(chunky bacon bits pieces))
       )
+    end
+
+    should "convert array to sentence string with different connector" do
+      assert_equal "1 or 2", @filter.array_to_sentence_string([1, 2], "or")
+      assert_equal "1, 2, 3, or 4", @filter.array_to_sentence_string([1, 2, 3, 4], "or")
     end
 
     context "normalize_whitespace filter" do
@@ -307,6 +317,145 @@ class TestFilters < BuntoUnitTest
       assert_equal "my%20things", @filter.uri_escape("my things")
     end
 
+    should "allow colons in URI" do
+      assert_equal "foo:bar", @filter.uri_escape("foo:bar")
+      assert_equal "foo%20bar:baz", @filter.uri_escape("foo bar:baz")
+    end
+
+    context "absolute_url filter" do
+      should "produce an absolute URL from a page URL" do
+        page_url = "/about/my_favorite_page/"
+        assert_equal "http://example.com/base#{page_url}", @filter.absolute_url(page_url)
+      end
+
+      should "ensure the leading slash" do
+        page_url = "about/my_favorite_page/"
+        assert_equal "http://example.com/base/#{page_url}", @filter.absolute_url(page_url)
+      end
+
+      should "ensure the leading slash for the baseurl" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => "base",
+        })
+        assert_equal "http://example.com/base/#{page_url}", filter.absolute_url(page_url)
+      end
+
+      should "be ok with a blank but present 'url'" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({
+          "url"     => "",
+          "baseurl" => "base",
+        })
+        assert_equal "/base/#{page_url}", filter.absolute_url(page_url)
+      end
+
+      should "be ok with a nil 'url'" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({
+          "url"     => nil,
+          "baseurl" => "base",
+        })
+        assert_equal "/base/#{page_url}", filter.absolute_url(page_url)
+      end
+
+      should "be ok with a nil 'baseurl'" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => nil,
+        })
+        assert_equal "http://example.com/#{page_url}", filter.absolute_url(page_url)
+      end
+
+      should "not prepend a forward slash if input is empty" do
+        page_url = ""
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => "/base",
+        })
+        assert_equal "http://example.com/base", filter.absolute_url(page_url)
+      end
+
+      should "not append a forward slash if input is '/'" do
+        page_url = "/"
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => "/base",
+        })
+        assert_equal "http://example.com/base/", filter.absolute_url(page_url)
+      end
+
+      should "not append a forward slash if input is '/' and nil 'baseurl'" do
+        page_url = "/"
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => nil,
+        })
+        assert_equal "http://example.com/", filter.absolute_url(page_url)
+      end
+
+      should "normalize international URLs" do
+        page_url = ""
+        filter = make_filter_mock({
+          "url"     => "http://ümlaut.example.org/",
+          "baseurl" => nil,
+        })
+        assert_equal "http://xn--mlaut-jva.example.org/", filter.absolute_url(page_url)
+      end
+    end
+
+    context "relative_url filter" do
+      should "produce a relative URL from a page URL" do
+        page_url = "/about/my_favorite_page/"
+        assert_equal "/base#{page_url}", @filter.relative_url(page_url)
+      end
+
+      should "ensure the leading slash between baseurl and input" do
+        page_url = "about/my_favorite_page/"
+        assert_equal "/base/#{page_url}", @filter.relative_url(page_url)
+      end
+
+      should "ensure the leading slash for the baseurl" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({ "baseurl" => "base" })
+        assert_equal "/base/#{page_url}", filter.relative_url(page_url)
+      end
+
+      should "normalize international URLs" do
+        page_url = "错误.html"
+        assert_equal "/base/%E9%94%99%E8%AF%AF.html", @filter.relative_url(page_url)
+      end
+
+      should "be ok with a nil 'baseurl'" do
+        page_url = "about/my_favorite_page/"
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => nil,
+        })
+        assert_equal "/#{page_url}", filter.relative_url(page_url)
+      end
+
+      should "not prepend a forward slash if input is empty" do
+        page_url = ""
+        filter = make_filter_mock({
+          "url"     => "http://example.com",
+          "baseurl" => "/base",
+        })
+        assert_equal "/base", filter.relative_url(page_url)
+      end
+
+      should "not return the url by reference" do
+        filter = make_filter_mock({ baseurl: nil })
+        page = Page.new(filter.site, test_dir("fixtures"), "", "front_matter.erb")
+        assert_equal "/front_matter.erb", page.url
+        url = filter.relative_url(page.url)
+        url << "foo"
+        assert_equal "/front_matter.erb", page.url
+      end
+    end
+
     context "jsonify filter" do
       should "convert hash to json" do
         assert_equal "{\"age\":18}", @filter.jsonify({ :age => 18 })
@@ -334,7 +483,7 @@ class TestFilters < BuntoUnitTest
           "excerpt"       => "<p>This should be published.</p>\n",
           "draft"         => false,
           "categories"    => [
-            "publish_test"
+            "publish_test",
           ],
           "layout"        => "default",
           "title"         => "Publish",
@@ -342,7 +491,7 @@ class TestFilters < BuntoUnitTest
           "date"          => "2008-02-02 00:00:00 +0000",
           "slug"          => "published",
           "ext"           => ".markdown",
-          "tags"          => []
+          "tags"          => [],
         }
         actual = JSON.parse(@filter.jsonify(@filter.site.docs_to_write.first.to_liquid))
 
@@ -358,7 +507,7 @@ class TestFilters < BuntoUnitTest
         actual = @filter.jsonify(@filter.site.to_liquid)
         assert_equal JSON.parse(actual)["bunto"], {
           "environment" => "development",
-          "version"     => Bunto::VERSION
+          "version"     => Bunto::VERSION,
         }
       end
 
@@ -374,7 +523,7 @@ class TestFilters < BuntoUnitTest
             "name" => name,
             :v     => 1,
             :thing => M.new({ :kay => "jewelers" }),
-            :stuff => true
+            :stuff => true,
           }
         end
       end
@@ -386,21 +535,21 @@ class TestFilters < BuntoUnitTest
             "v"     => 1,
             "thing" => [
               {
-                "kay" => "jewelers"
-              }
+                "kay" => "jewelers",
+              },
             ],
-            "stuff" => true
+            "stuff" => true,
           },
           {
             "name"  => "Smathers",
             "v"     => 1,
             "thing" => [
               {
-                "kay" => "jewelers"
-              }
+                "kay" => "jewelers",
+              },
             ],
-            "stuff" => true
-          }
+            "stuff" => true,
+          },
         ]
         result = @filter.jsonify([T.new("Jeremiah"), T.new("Smathers")])
         assert_equal expected, JSON.parse(result)
@@ -416,32 +565,32 @@ class TestFilters < BuntoUnitTest
               "v"     => 1,
               "thing" => [
                 {
-                  "kay" => "jewelers"
-                }
+                  "kay" => "jewelers",
+                },
               ],
-              "stuff" => true
+              "stuff" => true,
             },
             {
               "name"  => 1,
               "v"     => 1,
               "thing" => [
                 {
-                  "kay" => "jewelers"
-                }
+                  "kay" => "jewelers",
+                },
               ],
-              "stuff" => true
+              "stuff" => true,
             },
             {
               "name"  => 2,
               "v"     => 1,
               "thing" => [
                 {
-                  "kay" => "jewelers"
-                }
+                  "kay" => "jewelers",
+                },
               ],
-              "stuff" => true
-            }
-          ]
+              "stuff" => true,
+            },
+          ],
         }
         result = @filter.jsonify(my_hash)
         assert_equal expected, JSON.parse(result)
@@ -463,7 +612,9 @@ class TestFilters < BuntoUnitTest
               g["items"].is_a?(Array),
               "The list of grouped items for 'default' is not an Array."
             )
-            assert_equal 5, g["items"].size
+            # adjust array.size to ignore symlinked page in Windows
+            qty = Utils::Platforms.really_windows? ? 4 : 5
+            assert_equal qty, g["items"].size
           when "nil"
             assert(
               g["items"].is_a?(Array),
@@ -475,7 +626,9 @@ class TestFilters < BuntoUnitTest
               g["items"].is_a?(Array),
               "The list of grouped items for '' is not an Array."
             )
-            assert_equal 13, g["items"].size
+            # adjust array.size to ignore symlinked page in Windows
+            qty = Utils::Platforms.really_windows? ? 14 : 15
+            assert_equal qty, g["items"].size
           end
         end
       end
@@ -512,7 +665,7 @@ class TestFilters < BuntoUnitTest
         hash = {
           "a" => { "tags"=>%w(x y) },
           "b" => { "tags"=>["x"] },
-          "c" => { "tags"=>%w(y z) }
+          "c" => { "tags"=>%w(y z) },
         }
         assert_equal 2, @filter.where(hash, "tags", "x").length
       end
@@ -521,7 +674,7 @@ class TestFilters < BuntoUnitTest
         hash = {
           "a" => { "tags"=>%w(x y) },
           "b" => { "tags"=>"x" },
-          "c" => { "tags"=>%w(y z) }
+          "c" => { "tags"=>%w(y z) },
         }
         assert_equal 2, @filter.where(hash, "tags", "x").length
       end
@@ -530,7 +683,7 @@ class TestFilters < BuntoUnitTest
         hash = {
           "a" => { "category"=>"bear" },
           "b" => { "category"=>"wolf" },
-          "c" => { "category"=>%w(bear lion) }
+          "c" => { "category"=>%w(bear lion) },
         }
         assert_equal 0, @filter.where(hash, "category", "ear").length
       end
@@ -539,7 +692,7 @@ class TestFilters < BuntoUnitTest
         hash = {
           "The Words" => { "rating" => 1.2, "featured" => false },
           "Limitless" => { "rating" => 9.2, "featured" => true },
-          "Hustle"    => { "rating" => 4.7, "featured" => true }
+          "Hustle"    => { "rating" => 4.7, "featured" => true },
         }
 
         results = @filter.where(hash, "featured", "true")
@@ -583,7 +736,7 @@ class TestFilters < BuntoUnitTest
         hash = {
           "The Words" => { "rating" => 1.2, "featured" => false },
           "Limitless" => { "rating" => 9.2, "featured" => true },
-          "Hustle"    => { "rating" => 4.7, "featured" => true }
+          "Hustle"    => { "rating" => 4.7, "featured" => true },
         }
 
         results = @filter.where_exp(hash, "item", "item.featured == true")
@@ -604,7 +757,7 @@ class TestFilters < BuntoUnitTest
         { "id" => "a", "groups" => [1, 2] },
         { "id" => "b", "groups" => [2, 3] },
         { "id" => "c" },
-        { "id" => "d", "groups" => [1, 3] }
+        { "id" => "d", "groups" => [1, 3] },
       ]
       should "filter with the contains operator over arrays" do
         results = @filter.where_exp(objects, "obj", "obj.groups contains 1")
@@ -632,6 +785,91 @@ class TestFilters < BuntoUnitTest
       should "always return an array if the object responds to `select`" do
         results = @filter.where_exp(SelectDummy.new, "obj", "1 == 1")
         assert_equal [], results
+      end
+    end
+
+    context "group_by_exp filter" do
+      should "successfully group array of Bunto::Page's" do
+        @filter.site.process
+        groups = @filter.group_by_exp(@filter.site.pages, "page", "page.layout | upcase")
+        groups.each do |g|
+          assert(
+            ["DEFAULT", "NIL", ""].include?(g["name"]),
+            "#{g["name"]} isn't a valid grouping."
+          )
+          case g["name"]
+          when "DEFAULT"
+            assert(
+              g["items"].is_a?(Array),
+              "The list of grouped items for 'default' is not an Array."
+            )
+            # adjust array.size to ignore symlinked page in Windows
+            qty = Utils::Platforms.really_windows? ? 4 : 5
+            assert_equal qty, g["items"].size
+          when "nil"
+            assert(
+              g["items"].is_a?(Array),
+              "The list of grouped items for 'nil' is not an Array."
+            )
+            assert_equal 2, g["items"].size
+          when ""
+            assert(
+              g["items"].is_a?(Array),
+              "The list of grouped items for '' is not an Array."
+            )
+            # adjust array.size to ignore symlinked page in Windows
+            qty = Utils::Platforms.really_windows? ? 14 : 15
+            assert_equal qty, g["items"].size
+          end
+        end
+      end
+
+      should "include the size of each grouping" do
+        groups = @filter.group_by_exp(@filter.site.pages, "page", "page.layout")
+        groups.each do |g|
+          assert_equal(
+            g["items"].size,
+            g["size"],
+            "The size property for '#{g["name"]}' doesn't match the size of the Array."
+          )
+        end
+      end
+
+      should "allow more complex filters" do
+        items = [
+          { "version"=>"1.0", "result"=>"slow" },
+          { "version"=>"1.1.5", "result"=>"medium" },
+          { "version"=>"2.7.3", "result"=>"fast" },
+        ]
+
+        result = @filter.group_by_exp(items, "item", "item.version | split: '.' | first")
+        assert_equal 2, result.size
+      end
+
+      should "be equivalent of group_by" do
+        actual = @filter.group_by_exp(@filter.site.pages, "page", "page.layout")
+        expected = @filter.group_by(@filter.site.pages, "layout")
+
+        assert_equal expected, actual
+      end
+
+      should "return any input that is not an array" do
+        assert_equal "some string", @filter.group_by_exp("some string", "la", "le")
+      end
+
+      should "group by full element (as opposed to a field of the element)" do
+        items = %w(a b c d)
+
+        result = @filter.group_by_exp(items, "item", "item")
+        assert_equal 4, result.length
+        assert_equal ["a"], result.first["items"]
+      end
+
+      should "accept hashes" do
+        hash = { 1 => "a", 2 => "b", 3 => "c", 4 => "d" }
+
+        result = @filter.group_by_exp(hash, "item", "item")
+        assert_equal 4, result.length
       end
     end
 

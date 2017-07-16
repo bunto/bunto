@@ -1,3 +1,4 @@
+# CodeClimate
 engines:
   fixme:
     enabled: false
@@ -23,7 +24,7 @@ exclude_paths:
 
   - features/**/*
   - script/**/*
-  - site/**/*
+  - docs/**/*
   - spec/**/*
   - test/**/*
   - vendor/**/*

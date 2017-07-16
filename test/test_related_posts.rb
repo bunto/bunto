@@ -13,8 +13,8 @@ class TestRelatedPosts < BuntoUnitTest
       last_post     = @site.posts.last
       related_posts = Bunto::RelatedPosts.new(last_post).build
 
-      last_10_recent_posts = (@site.posts.docs.reverse - [last_post]).first(10)
-      assert_equal last_10_recent_posts, related_posts
+      last_ten_recent_posts = (@site.posts.docs.reverse - [last_post]).first(10)
+      assert_equal last_ten_recent_posts, related_posts
     end
   end
 
@@ -28,7 +28,7 @@ class TestRelatedPosts < BuntoUnitTest
 
       allow_any_instance_of(Bunto::RelatedPosts).to receive(:display)
       @site = fixture_site({
-        "lsi" => true
+        "lsi" => true,
       })
 
       @site.reset

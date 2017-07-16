@@ -16,6 +16,7 @@ class Bunto::Commands::NewTheme < Bunto::Command
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def process(args, opts)
       if !args || args.empty?
         raise Bunto::Errors::InvalidThemeName, "You must specify a theme name."
@@ -28,9 +29,10 @@ class Bunto::Commands::NewTheme < Bunto::Command
       end
 
       theme.create!
-      Bunto.logger.info "Your new Bunto theme, #{theme.name}," \
-        " is ready for you in #{theme.path}!"
+      Bunto.logger.info "Your new Bunto theme, #{theme.name.cyan}," \
+        " is ready for you in #{theme.path.to_s.cyan}!"
       Bunto.logger.info "For help getting started, read #{theme.path}/README.md."
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

@@ -1,6 +1,6 @@
 module Bunto
   class StaticFile
-    attr_reader :relative_path, :extname
+    attr_reader :relative_path, :extname, :name
 
     class << self
       # The cache of last modification times [path] -> mtime.
@@ -28,6 +28,10 @@ module Bunto
       @collection = collection
       @relative_path = File.join(*[@dir, @name].compact)
       @extname = File.extname(@name)
+
+      data.default_proc = proc do |_, key|
+        site.frontmatter_defaults.find(relative_path, type, key)
+      end
     end
     # rubocop: enable ParameterLists
 
@@ -96,11 +100,15 @@ module Bunto
     end
 
     def to_liquid
-      {
-        "extname"       => extname,
-        "modified_time" => modified_time,
-        "path"          => File.join("", relative_path)
-      }
+      @to_liquid ||= Drops::StaticFileDrop.new(self)
+    end
+
+    def data
+      @data ||= {}
+    end
+
+    def basename
+      File.basename(name, extname)
     end
 
     def placeholders
@@ -110,7 +118,7 @@ module Bunto
           @collection.relative_directory.size..relative_path.size],
         :output_ext => "",
         :name       => "",
-        :title      => ""
+        :title      => "",
       }
     end
 
@@ -123,7 +131,7 @@ module Bunto
                else
                  ::Bunto::URL.new({
                    :template     => @collection.url_template,
-                   :placeholders => placeholders
+                   :placeholders => placeholders,
                  })
                end.to_s.gsub(%r!/$!, "")
     end
@@ -146,7 +154,10 @@ module Bunto
       else
         FileUtils.copy_entry(path, dest_path)
       end
-      File.utime(self.class.mtimes[path], self.class.mtimes[path], dest_path)
+
+      unless File.symlink?(dest_path)
+        File.utime(self.class.mtimes[path], self.class.mtimes[path], dest_path)
+      end
     end
   end
 end

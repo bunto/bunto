@@ -5,7 +5,7 @@ module Bunto
       :highest => 100,
       :lowest  => -100,
       :normal  => 0,
-      :high    => 10
+      :high    => 10,
     }.freeze
 
     #

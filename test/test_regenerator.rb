@@ -8,10 +8,10 @@ class TestRegenerator < BuntoUnitTest
       @site = fixture_site({
         "collections" => {
           "methods" => {
-            "output" => true
-          }
+            "output" => true,
+          },
         },
-        "incremental" => true
+        "incremental" => true,
       })
 
       @site.read
@@ -92,7 +92,7 @@ class TestRegenerator < BuntoUnitTest
     setup do
       FileUtils.rm_rf(source_dir(".bunto-metadata"))
       @site = fixture_site({
-        "incremental" => true
+        "incremental" => true,
       })
 
       @site.read
@@ -129,7 +129,7 @@ class TestRegenerator < BuntoUnitTest
       @site = Site.new(Bunto.configuration({
         "source"      => source_dir,
         "destination" => dest_dir,
-        "incremental" => true
+        "incremental" => true,
       }))
 
       @site.process
@@ -311,7 +311,7 @@ class TestRegenerator < BuntoUnitTest
       @site = Site.new(Bunto.configuration({
         "source"      => source_dir,
         "destination" => dest_dir,
-        "incremental" => false
+        "incremental" => false,
       }))
 
       @site.process

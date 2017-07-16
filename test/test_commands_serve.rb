@@ -19,6 +19,12 @@ class TestCommandsServe < BuntoUnitTest
           p
         )
       end
+      Bunto.sites.clear
+      allow(SafeYAML).to receive(:load_file).and_return({})
+      allow(Bunto::Commands::Build).to receive(:build).and_return("")
+    end
+    teardown do
+      Bunto.sites.clear
     end
 
     should "label itself" do
@@ -79,14 +85,51 @@ class TestCommandsServe < BuntoUnitTest
         custom_options = {
           "config"  => %w(_config.yml _development.yml),
           "serving" => true,
-          "watch"   => false # for not having guard output when running the tests
+          "watch"   => false, # for not having guard output when running the tests
+          "url"     => "http://localhost:4000",
         }
-        allow(SafeYAML).to receive(:load_file).and_return({})
-        allow(Bunto::Commands::Build).to receive(:build).and_return("")
 
         expect(Bunto::Commands::Serve).to receive(:process).with(custom_options)
         @merc.execute(:serve, { "config" => %w(_config.yml _development.yml),
-                                "watch"  => false })
+                                "watch"  => false, })
+      end
+
+      context "in development environment" do
+        setup do
+          expect(Bunto).to receive(:env).and_return("development")
+          expect(Bunto::Commands::Serve).to receive(:start_up_webrick)
+        end
+        should "set the site url by default to `http://localhost:4000`" do
+          @merc.execute(:serve, { "watch" => false, "url" => "https://buntorb.com/" })
+
+          assert_equal 1, Bunto.sites.count
+          assert_equal "http://localhost:4000", Bunto.sites.first.config["url"]
+        end
+
+        should "take `host`, `port` and `ssl` into consideration if set" do
+          @merc.execute(:serve, {
+            "watch"    => false,
+            "host"     => "example.com",
+            "port"     => "9999",
+            "url"      => "https://buntorb.com/",
+            "ssl_cert" => "foo",
+            "ssl_key"  => "bar",
+          })
+
+          assert_equal 1, Bunto.sites.count
+          assert_equal "https://example.com:9999", Bunto.sites.first.config["url"]
+        end
+      end
+
+      context "not in development environment" do
+        should "not update the site url" do
+          expect(Bunto).to receive(:env).and_return("production")
+          expect(Bunto::Commands::Serve).to receive(:start_up_webrick)
+          @merc.execute(:serve, { "watch" => false, "url" => "https://buntorb.com/" })
+
+          assert_equal 1, Bunto.sites.count
+          assert_equal "https://buntorb.com/", Bunto.sites.first.config["url"]
+        end
       end
 
       context "verbose" do
@@ -103,13 +146,13 @@ class TestCommandsServe < BuntoUnitTest
         should "raise if enabling without key or cert" do
           assert_raises RuntimeError do
             custom_opts({
-              "ssl_key" => "foo"
+              "ssl_key" => "foo",
             })
           end
 
           assert_raises RuntimeError do
             custom_opts({
-              "ssl_key" => "foo"
+              "ssl_key" => "foo",
             })
           end
         end
@@ -123,7 +166,7 @@ class TestCommandsServe < BuntoUnitTest
             "ssl_cert"   => "foo",
             "source"     => "bar",
             "enable_ssl" => true,
-            "ssl_key"    => "bar"
+            "ssl_key"    => "bar",
           })
 
           assert result[:SSLEnable]
