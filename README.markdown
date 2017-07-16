@@ -11,6 +11,7 @@
       <th>CodeShip</th>
       <th>RubyGems</th>
       <th>Gemnasium</th>
+      <th>CLA</th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +33,9 @@
       </td>
       <td align="center">
         <a href="https://gemnasium.com/bunto/bunto"><img src="https://gemnasium.com/bunto/bunto.svg" alt="Dependency Status"></a>
+      </td>
+      <td align="center">
+        <a href="https://gist.github.com/f76d4854fb196820325ee8a5072a5722"><img src="https://cla-assistant.io/readme/badge/bunto/bunto" alt="CLA assistant"></a>
       </td>
     </tr>
   </tbody>
