@@ -17,7 +17,7 @@ class TestEntryFilter < BuntoUnitTest
     should "allow regexp filtering" do
       files = %w(README.md)
       @site.exclude = [
-        %r!README!
+        %r!README!,
       ]
 
       assert_empty @site.reader.filter_entries(
@@ -82,6 +82,9 @@ class TestEntryFilter < BuntoUnitTest
 
     # rubocop:disable Performance/FixedSize
     should "include only safe symlinks in safe mode" do
+      # no support for symlinks on Windows
+      skip_if_windows "Bunto does not currently support symlinks on Windows."
+
       site = Site.new(site_configuration("safe" => true))
       site.reader.read_directories("symlink-test")
 
@@ -91,6 +94,9 @@ class TestEntryFilter < BuntoUnitTest
     # rubocop:enable Performance/FixedSize
 
     should "include symlinks in unsafe mode" do
+      # no support for symlinks on Windows
+      skip_if_windows "Bunto does not currently support symlinks on Windows."
+
       site = Site.new(site_configuration)
 
       site.reader.read_directories("symlink-test")

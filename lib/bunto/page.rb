@@ -40,7 +40,11 @@ module Bunto
       @base = base
       @dir  = dir
       @name = name
-      @path = site.in_source_dir(base, dir, name)
+      @path = if site.in_theme_dir(base) == base # we're in a theme
+                site.in_theme_dir(base, dir, name)
+              else
+                site.in_source_dir(base, dir, name)
+              end
 
       process(name)
       read_yaml(File.join(base, dir), name)
@@ -54,7 +58,7 @@ module Bunto
 
     # The generated directory into which the page will be placed
     # upon generation. This is derived from the permalink or, if
-    # permalink is absent, we be '/'
+    # permalink is absent, will be '/'
     #
     # Returns the String destination directory.
     def dir
@@ -94,7 +98,7 @@ module Bunto
       @url ||= URL.new({
         :template     => template,
         :placeholders => url_placeholders,
-        :permalink    => permalink
+        :permalink    => permalink,
       }).to_s
     end
 
@@ -104,7 +108,7 @@ module Bunto
       {
         :path       => @dir,
         :basename   => basename,
-        :output_ext => output_ext
+        :output_ext => output_ext,
       }
     end
 

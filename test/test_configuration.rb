@@ -4,7 +4,7 @@ require "colorator"
 class TestConfiguration < BuntoUnitTest
   test_config = {
     "source"      => new(nil).source_dir,
-    "destination" => dest_dir
+    "destination" => dest_dir,
   }
 
   context ".from" do
@@ -34,8 +34,8 @@ class TestConfiguration < BuntoUnitTest
         {
           "posts" => {
             "output"    => true,
-            "permalink" => "/:categories/:year/:month/:day/:title:output_ext"
-          }
+            "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
+          },
         }
       )
     end
@@ -45,6 +45,20 @@ class TestConfiguration < BuntoUnitTest
         Configuration.from("watch" => true)["watch"],
         "Expected the 'watch' key to not be removed."
       )
+    end
+  end
+
+  context "the defaults" do
+    should "exclude node_modules" do
+      assert_includes Configuration.from({})["exclude"], "node_modules"
+    end
+
+    should "exclude ruby vendor directories" do
+      exclude = Configuration.from({})["exclude"]
+      assert_includes exclude, "vendor/bundle/"
+      assert_includes exclude, "vendor/cache/"
+      assert_includes exclude, "vendor/gems/"
+      assert_includes exclude, "vendor/ruby/"
     end
   end
 
@@ -71,8 +85,8 @@ class TestConfiguration < BuntoUnitTest
         {
           "posts" => {
             "output"    => true,
-            "permalink" => "/:categories/:year/:month/:day/:title/"
-          }
+            "permalink" => "/:categories/:year/:month/:day/:title/",
+          },
         }
       )
 
@@ -95,14 +109,14 @@ class TestConfiguration < BuntoUnitTest
         :permalink => "date",
         "baseurl"  => "/",
         :include   => [".htaccess"],
-        :source    => "./"
+        :source    => "./",
       }]
       @string_keys = Configuration[{
         "markdown"  => "kramdown",
         "permalink" => "date",
         "baseurl"   => "/",
         "include"   => [".htaccess"],
-        "source"    => "./"
+        "source"    => "./",
       }]
     end
     should "stringify symbol keys" do
@@ -118,7 +132,7 @@ class TestConfiguration < BuntoUnitTest
       @no_override     = {}
       @one_config_file = { "config" => "config.yml" }
       @multiple_files  = {
-        "config" => %w(config/site.yml config/deploy.toml configuration.yml)
+        "config" => %w(config/site.yml config/deploy.toml configuration.yml),
       }
     end
 
@@ -191,7 +205,7 @@ class TestConfiguration < BuntoUnitTest
         "pygments"    => true,
         "plugins"     => true,
         "layouts"     => true,
-        "data_source" => true
+        "data_source" => true,
       }]
     end
     should "unset 'auto' and 'watch'" do
@@ -241,7 +255,7 @@ class TestConfiguration < BuntoUnitTest
     setup do
       @config = proc do |val|
         Configuration[{
-          "paginate" => val
+          "paginate" => val,
         }]
       end
     end
@@ -313,7 +327,7 @@ class TestConfiguration < BuntoUnitTest
         :default => source_dir("_config.yml"),
         :other   => source_dir("_config.live.yml"),
         :toml    => source_dir("_config.dev.toml"),
-        :empty   => ""
+        :empty   => "",
       }
     end
 
@@ -358,7 +372,7 @@ class TestConfiguration < BuntoUnitTest
       Bunto.logger.log_level = :warn
       assert_equal \
         site_configuration({ "baseurl" => "/you-beautiful-blog-you",
-                             "title"   => "My magnificent site, wut" }),
+                             "title"   => "My magnificent site, wut", }),
         Bunto.configuration(test_config.merge({ "config" => [@paths[:toml]] }))
       Bunto.logger.log_level = :info
     end
@@ -421,9 +435,9 @@ class TestConfiguration < BuntoUnitTest
           "docs"  => {},
           "posts" => {
             "output"    => true,
-            "permalink" => "/:categories/:year/:month/:day/:title:output_ext"
-          }
-        }
+            "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
+          },
+        },
       })
     end
 
@@ -435,9 +449,9 @@ class TestConfiguration < BuntoUnitTest
         "collections" => {
           "posts" => {
             "output"    => true,
-            "permalink" => "/:categories/:year/:month/:day/:title:output_ext"
-          }
-        }
+            "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
+          },
+        },
       })
     end
 
@@ -447,9 +461,9 @@ class TestConfiguration < BuntoUnitTest
         "collections" => {
           "posts" => {
             "output"    => true,
-            "permalink" => "/:categories/:year/:month/:day/:title:output_ext"
-          }
-        }
+            "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
+          },
+        },
       })
     end
 
@@ -457,16 +471,16 @@ class TestConfiguration < BuntoUnitTest
       posts_permalink = "/:year/:title/"
       conf = Configuration[default_configuration].tap do |c|
         c["collections"] = {
-          "posts" => { "permalink" => posts_permalink }
+          "posts" => { "permalink" => posts_permalink },
         }
       end
       assert_equal conf.add_default_collections, conf.merge({
         "collections" => {
           "posts" => {
             "output"    => true,
-            "permalink" => posts_permalink
-          }
-        }
+            "permalink" => posts_permalink,
+          },
+        },
       })
     end
   end

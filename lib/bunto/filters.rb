@@ -1,10 +1,15 @@
-require "uri"
+require "addressable/uri"
 require "json"
 require "date"
 require "liquid"
 
+require_all "bunto/filters"
+
 module Bunto
   module Filters
+    include URLFilters
+    include GroupingFilters
+
     # Convert a Markdown string into HTML output.
     #
     # input - The Markdown String to convert.
@@ -147,7 +152,7 @@ module Bunto
     #
     # Returns the escaped String.
     def uri_escape(input)
-      URI.escape(input)
+      Addressable::URI.normalize_component(input)
     end
 
     # Replace any whitespace in the input string with a single space
@@ -172,6 +177,7 @@ module Bunto
     # word "and" for the last one.
     #
     # array - The Array of Strings to join.
+    # connector - Word used to connect the last 2 items in the array
     #
     # Examples
     #
@@ -179,8 +185,7 @@ module Bunto
     #   # => "apples, oranges, and grapes"
     #
     # Returns the formatted String.
-    def array_to_sentence_string(array)
-      connector = "and"
+    def array_to_sentence_string(array, connector = "and")
       case array.length
       when 0
         ""
@@ -200,29 +205,6 @@ module Bunto
     # Returns the converted json string
     def jsonify(input)
       as_liquid(input).to_json
-    end
-
-    # Group an array of items by a property
-    #
-    # input - the inputted Enumerable
-    # property - the property
-    #
-    # Returns an array of Hashes, each looking something like this:
-    #  {"name"  => "larry"
-    #   "items" => [...] } # all the items where `property` == "larry"
-    def group_by(input, property)
-      if groupable?(input)
-        input.group_by { |item| item_property(item, property).to_s }
-          .each_with_object([]) do |item, array|
-            array << {
-              "name"  => item.first,
-              "items" => item.last,
-              "size"  => item.last.size
-            }
-          end
-      else
-        input
-      end
     end
 
     # Filter an array of objects
@@ -379,11 +361,6 @@ module Bunto
     end
 
     private
-    def groupable?(element)
-      element.respond_to?(:group_by)
-    end
-
-    private
     def item_property(item, property)
       if item.respond_to?(:to_liquid)
         item.to_liquid[property.to_s]
@@ -433,6 +410,7 @@ module Bunto
 
       condition
     end
+
   end
 end
 

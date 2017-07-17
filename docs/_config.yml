@@ -1,0 +1,56 @@
+markdown: kramdown
+highlighter: rouge
+
+#gauges_id: 
+#google_analytics_id: UA-XXXX
+#google_site_verification: 
+
+repository: https://github.com/bunto/bunto
+help_url: https://github.com/bunto/bunto-help
+
+timezone: America/Los_Angeles
+
+defaults:
+  -
+    scope:
+      path: "_docs"
+      type: "docs"
+    values:
+      layout: "docs"
+  -
+    scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "news_item"
+
+
+collections:
+  docs:
+    permalink: /:collection/:path/
+    output: true
+  posts:
+    permalink: /news/:year/:month/:day/:title/
+    output: true
+
+name: Bunto • Simple, blog-aware, static sites
+description: Transform your plain text into static websites and blogs
+url: https://buntowaf.tk
+
+twitter:
+  username: buntorb
+
+logo: /img/logo-2x.png
+
+gems:
+  - bunto-avatar
+  - bunto-feed
+  - bunto-mentions
+  - bunto-redirect-from
+  - bunto-seo-tag
+  - bunto-sitemap
+  - bemoji
+
+exclude:
+  - .gitignore
+  - README.md

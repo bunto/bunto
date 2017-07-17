@@ -21,7 +21,7 @@ class Bunto::Converters::Markdown::RedcarpetParser
           code,
           {
             :lexer   => lang,
-            :options => { :encoding => "utf-8" }
+            :options => { :encoding => "utf-8" },
           }
         ),
         lang

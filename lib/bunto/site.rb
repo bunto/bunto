@@ -191,11 +191,7 @@ module Bunto
       render_pages(payload)
 
       Bunto::Hooks.trigger :site, :post_render, self, payload
-    # rubocop: disable HandleExceptions
-    rescue Errno::ENOENT
-      # ignore missing layout dir
     end
-    # rubocop: enable HandleExceptions
 
     # Remove orphaned files and empty directories in destination.
     #
@@ -306,7 +302,7 @@ module Bunto
         Bunto.logger.abort_with "Since v3.0, permalinks for pages" \
                                 " in subfolders must be relative to the" \
                                 " site source directory, not the parent" \
-                                " directory. Check http://bunto.github.io/docs/upgrading"\
+                                " directory. Check https://buntorb.com/docs/upgrading/"\
                                 " for more info."
       end
     end
@@ -424,13 +420,22 @@ module Bunto
     private
     def configure_theme
       self.theme = nil
-      self.theme = Bunto::Theme.new(config["theme"]) if config["theme"]
+      return if config["theme"].nil?
+
+      self.theme =
+        if config["theme"].is_a?(String)
+          Bunto::Theme.new(config["theme"])
+        else
+          Bunto.logger.warn "Theme:", "value of 'theme' in config should be " \
+          "String to use gem-based themes, but got #{config["theme"].class}"
+          nil
+        end
     end
 
     private
     def configure_include_paths
       @includes_load_paths = Array(in_source_dir(config["includes_dir"].to_s))
-      @includes_load_paths << theme.includes_path if self.theme
+      @includes_load_paths << theme.includes_path if theme && theme.includes_path
     end
 
     private

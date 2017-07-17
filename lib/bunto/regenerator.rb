@@ -40,7 +40,7 @@ module Bunto
 
       metadata[path] = {
         "mtime" => File.mtime(path),
-        "deps"  => []
+        "deps"  => [],
       }
       cache[path] = true
     end

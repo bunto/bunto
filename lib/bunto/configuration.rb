@@ -17,7 +17,9 @@ module Bunto
       # Handling Reading
       "safe"              => false,
       "include"           => [".htaccess"],
-      "exclude"           => [],
+      "exclude"           => %w(
+        node_modules vendor/bundle/ vendor/cache/ vendor/gems/ vendor/ruby/
+      ),
       "keep_files"        => [".git", ".svn"],
       "encoding"          => "utf-8",
       "markdown_ext"      => "markdown,mkdown,mkdn,mkd,md",
@@ -43,7 +45,7 @@ module Bunto
       "detach"            => false, # default to not detaching the server
       "port"              => "4000",
       "host"              => "127.0.0.1",
-      "baseurl"           => "",
+      "baseurl"           => nil, # this mounts at /, i.e. no subdirectory
       "show_dir_listing"  => false,
 
       # Output Configuration
@@ -56,15 +58,15 @@ module Bunto
       "defaults"          => [],
 
       "liquid"            => {
-        "error_mode" => "warn"
+        "error_mode" => "warn",
       },
 
       "rdiscount"         => {
-        "extensions" => []
+        "extensions" => [],
       },
 
       "redcarpet"         => {
-        "extensions" => []
+        "extensions" => [],
       },
 
       "kramdown"          => {
@@ -74,8 +76,8 @@ module Bunto
         "smart_quotes"  => "lsquo,rsquo,ldquo,rdquo",
         "input"         => "GFM",
         "hard_wrap"     => false,
-        "footnote_nr"   => 1
-      }
+        "footnote_nr"   => 1,
+      },
     }.map { |k, v| [k, v.freeze] }].freeze
 
     class << self

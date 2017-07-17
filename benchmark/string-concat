@@ -1,6 +1,7 @@
+#!/usr/bin/env ruby
 require 'benchmark/ips'
 
-url = "http://bunto.github.io"
+url = "https://buntowaf.tk"
 
 Benchmark.ips do |x|
   x.report('+=') { url += '/' }

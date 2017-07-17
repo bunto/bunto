@@ -1,5 +1,4 @@
-# AppVeyor CI (http://www.appveyor.com/docs/appveyor-yml)
-
+# AppVeyor CI
 version: "{build}"
 
 clone_depth: 10
@@ -7,43 +6,32 @@ clone_depth: 10
 branches:
   only:
     - master
+    #- themes
 
 build: off
 
 install:
-  - SET PATH=C:\Ruby%ruby_folder_version%\bin;%PATH%
-  - bundle install --retry 5
+  - SET PATH=C:\Ruby%RUBY_FOLDER_VER%\bin;%PATH%
+  - bundle install --retry 5 --jobs=%NUMBER_OF_PROCESSORS% --clean --path vendor\bundle
 
 environment:
   BUNDLE_WITHOUT: "benchmark:site:development"
   matrix:
-    - ruby_folder_version: "23"
-      ruby_gems_folder: "2.3.0"
+    - RUBY_FOLDER_VER: "23"
       TEST_SUITE: "test"
-    - ruby_folder_version: "23"
-      ruby_gems_folder: "2.3.0"
+    - RUBY_FOLDER_VER: "23"
       TEST_SUITE: "cucumber"
-    - ruby_folder_version: "23"
-      ruby_gems_folder: "2.3.0"
+    - RUBY_FOLDER_VER: "23"
       TEST_SUITE: "fmt"
-    - ruby_folder_version: "23-x64"
-      ruby_gems_folder: "2.3.0"
-      TEST_SUITE: "cucumber"
-    - ruby_folder_version: "23-x64"
-      ruby_gems_folder: "2.3.0"
+    - RUBY_FOLDER_VER: "23"
+      TEST_SUITE: "default-site"
+    - RUBY_FOLDER_VER: "23-x64"
       TEST_SUITE: "test"
-    - ruby_folder_version: "22"
-      ruby_gems_folder: "2.2.0"
+    - RUBY_FOLDER_VER: "22"
       TEST_SUITE: "test"
-    - ruby_folder_version: "22"
-      ruby_gems_folder: "2.2.0"
-      TEST_SUITE: "cucumber"
-    - ruby_folder_version: "21"
-      ruby_gems_folder: "2.1.0"
-      TEST_SUITE: "test"
-    - ruby_folder_version: "21"
-      ruby_gems_folder: "2.1.0"
-      TEST_SUITE: "cucumber"
+# DISABLED:
+#    - RUBY_FOLDER_VER: "21"
+#      TEST_SUITE: "test"
 
 test_script:
   - ruby --version
@@ -51,9 +39,6 @@ test_script:
   - bundler --version
   - bash ./script/cibuild
 
-matrix:
-  fast_finish: true
-
 cache:
-  - C:\Ruby%ruby_folder_version%\bin -> Gemfile,bunto.gemspec
-  - C:\Ruby%ruby_folder_version%\lib\ruby\gems\%ruby_gems_folder% -> Gemfile,bunto.gemspec
+  # If one of the files after the right arrow changes, cache will be skipped
+  - 'vendor\bundle -> appveyor.yml,Gemfile,bunto.gemspec'

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-time ruby -S bundle exec cucumber \
-  -f Bunto::Cucumber::Formatter "$@"
+echo "Currently disabled."
+#time ruby -S bundle exec cucumber \
+#  -f Bunto::Cucumber::Formatter "$@"

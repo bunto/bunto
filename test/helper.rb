@@ -10,8 +10,8 @@ def jruby?
 end
 
 if ENV["CI"]
-  require "codeclimate-test-reporter"
-  CodeClimate::TestReporter.start
+  require "simplecov"
+  SimpleCov.start
 else
   require File.expand_path("../simplecov_custom_profile", __FILE__)
   SimpleCov.start "gem" do
@@ -46,7 +46,7 @@ include Bunto
 Minitest::Reporters.use! [
   Minitest::Reporters::DefaultReporter.new(
     :color => true
-  )
+  ),
 ]
 
 module Minitest::Assertions
@@ -62,6 +62,10 @@ module Minitest::Assertions
 end
 
 module DirectoryHelpers
+  def root_dir(*subdirs)
+    File.join(File.dirname(File.dirname(__FILE__)), *subdirs)
+  end
+
   def dest_dir(*subdirs)
     test_dir("dest", *subdirs)
   end
@@ -70,8 +74,12 @@ module DirectoryHelpers
     test_dir("source", *subdirs)
   end
 
+  def theme_dir(*subdirs)
+    test_dir("fixtures", "test-theme", *subdirs)
+  end
+
   def test_dir(*subdirs)
-    File.join(File.dirname(__FILE__), *subdirs)
+    root_dir("test", *subdirs)
   end
 end
 
@@ -103,6 +111,21 @@ class BuntoUnitTest < Minitest::Test
     RSpec::Mocks.teardown
   end
 
+  def fixture_document(relative_path)
+    site = fixture_site({
+      "collections" => {
+        "methods" => {
+          "output" => true,
+        },
+      },
+    })
+    site.read
+    matching_doc = site.collections["methods"].docs.find do |doc|
+      doc.relative_path == relative_path
+    end
+    [site, matching_doc]
+  end
+
   def fixture_site(overrides = {})
     Bunto::Site.new(site_configuration(overrides))
   end
@@ -118,14 +141,11 @@ class BuntoUnitTest < Minitest::Test
   def site_configuration(overrides = {})
     full_overrides = build_configs(overrides, build_configs({
       "destination" => dest_dir,
-      "incremental" => false
+      "incremental" => false,
     }))
-    build_configs({
-      "source" => source_dir
-    }, full_overrides)
-      .fix_common_issues
-      .backwards_compatibilize
-      .add_default_collections
+    Configuration.from(full_overrides.merge({
+      "source" => source_dir,
+    }))
   end
 
   def clear_dest
@@ -147,11 +167,11 @@ class BuntoUnitTest < Minitest::Test
   end
 
   def capture_output
-    stderr = StringIO.new
-    Bunto.logger = Logger.new stderr
+    buffer = StringIO.new
+    Bunto.logger = Logger.new(buffer)
     yield
-    stderr.rewind
-    return stderr.string.to_s
+    buffer.rewind
+    buffer.string.to_s
   end
   alias_method :capture_stdout, :capture_output
   alias_method :capture_stderr, :capture_output
@@ -160,5 +180,12 @@ class BuntoUnitTest < Minitest::Test
     Nokogiri::HTML.fragment(
       str
     )
+  end
+
+  def skip_if_windows(msg = nil)
+    if Utils::Platforms.really_windows?
+      msg ||= "Bunto does not currently support this feature on Windows."
+      skip msg.to_s.magenta
+    end
   end
 end
