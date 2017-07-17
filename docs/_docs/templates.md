@@ -503,7 +503,7 @@ You may also optionally specify the filename in the gist to display:
 
 ```liquid
 {% raw %}
-{% gist parkr/931c1c8d465a04042403 bunto-private-gist.markdown %}
+{% gist parkr/931c1c8d465a04042403 jekyll-private-gist.markdown %}
 {% endraw %}
 ```
 

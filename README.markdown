@@ -70,11 +70,11 @@ conduct.
 Please adhere to this code of conduct in any interactions you have in the
 Bunto community. It is strictly enforced on all official Bunto
 repositories, websites, and resources. If you encounter someone violating
-these terms, please let a maintainer ([@parkr](https://github.com/parkr), [@envygeeks](https://github.com/envygeeks), [@mattr-](https://github.com/mattr-), or [@alfredxing](https://github.com/alfredxing)) know and we will address it as soon as possible.
+these terms, please let the maintainer ([@SuriyaaKudoIsc](https://github.com/SuriyaaKudoIsc) know and we will address it as soon as possible.
 
 ## Diving In
 
-* [Migrate](http://import.buntowaf.tk/docs/home/) from your previous system
+* [Migrate](https://bunto-import.tk/docs/home/) from your previous system
 * Learn how the [YAML Front Matter](https://buntowaf.tk/docs/frontmatter/) works
 * Put information on your site with [Variables](https://buntowaf.tk/docs/variables/)
 * Customize the [Permalinks](https://buntowaf.tk/docs/permalinks/) your posts are generated with

@@ -8,7 +8,7 @@ highlighter: rouge
 repository: https://github.com/bunto/bunto
 help_url: https://github.com/bunto/bunto-help
 
-timezone: America/Los_Angeles
+#timezone: America/Los_Angeles
 
 defaults:
   -
@@ -38,18 +38,18 @@ description: Transform your plain text into static websites and blogs
 url: https://buntowaf.tk
 
 twitter:
-  username: buntorb
+  username: buntowaf
 
 logo: /img/logo-2x.png
 
-gems:
-  - bunto-avatar
-  - bunto-feed
-  - bunto-mentions
-  - bunto-redirect-from
-  - bunto-seo-tag
-  - bunto-sitemap
-  - bemoji
+plugins_dir:
+  - jekyll-avatar
+  - jekyll-feed
+  - jekyll-mentions
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jemoji
 
 exclude:
   - .gitignore
