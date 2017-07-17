@@ -6,7 +6,7 @@ permalink: /docs/github-pages/
 [GitHub Pages](https://pages.github.com) are public web pages for users,
 organizations, and repositories, that are freely hosted on GitHub's
 `github.io` domain or on a custom domain name of your choice. GitHub Pages are
-powered by Bunto behind the scenes, so in addition to supporting regular HTML
+compatible with Bunto behind the scenes, so in addition to supporting regular HTML
 content, they’re also a great way to host your Bunto-powered website for free.
 
 Never built a website with GitHub Pages before? [See this marvelous guide by

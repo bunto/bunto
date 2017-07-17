@@ -7,12 +7,12 @@ It’s interesting to see what designs and features others have come up
 with. Below are some Bunto-powered blogs which were hand-picked for
 learning purposes.
 
-- [Tom Preston-Werner](http://tom.preston-werner.com/)
-    ([source](https://github.com/mojombo/mojombo.github.io))
-- [GitHub Official Teaching Materials](https://services.github.com/training/)
-    ([source](https://github.com/github/training-kit))
-- [Rasmus Andersson](https://rsms.me/)
-    ([source](https://github.com/rsms/rsms.github.com))
+- [Suriyaa Kudo](https://suriyaa.tk/)
+    ([source](https://github.com/iSC-Host/suriyaa.me))
+- [Aahash de Ruffy](https://aahash.tk/)
+    ([source](https://github.com/iSC-Host/aahash.me))
+- [Bunto](https://buntowaf.tk/)
+    ([source](https://github.com/bunto/bunto/tree/master/docs))
 
 If you would like to explore more examples, you can find a list of sites
 and their sources on the ["Sites" page in the Bunto wiki][bunto-sites].

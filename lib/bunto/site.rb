@@ -302,7 +302,7 @@ module Bunto
         Bunto.logger.abort_with "Since v3.0, permalinks for pages" \
                                 " in subfolders must be relative to the" \
                                 " site source directory, not the parent" \
-                                " directory. Check https://buntorb.com/docs/upgrading/"\
+                                " directory. Check https://buntowaf.com/docs/upgrading/"\
                                 " for more info."
       end
     end

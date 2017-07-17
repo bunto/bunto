@@ -14,7 +14,7 @@ Known breaking changes are listed in the upgrading docs.
 
 Our guide to Bunto covering installation, writing, customization, deployment, and more.
 
-### [View source](https://github.com/bunto/bunto/wiki/sites)
+### [View source](https://github.com/bunto/bunto/wiki/Sites)
 
 Learn from the source of others' Bunto-powered sites.
 
@@ -43,7 +43,7 @@ Bunto IRC channel.
 Search through the issues on the main Bunto development. Think you've
 found a bug? File a new issue.
 
-### [@buntorb on Twitter](https://twitter.com/buntorb)
+### [@buntowaf on Twitter](https://twitter.com/buntowaf)
 
 The official Bunto Twitter account. It's not checked often, so try the
 above first.

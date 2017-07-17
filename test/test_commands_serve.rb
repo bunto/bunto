@@ -100,7 +100,7 @@ class TestCommandsServe < BuntoUnitTest
           expect(Bunto::Commands::Serve).to receive(:start_up_webrick)
         end
         should "set the site url by default to `http://localhost:4000`" do
-          @merc.execute(:serve, { "watch" => false, "url" => "https://buntorb.com/" })
+          @merc.execute(:serve, { "watch" => false, "url" => "https://buntowaf.com/" })
 
           assert_equal 1, Bunto.sites.count
           assert_equal "http://localhost:4000", Bunto.sites.first.config["url"]
@@ -111,7 +111,7 @@ class TestCommandsServe < BuntoUnitTest
             "watch"    => false,
             "host"     => "example.com",
             "port"     => "9999",
-            "url"      => "https://buntorb.com/",
+            "url"      => "https://buntowaf.com/",
             "ssl_cert" => "foo",
             "ssl_key"  => "bar",
           })
@@ -125,10 +125,10 @@ class TestCommandsServe < BuntoUnitTest
         should "not update the site url" do
           expect(Bunto).to receive(:env).and_return("production")
           expect(Bunto::Commands::Serve).to receive(:start_up_webrick)
-          @merc.execute(:serve, { "watch" => false, "url" => "https://buntorb.com/" })
+          @merc.execute(:serve, { "watch" => false, "url" => "https://buntowaf.com/" })
 
           assert_equal 1, Bunto.sites.count
-          assert_equal "https://buntorb.com/", Bunto.sites.first.config["url"]
+          assert_equal "https://buntowaf.com/", Bunto.sites.first.config["url"]
         end
       end
 

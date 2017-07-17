@@ -190,7 +190,7 @@ for that](https://github.com/openshift-quickstart/bunto-openshift).
 
 <div class="note">
   <h5>ProTip™: Use GitHub Pages for zero-hassle Bunto hosting</h5>
-  <p>GitHub Pages are powered by Bunto behind the scenes, so if you’re looking for a zero-hassle, zero-cost solution, GitHub Pages are a great way to <a href="../github-pages/">host your Bunto-powered website for free</a>.</p>
+  <p>GitHub Pages are compatible with Bunto behind the scenes, so if you’re looking for a zero-hassle, zero-cost solution, GitHub Pages are a great way to <a href="../github-pages/">host your Bunto-powered website for free</a>.</p>
 </div>
 
 ## Kickster
