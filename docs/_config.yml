@@ -2,7 +2,7 @@ markdown: kramdown
 highlighter: rouge
 
 #gauges_id: 
-#google_analytics_id: UA-XXXX
+google_analytics_id: UA-88019666-1
 #google_site_verification: 
 
 repository: https://github.com/bunto/bunto
